@@ -1,0 +1,37 @@
+﻿
+@{
+    Layout = null;
+}
+ 
+<!DOCTYPE html>
+ 
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Сотрудники</title>
+</head>
+<body>
+    <div>
+        <h3>Список сотрудников</h3>
+        <table>
+            <tr>
+                <td><p>Фамилия</p></td>
+                <td><p>Имя</p></td>
+                <td><p>Отчество</p></td>
+                <td><p>Email</p></td>
+                <td></td>
+            </tr>
+            @foreach (var b in ViewBag.Employees)
+            {
+            <tr>
+                <td><p>@b.FamName</p></td>
+                <td><p>@b.Name</p></td>
+                <td><p>@b.SecName</p></td>
+                <td><p>@b.Email</p></td>
+                
+            </tr>
+            }
+        </table>
+    </div>
+</body>
+</html>
