@@ -14,12 +14,15 @@ namespace DutyOfServiceDepart.Controllers
 
 		public ActionResult Index()
 		{
+
 			// получаем из бд все объекты
 			IEnumerable<Employee> employees = db.Employees;
 			// передаем все объекты в динамическое свойство Employees в ViewBag
 			ViewBag.Employees = employees;
 			// возвращаем представление
+			
 			return View();
+
 		}
 		public ActionResult About()
 		{

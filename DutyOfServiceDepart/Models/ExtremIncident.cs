@@ -17,7 +17,7 @@ namespace DutyOfServiceDepart.Models
 		[Required]
 		public Employee Employee { get; set; } //кого вызвали туда
 				
-		public string DecsIncedent { get; set; }//описание чп
+		public string DecsIncident { get; set; }//описание чп
 		
 	}
 }

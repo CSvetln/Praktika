@@ -21,8 +21,10 @@ namespace DutyOfServiceDepart.Models
 		[Required]
 		public string Email { get; set; }
 		[MinLength(4)]
-		[MaxLength(30)]
+		[MaxLength(100)]
 		[Required]
-		public string login { get; set; }
+		public string Login { get; set; }
+
+		
 	}
 }

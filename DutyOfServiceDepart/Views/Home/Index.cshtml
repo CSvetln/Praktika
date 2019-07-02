@@ -1,37 +1,17 @@
-﻿
-@{
-    Layout = null;
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
- 
-<!DOCTYPE html>
- 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Сотрудники</title>
-</head>
-<body>
-    <div>
-        <h3>Список сотрудников</h3>
-        <table>
-            <tr>
-                <td><p>Фамилия</p></td>
-                <td><p>Имя</p></td>
-                <td><p>Отчество</p></td>
-                <td><p>Email</p></td>
-                <td></td>
-            </tr>
-            @foreach (var b in ViewBag.Employees)
-            {
-            <tr>
-                <td><p>@b.FamName</p></td>
-                <td><p>@b.Name</p></td>
-                <td><p>@b.SecName</p></td>
-                <td><p>@b.Email</p></td>
-                
-            </tr>
-            }
-        </table>
+<div>
+    <div align=center>
+        @*<div style="width:220px; border:1px solid #c0c0c0; padding:6px;">*@
+            <table id="calendar" border="1" cellspacing="1" cellpadding="1">
+                <thead>
+                    <tr><td><b>‹</b><td colspan="5"><td><b>›</b>
+                    <tr><td>Пн<td>Вт<td>Ср<td>Чт<td>Пт<td>Сб<td>Вс
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
     </div>
-</body>
-</html>
+</div>
+

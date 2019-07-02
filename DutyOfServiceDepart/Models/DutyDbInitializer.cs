@@ -10,7 +10,7 @@ namespace DutyOfServiceDepart.Models
 	{
 		protected override void Seed(DutyContext db)
 		{
-			db.Employees.Add(new Employee {FamName= "Сорокина", Name = "Светлана", SecName = "Вадимовна", Email = "cveta2500@mail.ru", login="ffffff" });
+			db.Employees.Add(new Employee {FamName= "Сорокина", Name = "Светлана", SecName = "Вадимовна", Email = "cveta2500@mail.ru", Login="ffffff" });
 			
 			
 

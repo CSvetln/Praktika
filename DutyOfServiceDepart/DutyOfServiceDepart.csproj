@@ -166,6 +166,7 @@
       <DependentUpon>201907020530012_migration2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Access.cs" />
     <Compile Include="Models\DutyContext.cs" />
     <Compile Include="Models\DutyDbInitializer.cs" />
     <Compile Include="Models\DutyList.cs" />
