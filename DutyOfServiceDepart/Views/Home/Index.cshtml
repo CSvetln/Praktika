@@ -1,17 +1,56 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<title>Дежурства</title>
 <div>
+   
     <div align=center>
         @*<div style="width:220px; border:1px solid #c0c0c0; padding:6px;">*@
-            <table id="calendar" border="1" cellspacing="1" cellpadding="1">
-                <thead>
-                    <tr><td><b>‹</b><td colspan="5"><td><b>›</b>
-                    <tr><td>Пн<td>Вт<td>Ср<td>Чт<td>Пт<td>Сб<td>Вс
-                </thead>
-                <tbody></tbody>
-            </table>
-        </div>
+        <table id="calendar" border="1" c  ellspacing="1" cellpadding="1" align="center">
+            <thead>
+                <tr><td><b>‹</b><td colspan="5" align="center">@DateTime.Now.ToString("MMMMMM")<td><b>›</b></tr>
+               
+                <tr>
+                    <td>ПН</td>
+                    <td>ВТ</td>
+                    <td>СР</td>
+                    <td>ЧТ</td>
+                    <td>ПТ</td>
+                    <td>СБ</td>
+                    <td>ВС</td>
+                </tr>
+            </thead>
+            <tr>
+                @{ DateTime start = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+                    int dayofweek = (int)start.DayOfWeek; }
+                @for (int i = 0; i < dayofweek - 1; i++)
+                {@:<td></td>
+                }
+
+                @while (DateTime.Now.Month == start.Month)
+                {
+                    do
+                    {
+                        <td>@start.ToString("dd" + " ")</td>
+                        start = start.AddDays(1);
+                        dayofweek = (int)start.DayOfWeek;
+
+                        foreach (DutyOfServiceDepart.Models.Calendar s in Model)
+                        {
+                            s.CurrentDate.Day.ToString();
+                            s.Duties.Values.ToString();
+                        }
+
+                        <td></td>
+
+                    }
+                    while ((dayofweek != 1) && (DateTime.Now.Month == start.Month));
+                }
+
+            </tr>
+     
+        </table>
     </div>
 </div>
+
 

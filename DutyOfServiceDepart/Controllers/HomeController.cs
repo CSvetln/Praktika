@@ -11,17 +11,18 @@ namespace DutyOfServiceDepart.Controllers
 	{
 		// создаем контекст данных
 		DutyContext db = new DutyContext();
+		foreach(DutyList s in db.DutyLists)
+			{
+		Dictionary<DateTime, Employee> ex = new Dictionary<DateTime, Employee>();
+	}
+		foreach(KeyValuePair<DateTime, Employee> s in ex)
 
+
+		[HttpGet]
 		public ActionResult Index()
 		{
-
-			// получаем из бд все объекты
-			IEnumerable<Employee> employees = db.Employees;
-			// передаем все объекты в динамическое свойство Employees в ViewBag
-			ViewBag.Employees = employees;
-			// возвращаем представление
 			
-			return View();
+			return View(db.Calendars);
 
 		}
 		public ActionResult About()

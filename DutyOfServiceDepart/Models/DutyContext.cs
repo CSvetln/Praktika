@@ -14,11 +14,9 @@ namespace DutyOfServiceDepart.Models
 		public DbSet<Employee> Employees { get; set; }
 		public DbSet<ExtremIncident> Incidents { get; set; }
 		public DbSet<DutyList> DutyLists { get; set; }
+		public DbSet<Calendar> Calendars { get; set; }
+		public DbSet<Access> Accesses { get; set; }
 		
-		//protected override void OnModelCreating(DbModelBuilder modelBuilder)
-		//{
-		//	modelBuilder.Entity<DutyList>().HasMany(d => d.Employee).WithRequired(o => o.).WillCascadeOnDelete(false);
-		//}
-		
+
 	}
 }
