@@ -14,20 +14,22 @@ namespace DutyOfServiceDepart.Controllers
 	{
 		// создаем контекст данных
 		DutyContext db = new DutyContext();
-		DateTime Target = DateTime.Now;
+		
 		
 	    
-		public ActionResult Index(DateTime TargetDate = Target)
+		public ActionResult Index(DateTime? Start)
 		{
 			Calendar calendar;
-			calendar = GetCalendar(TargetDate);
+			DateTime Target1 = Start.HasValue ? Start.Value : DateTime.Now.Date;
+			
+			calendar = GetCalendar(Target1);
 			return View(calendar);
 
 		}
-		private Calendar GetCalendar(DateTime date)
+		private Calendar GetCalendar(DateTime Target)
 		{
-			Calendar calendar = new Calendar();
-			calendar.CurrentDate = date;
+			Calendar calendar = new Calendar();		
+			calendar.CurrentDate = Target;
 
 
 			foreach (DutyList s in db.DutyLists.Include(x => x.Employee).Where(x => x.DateDuty.Year == calendar.CurrentDate.Year && x.DateDuty.Month == calendar.CurrentDate.Month).ToList())

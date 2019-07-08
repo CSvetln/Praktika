@@ -8,12 +8,13 @@
 @using DutyOfServiceDepart.Models;
 <title>Дежурства</title>
 <div>
+
     @Html.ActionLink("<<", "Index", new { TargetDate = Model.CurrentDate.AddMonths(-1) })
     <div align=center class="tm-right-column">
         @*<div style="width:220px; border:1px solid #c0c0c0; padding:6px;">*@
         <table id="calendar" border="1" cellspacing="1" cellpadding="1" align="center">
             <thead>
-                <tr><td><b>‹</b><td colspan="5" align="center">@DateTime.Now.ToString("MMMMMM")<td><b>›</b></tr>
+                <tr><td><b></b><td colspan="5" align="center">@DateTime.Now.ToString("MMMMMM")<td><b></b></tr>
 
                 <tr>
                     <td>ПН</td>
@@ -27,30 +28,40 @@
             </thead>
             @{
                 DateTime Start = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-                while(Start.DayOfWeek != DayOfWeek.Monday)
-                {
-                    Start = Start.AddDays(-1);
-                }
                 while (true)
                 {
                     <tr>
-                        @while(Start.DayOfWeek!=DayOfWeek.Sunday)
+                        @while ((Start.DayOfWeek != DayOfWeek.Sunday) && (DateTime.Now.Month == Start.Month))
                         {
-                           <td>
+                            <td>
+                                @Start.Day.ToString()
+                                @if (Model.Duties.ContainsKey(Start.Day))
+                                {
+                                    @Model.Duties[Start.Day].FamName
+                                }
+                            </td>
+                            Start = Start.AddDays(1);
 
-                               @Model.CurrentDate.ToString()
-                               @*@Model.Duties[19].SecName*@
-                               
-                           </td>
-                            Start=Start.AddDays(1);
+
                         }
                         @if (DateTime.Now.Month != Start.Month)
-                        {
-                            break;
-                        }
+                        { break; }
+                            <td>
+
+
+                                @Start.Day.ToString()
+                                @if (Model.Duties.ContainsKey(Start.Day))
+                                {
+                                    @Model.Duties[Start.Day].FamName
+                                }
+
+                            </td>
+
                     </tr>
-                }          
+                    Start = Start.AddDays(1);
+              }
             }
+           
         </table>
     </div>
 </div>
