@@ -8,34 +8,32 @@
 </head>
 
 <body>
-    <div class="tm-blue-bg tm-left-column">
-        <div class="tm-logo-div text-xs-center">
-            <img src="~/Content/suek.png" class="att">
-           
+    <div class="container">
+        <div class="tm-blue-bg tm-left-column">
+            <div class="tm-logo-div">
+                <img src="~/Content/suek.png" class="att">
+            </div>
+            <nav class="tm-main-nav">
+                <ul class="tm-main-nav-ul">
+                    <li class="tm-nav-item">
+                        @Html.ActionLink("Дежурство", "Index", "Home")
+                    </li>
+                    <li class="tm-nav-item">
+                        @Html.ActionLink("Сотрудники", "Index", "Employee")
+                    </li>
+                    <li class="tm-nav-item">
+                        @Html.ActionLink("Аварии", "Index", "Incident")
+                    </li>
+                    <li class="tm-nav-item">
+                        @Html.ActionLink("Права доступа", "Index", "Home")
+                    </li>
+
+                </ul>
+            </nav>
         </div>
-        <nav class="tm-main-nav">
-            <ul class="tm-main-nav-ul">
-                <li class="tm-nav-item">
-                    @*<a href="#welcome" class="tm-nav-item-link">Welcome</a>*@
-                    @Html.ActionLink("Дежурство", "Index", "Home")
-                </li>
-                <li class="tm-nav-item">
-                    @*<a href="#about" class="tm-nav-item-link">About Us</a>*@
-                    @Html.ActionLink("Сотрудники", "Index", "Home")
-                </li>
-                <li class="tm-nav-item">
-                    @*<a href="#galleryone" class="tm-nav-item-link">Gallery One</a>*@
-                    @Html.ActionLink("Аварии", "Index", "Home")
-                </li>
-                <li class="tm-nav-item">
-                    @*<a href="#secondgallery" class="tm-nav-item-link">Second Gallery</a>*@
-                    @Html.ActionLink("Права доступа", "Index", "Home")
-                </li>
-                
-            </ul>
-        </nav>
-    </div> <!-- Left column: logo and menu -->
-    
-    @RenderBody()
+        <div class="right-column">
+            @RenderBody()
+        </div>
+    </div>
 </body>
 </html>>

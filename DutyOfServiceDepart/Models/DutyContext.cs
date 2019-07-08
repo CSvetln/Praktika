@@ -14,7 +14,7 @@ namespace DutyOfServiceDepart.Models
 		public DbSet<Employee> Employees { get; set; }
 		public DbSet<ExtremIncident> Incidents { get; set; }
 		public DbSet<DutyList> DutyLists { get; set; }
-		public DbSet<Calendar> Calendars { get; set; }
+	
 		public DbSet<Access> Accesses { get; set; }
 		
 

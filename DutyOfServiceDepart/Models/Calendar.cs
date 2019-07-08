@@ -8,7 +8,7 @@ namespace DutyOfServiceDepart.Models
 {
 	public class Calendar
 	{
-		public Dictionary<int, Employee> Duties { get; set; }
+		public Dictionary<int, Employee> Duties { get; set; } = new Dictionary<int, Employee>();
 		[Key]
 		public DateTime CurrentDate { get; set; }
 	}

@@ -1,0 +1,57 @@
+﻿@using PagedList.Mvc;
+@using DutyOfServiceDepart.Models;
+
+@model PagedList.IPagedList<DutyOfServiceDepart.Models.Employee>
+
+@{
+
+    ViewBag.Title = "Сотрудники";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+<link rel="stylesheet" href="~/Content/StyleGetEmp.css">
+<link rel="stylesheet" href="~/Content/PagedList.css">
+<div>
+
+    <div class="tm-right-columnt">
+        <div id="name">Список сотрудников</div>
+        <p class="addemp">@Html.ActionLink("+ Добавить сотрудника", "CreateEmployee", "Employee")</p>
+        @*<p><a id="a1" href="~/Controllers/Employee/CreateEmployee">Добавить сотрудника</a></p>*@
+        @using (Html.BeginForm())
+        {
+            <p>
+                Поиск по имени:
+                @Html.TextBox("SearchString")
+                <input id="but1" type="submit" value="Поиск" />
+            </p>
+        }
+        <table>
+
+            <tr id="nameemp">
+                <th><p>Фамилия</p></th>
+                <th><p>Имя</p></th>
+                <th><p>Отчество</p></th>
+                <th><p>Email</p></th>
+                <th><p></p></th>
+            </tr>
+            @foreach (Employee b in Model)
+            {
+            <tr>
+                <td><p>@b.FamName</p></td>
+                <td><p>@b.Name</p></td>
+                <td><p>@b.SecName</p></td>
+                <td><p>@b.Email</p></td>
+                <td><p><a href="~/Controllers/Employee/Delete/b.EmployeId">Удалить</a></p></td>
+            </tr>
+            }
+        </table>
+        <br />
+
+    </div>
+</div>
+    <br />
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("Index",
+        new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+

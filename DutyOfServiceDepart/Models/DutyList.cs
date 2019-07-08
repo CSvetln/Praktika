@@ -13,11 +13,8 @@ namespace DutyOfServiceDepart.Models
 		public int DutyId { get; set; }
 
 		[Required]
-		public DateTime StartDuty { get; set; } //дата начала
-
-		[Required]
-		public DateTime FinishDuty { get; set; }//дата окончания
-
+		public DateTime DateDuty { get; set; } //дата дежурства
+	
 		[Required]
 		public Employee Employee { get; set; }   //дежурный
 

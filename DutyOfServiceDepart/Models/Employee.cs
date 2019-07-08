@@ -14,8 +14,8 @@ namespace DutyOfServiceDepart.Models
 		public string FamName { get; set; }
 		[Required]
 		public string Name { get; set; }
-
 		public string SecName { get; set; }
+
 		[MinLength(6)]
 		[MaxLength(100)]
 		[Required]

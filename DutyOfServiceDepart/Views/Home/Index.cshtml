@@ -1,15 +1,20 @@
-﻿@{
+﻿@model Calendar
+
+
+@{
+    ViewBag.Title = "Дежурства";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@using DutyOfServiceDepart.Models;
 <title>Дежурства</title>
 <div>
-   
-    <div align=center>
+    @Html.ActionLink("<<", "Index", new { TargetDate = Model.CurrentDate.AddMonths(-1) })
+    <div align=center class="tm-right-column">
         @*<div style="width:220px; border:1px solid #c0c0c0; padding:6px;">*@
-        <table id="calendar" border="1" c  ellspacing="1" cellpadding="1" align="center">
+        <table id="calendar" border="1" cellspacing="1" cellpadding="1" align="center">
             <thead>
                 <tr><td><b>‹</b><td colspan="5" align="center">@DateTime.Now.ToString("MMMMMM")<td><b>›</b></tr>
-               
+
                 <tr>
                     <td>ПН</td>
                     <td>ВТ</td>
@@ -20,37 +25,36 @@
                     <td>ВС</td>
                 </tr>
             </thead>
-            <tr>
-                @{ DateTime start = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-                    int dayofweek = (int)start.DayOfWeek; }
-                @for (int i = 0; i < dayofweek - 1; i++)
-                {@:<td></td>
-                }
-
-                @while (DateTime.Now.Month == start.Month)
+            @{
+                DateTime Start = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+                while(Start.DayOfWeek != DayOfWeek.Monday)
                 {
-                    do
-                    {
-                        <td>@start.ToString("dd" + " ")</td>
-                        start = start.AddDays(1);
-                        dayofweek = (int)start.DayOfWeek;
-
-                        foreach (DutyOfServiceDepart.Models.Calendar s in Model)
-                        {
-                            s.CurrentDate.Day.ToString();
-                            s.Duties.Values.ToString();
-                        }
-
-                        <td></td>
-
-                    }
-                    while ((dayofweek != 1) && (DateTime.Now.Month == start.Month));
+                    Start = Start.AddDays(-1);
                 }
+                while (true)
+                {
+                    <tr>
+                        @while(Start.DayOfWeek!=DayOfWeek.Sunday)
+                        {
+                           <td>
 
-            </tr>
-     
+                               @Model.CurrentDate.ToString()
+                               @*@Model.Duties[19].SecName*@
+                               
+                           </td>
+                            Start=Start.AddDays(1);
+                        }
+                        @if (DateTime.Now.Month != Start.Month)
+                        {
+                            break;
+                        }
+                    </tr>
+                }          
+            }
         </table>
     </div>
 </div>
+
+
 
 

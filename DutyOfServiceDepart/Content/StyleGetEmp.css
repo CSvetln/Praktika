@@ -1,0 +1,84 @@
+﻿body {
+
+}
+table {
+    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+    border-collapse: collapse;
+    color: #686461;
+}
+
+
+#name {
+    font-size: 26pt;
+    font-family: "Isocpeur";
+    padding-top: 20px;
+    font-weight: bold;
+    margin-top: 20px;
+    color: black;
+}
+#a1:visited {
+    color:blue;
+}
+#but1 {
+    text-align: center;
+    font-size: 16pt;
+    text-decoration: none;
+    /*font-weight: 700;*/
+    background: #4682B4;
+    display: block;
+    height: 40px;
+    width: 110px;
+    /*background-image: linear-gradient(#B0C4DE, #4682B4);*/
+    border-radius: 3px;
+    color: #FFFFFF;
+    
+   
+}
+/*.addemp {
+    text-align: center;
+    font-size: 16pt;
+    text-decoration: none;
+    /*font-weight: 700;*/
+    /*background: #4682B4;
+    display: block;
+    height: 40px;*/
+    /*width: 110px;*/
+    /*background-image: linear-gradient(#B0C4DE, #4682B4);*/
+    /*border-radius: 3px;
+    color: #FFFFFF;*/
+/*}*/
+
+     #but1.hover {
+        background: #fff;
+    }
+
+     #but1.active {
+        background: #d0d3d6;
+        background-image: linear-gradient(rgba(0,0,0,.1), rgba(0,0,0,0));
+        box-shadow: inset 0 0 2px rgba(0,0,0,.2), inset 0 2px 5px rgba(0,0,0,.2), 0 1px rgba(255,255,255,.2);
+    }
+th {
+    border-bottom: 3px solid #B9B29F;
+    padding: 5px;
+    text-align: left;
+}
+
+td {
+    padding: 10px;
+}
+
+tr:nth-child(odd) {
+    background: white;
+}
+
+tr:nth-child(even) {
+    background: #C0C0C0;
+}
+#nameemp {
+    padding: 10px;
+    color: black;
+    background: #8FBC8F;
+    font-size: 18px;
+    text-align: left;
+    font-weight: bold;
+}

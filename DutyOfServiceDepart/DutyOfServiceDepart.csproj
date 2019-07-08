@@ -52,6 +52,12 @@
       <HintPath>..\packages\EntityFramework.6.3.0-preview6-19304-03\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -153,10 +159,13 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\IncidentController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\ListHelpersForIndex.cs" />
     <Compile Include="Migrations\201907020521172_InitialCreate.cs" />
     <Compile Include="Migrations\201907020521172_InitialCreate.Designer.cs">
       <DependentUpon>201907020521172_InitialCreate.cs</DependentUpon>
@@ -168,6 +177,22 @@
     <Compile Include="Migrations\201907050425426_111.cs" />
     <Compile Include="Migrations\201907050425426_111.Designer.cs">
       <DependentUpon>201907050425426_111.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907051051046_2.cs" />
+    <Compile Include="Migrations\201907051051046_2.Designer.cs">
+      <DependentUpon>201907051051046_2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907051438574_3.cs" />
+    <Compile Include="Migrations\201907051438574_3.Designer.cs">
+      <DependentUpon>201907051438574_3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907051502025_4.cs" />
+    <Compile Include="Migrations\201907051502025_4.Designer.cs">
+      <DependentUpon>201907051502025_4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907061408151_6.cs" />
+    <Compile Include="Migrations\201907061408151_6.Designer.cs">
+      <DependentUpon>201907061408151_6.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Access.cs" />
@@ -184,6 +209,9 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\PagedList.css" />
+    <Content Include="Content\StyleCreateEmp.css" />
+    <Content Include="Content\StyleGetEmp.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -218,6 +246,9 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Employee\GetEmployee.cshtml" />
+    <Content Include="Views\Employee\CreateEmployee.cshtml" />
+    <Content Include="Views\Incident\GetIncident.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -244,6 +275,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907050425426_111.resx">
       <DependentUpon>201907050425426_111.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907051051046_2.resx">
+      <DependentUpon>201907051051046_2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907051438574_3.resx">
+      <DependentUpon>201907051438574_3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907051502025_4.resx">
+      <DependentUpon>201907051502025_4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907061408151_6.resx">
+      <DependentUpon>201907061408151_6.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using PagedList;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 
 namespace DutyOfServiceDepart.Controllers
 {
@@ -11,32 +14,29 @@ namespace DutyOfServiceDepart.Controllers
 	{
 		// создаем контекст данных
 		DutyContext db = new DutyContext();
-		foreach(DutyList s in db.DutyLists)
+		DateTime Target = DateTime.Now;
+		
+	    
+		public ActionResult Index(DateTime TargetDate = Target)
+		{
+			Calendar calendar;
+			calendar = GetCalendar(TargetDate);
+			return View(calendar);
+
+		}
+		private Calendar GetCalendar(DateTime date)
+		{
+			Calendar calendar = new Calendar();
+			calendar.CurrentDate = date;
+
+
+			foreach (DutyList s in db.DutyLists.Include(x => x.Employee).Where(x => x.DateDuty.Year == calendar.CurrentDate.Year && x.DateDuty.Month == calendar.CurrentDate.Month).ToList())
 			{
-		Dictionary<DateTime, Employee> ex = new Dictionary<DateTime, Employee>();
-	}
-		foreach(KeyValuePair<DateTime, Employee> s in ex)
-
-
-		[HttpGet]
-		public ActionResult Index()
-		{
-			
-			return View(db.Calendars);
-
-		}
-		public ActionResult About()
-		{
-			ViewBag.Message = "Your application description page.";
-
-			return View();
+				calendar.Duties.Add(s.DateDuty.Day, s.Employee);
+				
+			}
+			return calendar;
 		}
 
-		public ActionResult Contact()
-		{
-			ViewBag.Message = "Your contact page.";
-
-			return View();
-		}
 	}
 }
