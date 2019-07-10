@@ -15,9 +15,7 @@ namespace DutyOfServiceDepart.Controllers
         // GET: Employee
         public ViewResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
-			//ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-			//ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
-
+			
 			ViewBag.CurrentSort = sortOrder;
 			if (searchString != null)
 			{
@@ -38,9 +36,9 @@ namespace DutyOfServiceDepart.Controllers
 			int pageSize = 3;
 			int pageNumber = (page ?? 1);
 			return View("GetEmployee", emps.ToPagedList(pageNumber, pageSize));
-			//return View( db.Employees);
-        }
 
+        }
+		//[Authorize(Roles = "Admin")]
 		[HttpGet]
 		public ViewResult CreateEmployee()
 		{

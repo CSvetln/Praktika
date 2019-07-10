@@ -11,10 +11,8 @@ namespace DutyOfServiceDepart.Models
 		[Key]
 		public int EmployeId { get; set; }
 		[Required]
-		public string FamName { get; set; }
-		[Required]
 		public string Name { get; set; }
-		public string SecName { get; set; }
+		
 
 		[MinLength(6)]
 		[MaxLength(100)]

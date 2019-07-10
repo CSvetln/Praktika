@@ -28,18 +28,18 @@
         <table>
 
             <tr id="nameemp">
-                <th><p>Фамилия</p></th>
+              
                 <th><p>Имя</p></th>
-                <th><p>Отчество</p></th>
+                
                 <th><p>Email</p></th>
                 <th><p></p></th>
             </tr>
             @foreach (Employee b in Model)
             {
             <tr>
-                <td><p>@b.FamName</p></td>
+                
                 <td><p>@b.Name</p></td>
-                <td><p>@b.SecName</p></td>
+               
                 <td><p>@b.Email</p></td>
                 <td><p><a href="~/Controllers/Employee/Delete/b.EmployeId">Удалить</a></p></td>
             </tr>

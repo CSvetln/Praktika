@@ -7,7 +7,7 @@
     margin-bottom: 0px;
     margin-top: 0px;
     background: left;
-    background-color: #D3D3D3;
+    background-color: #E6E6FA;
 }
 .tm-blue-bg {
     background-color: #006599;
@@ -26,7 +26,8 @@ a {
     text-decoration: none;
 } 
 .right-column {
-    margin-left:20px;
+    padding-left:20px;
+    margin-left:10px;
     float: right;
     width: 80%;
 }
@@ -99,7 +100,7 @@ a {
 
     .right-column {
         float: right;
-        width: 70%;
+        width: 80%;
     }
 
     .tm-nav-item {

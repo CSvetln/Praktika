@@ -194,6 +194,10 @@
     <Compile Include="Migrations\201907061408151_6.Designer.cs">
       <DependentUpon>201907061408151_6.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201907090821338_Nam.cs" />
+    <Compile Include="Migrations\201907090821338_Nam.Designer.cs">
+      <DependentUpon>201907090821338_Nam.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Access.cs" />
     <Compile Include="Models\Calendar.cs" />
@@ -212,6 +216,7 @@
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\StyleCreateEmp.css" />
     <Content Include="Content\StyleGetEmp.css" />
+    <Content Include="Content\StyleIndex.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -243,8 +248,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Employee\GetEmployee.cshtml" />
     <Content Include="Views\Employee\CreateEmployee.cshtml" />
@@ -287,6 +290,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907061408151_6.resx">
       <DependentUpon>201907061408151_6.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907090821338_Nam.resx">
+      <DependentUpon>201907090821338_Nam.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

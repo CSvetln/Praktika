@@ -14,9 +14,9 @@ namespace DutyOfServiceDepart.Controllers
 	{
 		// создаем контекст данных
 		DutyContext db = new DutyContext();
+		DateTime d = new DateTime(2019, 02, 02);
 		
-		
-	    
+	    [HttpGet]
 		public ActionResult Index(DateTime? Start)
 		{
 			Calendar calendar;
@@ -24,7 +24,11 @@ namespace DutyOfServiceDepart.Controllers
 			
 			calendar = GetCalendar(Target1);
 			return View(calendar);
-
+		}
+		[HttpPost]
+		public string Index(int selectedEmpId)
+		{			
+			return selectedEmpId.ToString();			
 		}
 		private Calendar GetCalendar(DateTime Target)
 		{
