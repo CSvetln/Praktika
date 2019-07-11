@@ -12,10 +12,9 @@ namespace DutyOfServiceDepart.Controllers
     public class EmployeeController : Controller
     {
 		private DutyContext db = new DutyContext();
-        // GET: Employee
+
         public ViewResult Index(string sortOrder, string currentFilter, string searchString, int? page)
-        {
-			
+        {			
 			ViewBag.CurrentSort = sortOrder;
 			if (searchString != null)
 			{
@@ -33,11 +32,11 @@ namespace DutyOfServiceDepart.Controllers
 			{
 				emps = emps.Where(s => s.Name.Contains(searchString));
 			}
-			int pageSize = 3;
+			int pageSize = 5;
 			int pageNumber = (page ?? 1);
 			return View("GetEmployee", emps.ToPagedList(pageNumber, pageSize));
-
         }
+
 		//[Authorize(Roles = "Admin")]
 		[HttpGet]
 		public ViewResult CreateEmployee()
@@ -57,20 +56,16 @@ namespace DutyOfServiceDepart.Controllers
 			}
 			return View(employee);
 		}
-		[HttpGet]
+		
 		public ActionResult Delete(int? id)
 		{
-			if (id == null)
-			{
-				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-			}
-			
 			Employee employee = db.Employees.Find(id);
-			if (employee == null)
+			if (employee != null)
 			{
-				return HttpNotFound();
+				db.Employees.Remove(employee);
+				db.SaveChanges();
 			}
-			return View(employee);
+			return RedirectToAction("GetEmployee");
 		}
 
 	}

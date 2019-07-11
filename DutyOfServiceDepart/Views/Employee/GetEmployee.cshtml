@@ -19,29 +19,29 @@
         @*<p><a id="a1" href="~/Controllers/Employee/CreateEmployee">Добавить сотрудника</a></p>*@
         @using (Html.BeginForm())
         {
-            <p>
-                Поиск по имени:
-                @Html.TextBox("SearchString")
-                <input id="but1" type="submit" value="Поиск" />
-            </p>
+        <div class="search">
+            Поиск по имени:
+            @Html.TextBox("SearchString")
+            <input id="but1" type="submit" value="Поиск" />
+        </div>
         }
-        <table>
+        <table border="1">
+            <thead>
+                <tr id="nameemp" align="center">
 
-            <tr id="nameemp">
-              
-                <th><p>Имя</p></th>
-                
-                <th><p>Email</p></th>
-                <th><p></p></th>
-            </tr>
+                    <th><p>Имя</p></th>
+                    <th><p>Email</p></th>
+                    <th><p></p></th>
+                </tr>
+            </thead>
             @foreach (Employee b in Model)
             {
             <tr>
                 
-                <td><p>@b.Name</p></td>
+                <td align="center"><p>@b.Name</p></td>
                
-                <td><p>@b.Email</p></td>
-                <td><p><a href="~/Controllers/Employee/Delete/b.EmployeId">Удалить</a></p></td>
+                <td align="center"><p>@b.Email</p></td>
+                <td class="remove"><p><a href="~/Controllers/Employee/Delete/b.EmployeId">Удалить</a></p></td>
             </tr>
             }
         </table>

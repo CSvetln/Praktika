@@ -1,0 +1,41 @@
+﻿@model IEnumerable<DutyOfServiceDepart.Models.ExtremIncident>
+@{
+    ViewBag.Title = "Новая авария";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="~/Content/StyleCreateEmp.css">
+<h2>Добавить информацию об аварии</h2>
+<div>
+    <h3>Введите необходимые данные:</h3>
+    <form method="post" action="" class="tm-right-columnt">
+        @*<input type="hidden" value="@ViewBag.EmployeeId" name="BookId" />*@
+        <table class="createemp">
+
+            <tr>
+                <td><p>Дата и время возникновения аварии:</p></td>
+                <td><input type="datetime" name="StartIncident" required /> </td>
+            </tr>
+            <tr>
+                <td><p>Дата и время устранения аварии:</p></td>
+                <td><input type="datetime" name="FinishIncident" required /> </td>
+            </tr>
+            <tr>
+                <td><p>Ответсвенный за устранение</p></td>
+                <td>
+                    @Html.DropDownList("Employee", new SelectList(Model, "EmployeId", "Name"))
+                </td>
+            </tr>
+            <tr>
+                <td><p>Описание аварии:</p></td>
+                <td><input type="text" name="DescIncident" /> </td>
+            </tr>
+            <tr><td><input type="submit" value="Добавить" /> </td><td></td></tr>
+        </table>
+    </form>
+</div>
+
+<div>
+    @Html.ActionLink("Вернуться назад", "Index")
+</div>
+
+

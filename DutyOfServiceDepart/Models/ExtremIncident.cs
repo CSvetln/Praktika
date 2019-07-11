@@ -15,7 +15,8 @@ namespace DutyOfServiceDepart.Models
 		[Required]
 		public DateTime FinishIncident { get; set; } //конец чп
 		[Required]
-		public Employee Employee { get; set; } //кого вызвали туда
+		public Employee Employee { get; set; } = new Employee();
+		//кого вызвали туда
 				
 		public string DecsIncident { get; set; }//описание чп
 		

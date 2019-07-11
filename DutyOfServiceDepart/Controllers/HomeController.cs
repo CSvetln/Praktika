@@ -28,7 +28,7 @@ namespace DutyOfServiceDepart.Controllers
 		[HttpPost]
 		public string Index(int selectedEmpId)
 		{			
-			return selectedEmpId.ToString();			
+			return  selectedEmpId.ToString();			
 		}
 		private Calendar GetCalendar(DateTime Target)
 		{
@@ -43,6 +43,10 @@ namespace DutyOfServiceDepart.Controllers
 			}
 			return calendar;
 		}
-
+		[HttpPost]
+		public string Edit(int selectedEmpId)
+		{
+			return selectedEmpId.ToString();
+		}
 	}
 }

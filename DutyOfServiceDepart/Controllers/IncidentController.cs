@@ -14,36 +14,18 @@ namespace DutyOfServiceDepart.Controllers
         // GET: Incident
         public ActionResult Index(string sortOrder, string currentFilter, DateTime? searchString, int? page)
         {
-			ViewBag.CurrentSort = sortOrder;
-			//if (searchString != null)
-			//{
-			//	page = 1;
-			//}
-			//else
-			//{
-			//	searchString = currentFilter;
-			//}
-			ViewBag.CurrentFilter = searchString;
 			var incs = from s in db.Incidents
 					   select s;
 			incs = incs.OrderBy(s => s.StartIncident);
 
-			//if (!String.IsNullOrEmpty(searchString))
-			//{
-			//	emps = emps.Where(s => s.Name.Contains(searchString));
-			//}
-			List<ExtremIncident> find = new List<ExtremIncident>();
-			if (searchString != null)
-			{
-				foreach (ExtremIncident c in incs)
-				{
-					if (searchString == c.StartIncident)
-						find.Add(c);
-				}
-			}
-			int pageSize = 3;
+			int pageSize = 5;
 			int pageNumber = (page ?? 1);
 			return View("GetIncident", incs.ToPagedList(pageNumber, pageSize));
+		}
+
+		public ViewResult CreateIncident()
+		{
+			return View(db.Employees);
 		}
 
     }

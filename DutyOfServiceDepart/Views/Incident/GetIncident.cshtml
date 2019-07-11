@@ -1,4 +1,5 @@
 ﻿@model PagedList.IPagedList<DutyOfServiceDepart.Models.ExtremIncident>
+
 @using PagedList.Mvc;
 @using DutyOfServiceDepart.Models;
 @{
@@ -6,20 +7,14 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <link rel="stylesheet" href="~/Content/PagedList.css">
+<link rel="stylesheet" href="~/Content/StyleGetEmp.css">
 <div>
 
     <div class="tm-right-columnt">
         <div id="name">Список аварий</div>
         <p class="addemp">@Html.ActionLink("+ Добавить описание аварии", "CreateIncident", "Incident")</p>
         @*<p><a id="a1" href="~/Controllers/Employee/CreateEmployee">Добавить сотрудника</a></p>*@
-        @using (Html.BeginForm())
-        {
-            <p>
-                Поиск по имени:
-                @Html.TextBox("SearchString")
-                <input id="but1" type="submit" value="Поиск" />
-            </p>
-        }
+       
         <table>
 
             <tr id="nameemp">
@@ -33,9 +28,9 @@
                 <tr>
                     <td><p>@b.StartIncident</p></td>
                     <td><p>@b.FinishIncident</p></td>
-                    <td><p>@b.Employee</p></td>
+                    <td><p>@b.Employee.Name</p></td>
                     <td><p>@b.DecsIncident</p></td>
-                    <td><p><a href="~/Controllers/Incident/Delete/b.IncidentId">Удалить</a></p></td>
+                    <td ><p class="remove"><a  href="~/Controllers/Incident/Delete/b.IncidentId">Удалить</a></p></td>
                 </tr>
             }
         </table>

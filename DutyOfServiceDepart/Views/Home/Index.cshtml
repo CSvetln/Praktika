@@ -1,4 +1,5 @@
 ﻿@model Calendar
+
 @{
     ViewBag.Title = "Дежурства";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -12,93 +13,90 @@
     @Html.ActionLink("<<", "Index", new { Start = Model.CurrentDate.AddMonths(-1) })
     @Html.ActionLink(">>", "Index", new { Start = Model.CurrentDate.AddMonths(+1) })
     <div align=center class="tm-right-column">
-        @*<div style="width:220px; border:1px solid #c0c0c0; padding:6px;">*@
+
         <h1> @Model.CurrentDate.ToString("MMMMM")</h1>
-            <table id="calendar" border="1" cellspacing="1" cellpadding="1" align="center">
-                <thead>
+        <table id="calendar" border="1" cellspacing="1" cellpadding="1" align="center">
+            <thead>
+                <tr>
+                    <td>ПН</td>
+                    <td>ВТ</td>
+                    <td>СР</td>
+                    <td>ЧТ</td>
+                    <td>ПТ</td>
+                    <td>СБ</td>
+                    <td>ВС</td>
+                </tr>
+            </thead>
+
+            @{ DutyContext db = new DutyContext();
+                int i = 0;
+                DateTime Start = new DateTime(Model.CurrentDate.Year, Model.CurrentDate.Month, 1);
+                while (Start.DayOfWeek != DayOfWeek.Monday)
+                {
+                    Start = Start.AddDays(-1);
+                }
+                while (true)
+                {
                     <tr>
-                        <td>ПН</td>
-                        <td>ВТ</td>
-                        <td>СР</td>
-                        <td>ЧТ</td>
-                        <td>ПТ</td>
-                        <td>СБ</td>
-                        <td>ВС</td>
-                    </tr>
-                    </thead>
-
-                    @{  DutyContext db = new DutyContext();
-                        int i = 0;
-                        DateTime Start = new DateTime(Model.CurrentDate.Year, Model.CurrentDate.Month, 1);
-                        while (Start.DayOfWeek != DayOfWeek.Monday)
+                        @while (Start.DayOfWeek != DayOfWeek.Sunday)
                         {
-                            Start = Start.AddDays(-1);
-                        }
-                        while (true)
-                        {
-                            <tr>
-                                @while (Start.DayOfWeek != DayOfWeek.Sunday)
+                            <td>
+                                @if (Start.Month == Model.CurrentDate.Month)
                                 {
-                                    <td>
-                                        @if (Start.Month == Model.CurrentDate.Month)
-                                        {
-                                            @Start.Day
-                                            if (Model.Duties.ContainsKey(Start.Day))
-                                            {
-                                                @Model.Duties[Start.Day].Name;
-                                            }
-
-                                            using (Html.BeginForm("Index", "Home", FormMethod.Post))
-                                            {
-                                                <div class="hidden" id="@i">
-                                                    <input type="hidden" value="@Start.Day" name="DateDuty" />
-                                                    @Html.DropDownList("selectedEmpId", new SelectList(db.Employees, "EmployeId", "Name"))
-                                                    <input type="submit" value="Сохранить изменения" />
-                                                </div>
-                                            }
-
-                                            <a href="" onclick="document.getElementById(@i).style.display = 'block'; return false;"><img src="~/Content/edit.png" /></a>
-
-                                        }
-
-                                    </td>
-                                    i++;
-                                    Start = Start.AddDays(1);
-                                }
-                                <td>
-                                    @if (Start.Month == Model.CurrentDate.Month)
+                                    @Start.Day
+                                    if (Model.Duties.ContainsKey(Start.Day))
                                     {
-                                        @Start.Day
-                                        if (Model.Duties.ContainsKey(Start.Day))
-                                        {
-                                            @Model.Duties[Start.Day].Name
-                                        }
-
-                                        using (Html.BeginForm())
-                                        {
-                                            using (Html.BeginForm("Index", "Home", FormMethod.Post))
-                                            {
-                                                <div class="hidden" id="@i">
-                                                    <input type="hidden" value="@Start.Day" name="DateDuty" />
-                                                    @Html.DropDownList("selectedEmpId", new SelectList(db.Employees, "EmployeId", "Name"))
-                                                    <input type="submit" value="Сохранить изменения" />
-                                                </div>
-                                            }
-                                        }
-
-                                        <a href="" onclick="document.getElementById(@i).style.display = 'block'; return false;"><img src="~/Content/edit.png" /></a>
-
+                                        @Model.Duties[Start.Day].Name;
                                     }
-                                </td>
-                            </tr>
+
+                                    using (Html.BeginForm("Edit", "Home", FormMethod.Post))
+                                    {
+                                        <div class="hidden" id="day[@i]">
+                                            <input type="hidden" value="@Start.Day" name="DateDuty" />
+                                            @Html.DropDownList("selectedEmpId", db.Employees.ToList().Select(x => new SelectListItem() { Text = x.Name, Value = x.EmployeId.ToString(), Selected = Model.Duties.ContainsKey(Start.Day) && x.EmployeId == Model.Duties[Start.Day].EmployeId }))
+                                            <input type="submit" value="Сохранить изменения" />
+                                        </div>
+                                    }
+
+                                    <a href="" onclick="document.getElementById('day[@i]').style.display = 'block'; return false;"><img src="~/Content/edit.png" /></a>
+
+                                }
+
+                            </td>
                             i++;
                             Start = Start.AddDays(1);
-                            if (Model.CurrentDate.Month != Start.Month)
-                            { break; }
                         }
-                    }
-                    </table>
-</div>
+                        <td>
+                            @if (Start.Month == Model.CurrentDate.Month)
+                            {
+                                @Start.Day
+                                if (Model.Duties.ContainsKey(Start.Day))
+                                {
+                                    @Model.Duties[Start.Day].Name
+                                }
+                               
+                                    using (Html.BeginForm("Edit", "Home", FormMethod.Post))
+                                    {
+                                        <div class="hidden" id="day[@i]">
+                                            <input type="hidden" value="@Start.Day" name="DateDuty" />
+                                            @Html.DropDownList("selectedEmpId", db.Employees.ToList().Select(x => new SelectListItem() { Text = x.Name, Value = x.EmployeId.ToString(), Selected = Model.Duties.ContainsKey(Start.Day) && x.EmployeId == Model.Duties[Start.Day].EmployeId }))
+                                            <input type="submit" value="Сохранить изменения" />
+                                        </div>
+                                    }
+                                
+                                <a href="" onclick="document.getElementById('day[@i]').style.display = 'block'; return false;"><img src="~/Content/edit.png" /></a>
+
+                            }
+                        </td>
+                    </tr>
+                    i++;
+                    Start = Start.AddDays(1);
+                    if (Model.CurrentDate.Month != Start.Month)
+                    { break; }
+                }
+            }
+        </table>
+    </div>
 </div>
 
 

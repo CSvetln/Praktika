@@ -1,7 +1,7 @@
 ﻿
 
 @{
-    ViewBag.Title = "CreateEmployee";
+    ViewBag.Title = "Новый сотрудник ;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <link rel="stylesheet" href="~/Content/StyleCreateEmp.css">
@@ -10,27 +10,21 @@
 <div>
     <h3>Введите необходимые данные:</h3>
     <form method="post" action="" class="tm-right-columnt">
-        @*<input type="hidden" value="@ViewBag.EmployeeId" name="BookId" />*@
+      
         <table class="createemp">
-            <tr>
-                <td><p>Фамилия: </p></td>
-                <td><input type="text" name="FamName" required/> </td>
-            </tr>
+          
             <tr>
                 <td><p>Имя: </p></td>
                 <td><input type="text" name="Name" required/> </td>
             </tr>
-            <tr>
-                <td><p>Отчество: </p></td>
-                <td><input type="text" name="SecName" /> </td>
-            </tr>
+          
             <tr>
                 <td><p>E-mail:</p></td>
                 <td>
                     <input type="text" name="Email"  required/>
                 </td>
             </tr>
-            <tr><td><input type="submit" value="Сохранить" /> </td><td></td></tr>
+            <tr><td><input type="submit" value="Добавить" /> </td><td></td></tr>
         </table>
     </form>
 </div>

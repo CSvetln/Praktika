@@ -32,6 +32,7 @@ namespace DutyOfServiceDepart.Models
 			db.Employees.Add(new Employee() { EmployeId = 21, Name = "Иванов Иван1", Email = "cveta2500@mail.ru", Login = "ffffff" });
 			db.Employees.Add(new Employee() { EmployeId = 22, Name = "Иванов Иван2", Email = "cveta2500@mail.ru", Login = "ffffff" });
 			db.Employees.Add(new Employee() { EmployeId = 23, Name = "Иванов Иван3", Email = "cveta2500@mail.ru", Login = "ffffff" });
+			db.Incidents.Add(new ExtremIncident() { StartIncident = DateTime.Now, FinishIncident = DateTime.Now.AddDays(1), Employee = new Employee() { EmployeId = 11, Name = "Иванов Иван", Email = "cveta2500@mail.ru", Login = "ffffff" }, DecsIncident = "", IncidentId = 555 });
 			base.Seed(db);
 		}
 	}
