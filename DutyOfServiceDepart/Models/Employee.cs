@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace DutyOfServiceDepart.Models
 {
 	public class Employee
 	{
+	
 		[Key]
 		public int EmployeId { get; set; }
 		[Required]
-		public string Name { get; set; }
+		public string Name { get; set; } 
 		
 
 		[MinLength(6)]

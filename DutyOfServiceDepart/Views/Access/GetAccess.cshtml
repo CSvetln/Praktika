@@ -1,0 +1,54 @@
+﻿@model PagedList.IPagedList<DutyOfServiceDepart.Models.Access>
+
+@using PagedList.Mvc;
+@using DutyOfServiceDepart.Models;
+@{
+    ViewBag.Title = "Права доступа";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Авторизованные пользователи</h2>
+<link rel="stylesheet" href="~/Content/PagedList.css">
+<link rel="stylesheet" href="~/Content/StyleGet.css">
+<div>
+
+    <div class="tm-right-columnt">
+  
+        <p class="addemp">@Html.ActionLink("+ Добавить пользователя", "Create", "Access")</p>
+
+        <table>
+
+            <tr class="nametab">
+                <th><p>Логин</p></th>
+                <th><p>Уровень доступа</p></th>
+                <th><p></p></th>
+            </tr>
+            @foreach (Access b in Model)
+            {
+            <tr>
+
+                <td><p>@b.Login</p></td>
+                @if (b.AllowedEdit)
+                {
+                    <td><p>Чтение и запись</p></td>
+                }
+                else
+                {
+                    <td><p>Чтение</p></td>
+                }
+          
+                <td><p><a class="edrem" href="/Access/Delete/@b.AccessId">Удалить</a></p></td>
+            </tr>
+
+            }
+        </table>
+        <br />
+
+    </div>
+</div>
+<br />
+    Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("Index",
+        new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+

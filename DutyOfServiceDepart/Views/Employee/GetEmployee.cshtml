@@ -7,50 +7,54 @@
 
     ViewBag.Title = "Сотрудники";
     Layout = "~/Views/Shared/_Layout.cshtml";
-
+    
 }
-<link rel="stylesheet" href="~/Content/StyleGetEmp.css">
+
+<link rel="stylesheet" href="~/Content/StyleGet.css">
 <link rel="stylesheet" href="~/Content/PagedList.css">
 <div>
 
     <div class="tm-right-columnt">
-        <div id="name">Список сотрудников</div>
-        <p class="addemp">@Html.ActionLink("+ Добавить сотрудника", "CreateEmployee", "Employee")</p>
-        @*<p><a id="a1" href="~/Controllers/Employee/CreateEmployee">Добавить сотрудника</a></p>*@
+        <h2>Список сотрудников</h2>
+        <p class="addemp">@Html.ActionLink("+ Добавить сотрудника", "Create", "Employee")</p>
+
         @using (Html.BeginForm())
         {
-        <div class="search">
-            Поиск по имени:
-            @Html.TextBox("SearchString")
-            <input id="but1" type="submit" value="Поиск" />
-        </div>
+            <div class="search">
+                Поиск по имени:
+                @Html.TextBox("SearchString")
+                <input class="but" id="but1" type="submit" value="Поиск" />
+            </div>
         }
-        <table border="1">
-            <thead>
-                <tr id="nameemp" align="center">
 
-                    <th><p>Имя</p></th>
-                    <th><p>Email</p></th>
-                    <th><p></p></th>
-                </tr>
-            </thead>
+        <table>
+            <tr class="nametab">
+                
+                <td><p>Имя</p></td>
+                <td><p>Email</p></td>
+                <td><p></p></td>
+                
+            </tr>
+
             @foreach (Employee b in Model)
             {
-            <tr>
-                
-                <td align="center"><p>@b.Name</p></td>
-               
-                <td align="center"><p>@b.Email</p></td>
-                <td class="remove"><p><a href="~/Controllers/Employee/Delete/b.EmployeId">Удалить</a></p></td>
-            </tr>
+                <tr>
+                    
+                    <td><p>@b.Name</p></td>
+                    <td><p>@b.Email</p></td>                  
+                    <td><p><a class="edrem" href="/Employee/Delete/@b.EmployeId">Удалить</a></p></td>
+                </tr>
+
             }
+          
         </table>
+        
         <br />
 
     </div>
 </div>
-    <br />
-    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+<br />
+    Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount
 
     @Html.PagedListPager(Model, page => Url.Action("Index",
         new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

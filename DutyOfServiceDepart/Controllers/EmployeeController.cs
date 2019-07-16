@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using DutyOfServiceDepart.Filters;
 using DutyOfServiceDepart.Models;
 using PagedList;
 
@@ -37,16 +40,15 @@ namespace DutyOfServiceDepart.Controllers
 			return View("GetEmployee", emps.ToPagedList(pageNumber, pageSize));
         }
 
-		//[Authorize(Roles = "Admin")]
+		[MyAuthorize]
 		[HttpGet]
-		public ViewResult CreateEmployee()
+		public ViewResult Create()
 		{
 			return View("CreateEmployee");
 		}
-
+		[MyAuthorize]
 		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public ActionResult Create(Employee employee)
+		public ActionResult Create([Bind(Include = "Name, Email, Login")]Employee employee)
 		{
 			if (ModelState.IsValid)
 			{
@@ -54,10 +56,10 @@ namespace DutyOfServiceDepart.Controllers
 				db.SaveChanges();
 				return RedirectToAction("Index");
 			}
-			return View(employee);
+			return View("CreateEmployee");
 		}
-		
-		public ActionResult Delete(int? id)
+		[MyAuthorize]
+		public ActionResult Delete(int id)
 		{
 			Employee employee = db.Employees.Find(id);
 			if (employee != null)
@@ -65,9 +67,9 @@ namespace DutyOfServiceDepart.Controllers
 				db.Employees.Remove(employee);
 				db.SaveChanges();
 			}
-			return RedirectToAction("GetEmployee");
+			return RedirectToAction("Index");
 		}
-
+		
 	}
 
 	

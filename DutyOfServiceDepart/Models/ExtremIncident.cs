@@ -11,14 +11,18 @@ namespace DutyOfServiceDepart.Models
 		[Key]
 		public int IncidentId { get; set; }
 		[Required]
-		public DateTime StartIncident { get; set; } //начало чп
+		public DateTime DateIncident { get; set; } //дата чп
+
+
 		[Required]
-		public DateTime FinishIncident { get; set; } //конец чп
-		[Required]
-		public Employee Employee { get; set; } = new Employee();
+		public Employee Employee { get; set; }
 		//кого вызвали туда
-				
+
 		public string DecsIncident { get; set; }//описание чп
-		
+
+		public ExtremIncident()
+		{
+			Employee = new Employee();
+		}
 	}
 }

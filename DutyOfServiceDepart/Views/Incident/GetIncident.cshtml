@@ -5,33 +5,35 @@
 @{
     ViewBag.Title = "Аварии";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
 }
 <link rel="stylesheet" href="~/Content/PagedList.css">
-<link rel="stylesheet" href="~/Content/StyleGetEmp.css">
+<link rel="stylesheet" href="~/Content/StyleGet.css">
 <div>
 
     <div class="tm-right-columnt">
-        <div id="name">Список аварий</div>
-        <p class="addemp">@Html.ActionLink("+ Добавить описание аварии", "CreateIncident", "Incident")</p>
-        @*<p><a id="a1" href="~/Controllers/Employee/CreateEmployee">Добавить сотрудника</a></p>*@
-       
+        <h2>Список аварий</h2>
+        <p class="addemp">@Html.ActionLink("+ Добавить описание аварии", "Create", "Incident")</p>
+     
         <table>
 
-            <tr id="nameemp">
-                <th><p>Дата начала</p></th>
-                <th><p>Дата окончания</p></th>
+            <tr class="nametab">
+                
+                <th><p>Дата аварии</p></th>
                 <th><p>Ответственный за устранение</p></th>
                 <th><p>Описание аварии</p></th>
+                <th><p></p></th>
             </tr>
             @foreach (ExtremIncident b in Model)
             {
                 <tr>
-                    <td><p>@b.StartIncident</p></td>
-                    <td><p>@b.FinishIncident</p></td>
-                    <td><p>@b.Employee.Name</p></td>
+                    
+                    <td><p>@b.DateIncident.ToLongDateString()</p></td>
+                    <td><p>@b.Employee.Name.ToString()</p></td>
                     <td><p>@b.DecsIncident</p></td>
-                    <td ><p class="remove"><a  href="~/Controllers/Incident/Delete/b.IncidentId">Удалить</a></p></td>
+                    <td><p><a class="edrem" href="/Incident/Delete/@b.IncidentId">Удалить</a></p></td>
                 </tr>
+                
             }
         </table>
         <br />
@@ -39,7 +41,7 @@
     </div>
 </div>
 <br />
-    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount
 
     @Html.PagedListPager(Model, page => Url.Action("Index",
         new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

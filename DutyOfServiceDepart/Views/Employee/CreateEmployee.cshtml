@@ -1,34 +1,38 @@
 ﻿
 
 @{
-    ViewBag.Title = "Новый сотрудник ;
+    ViewBag.Title = "Новый сотрудник";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<link rel="stylesheet" href="~/Content/StyleCreateEmp.css">
+<link rel="stylesheet" href="~/Content/StyleCreate.css">
 <h2>Добавление нового сотрудника</h2>
+
 
 <div>
     <h3>Введите необходимые данные:</h3>
-    <form method="post" action="" class="tm-right-columnt">
-      
-        <table class="createemp">
-          
+    @using (Html.BeginForm("Create", "Employee", FormMethod.Post))
+    {
+        @Html.ValidationSummary(true)
+        <table>
             <tr>
                 <td><p>Имя: </p></td>
-                <td><input type="text" name="Name" required/> </td>
+                <td><input type="text" name="Name" required /> </td>
             </tr>
-          
+
             <tr>
                 <td><p>E-mail:</p></td>
                 <td>
-                    <input type="text" name="Email"  required/>
+                    <input type="text" name="Email" required />
                 </td>
             </tr>
-            <tr><td><input type="submit" value="Добавить" /> </td><td></td></tr>
+            <tr>
+                <td><p>Логин:</p></td>
+                <td>
+                    <input type="text" name="Login" required />
+                </td>
+            </tr>
         </table>
-    </form>
+        <input class="but" id="but1" type="submit" value="Добавить" />
+    }
 </div>
 
-<div>
-    @Html.ActionLink("Вернуться назад", "Index")
-</div>

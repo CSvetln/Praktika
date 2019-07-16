@@ -1,0 +1,35 @@
+﻿@model System.Data.Entity.DbSet<DutyOfServiceDepart.Models.Employee>
+@{
+    ViewBag.Title = "Новый пользователь";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="~/Content/StyleCreate.css">
+<h2>Добавление нового пользователя</h2>
+
+
+<div>
+    <h3>Введите необходимые данные:</h3>
+    @using (Html.BeginForm("Create", "Access", FormMethod.Post))
+    {
+        <table>
+            <tr>
+                <td><p>Login: </p></td>
+                <td> @Html.DropDownList("Login", new SelectList(Model, "Login", "Login")) </td>
+            </tr>
+
+            <tr>
+                <td><p>Уровень доступа:</p></td>
+                <td>
+                    <p>
+                        <input type="radio" value="false" checked name="AllowedEdit" />чтение
+                    </p>
+                    <p>
+                        <input type="radio" value="true" name="AllowedEdit" />чтение и запись
+                    </p>
+                </td>
+            </tr>
+            
+        </table>
+        <input class="but" id="but1" type="submit" value="Добавить" />
+    }
+</div>
