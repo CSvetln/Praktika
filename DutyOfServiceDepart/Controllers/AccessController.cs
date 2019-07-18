@@ -28,7 +28,7 @@ namespace DutyOfServiceDepart.Controllers
 		[HttpGet]
 		public ViewResult Create()
 		{
-			return View("CreateAccess", db.Employees);
+			return View("CreateAccess");
 		}
 		[MyAuthorize]
 		[HttpPost]
@@ -47,7 +47,7 @@ namespace DutyOfServiceDepart.Controllers
 		public ActionResult Delete(int id)
 		{
 			Access access = db.Accesses.Find(id);
-			if (access != null)
+			if (ModelState.IsValid)
 			{
 				db.Accesses.Remove(access);
 				db.SaveChanges();

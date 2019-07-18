@@ -1,4 +1,6 @@
-﻿@model System.Data.Entity.DbSet<DutyOfServiceDepart.Models.Employee>
+﻿
+@model DutyOfServiceDepart.Models.ExtremIncident
+@using DutyOfServiceDepart.Models;
 @{
     ViewBag.Title = "Новая авария";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -9,29 +11,30 @@
     <h3>Введите необходимые данные:</h3>
     @using (Html.BeginForm("Create", "Incident", FormMethod.Post))
     {
-
        
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        DutyContext db = new DutyContext();
         <table>
             <tr>
-                <td><p>Дата возникновения аварии:</p></td>
+                <td><p>Дата аварии:</p></td>
                 <td>
-                    <input type="date" name="StartIncident" required />
+                    <input type="date" name="DateIncident" required />
 
                 </td>
+                <td> @Html.ValidationMessageFor(model => model.DateIncident, "", new { @class = "text-danger" })</td>
             </tr>
-            <tr>
-                <td><p>Дата устранения аварии:</p></td>
-                <td><input type="date" name="FinishIncident" required /> </td>
-            </tr>
+
             <tr>
                 <td><p>Ответсвенный за устранение:</p></td>
                 <td>
-                    @Html.DropDownList("EmployeId", new SelectList(Model, "EmployeId", "Name"))
+                    @Html.DropDownList("EmployeeId", new SelectList(db.Employees, "EmployeId", "Name"))
                 </td>
+                <td> @Html.ValidationMessageFor(model => model.EmployeeId, "", new { @class = "text-danger" })</td>
             </tr>
             <tr>
                 <td><p>Описание аварии:</p></td>
                 <td><textarea name="DescIncident">Введите описание</textarea></td>
+                <td> @Html.ValidationMessageFor(model => model.DecsIncident, "", new { @class = "text-danger" })</td>
             </tr>
 
         </table>

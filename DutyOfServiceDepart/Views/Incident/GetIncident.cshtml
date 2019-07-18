@@ -26,13 +26,17 @@
             </tr>
             @foreach (ExtremIncident b in Model)
             {
-                <tr>
-                    
-                    <td><p>@b.DateIncident.ToLongDateString()</p></td>
-                    <td><p>@b.Employee.Name.ToString()</p></td>
-                    <td><p>@b.DecsIncident</p></td>
-                    <td><p><a class="edrem" href="/Incident/Delete/@b.IncidentId">Удалить</a></p></td>
-                </tr>
+               
+            <tr>
+
+                <td><p>@b.DateIncident.ToLongDateString()</p></td>
+       
+            <td><p>@b.Employee.Name.ToString()</p></td>
+      
+                <td><p>@b.DecsIncident</p></td>
+
+                <td><p><a class="edrem" href="/Incident/Delete/@b.IncidentId">Удалить</a></p></td>
+            </tr>
                 
             }
         </table>

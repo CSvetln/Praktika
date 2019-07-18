@@ -39,13 +39,14 @@ namespace DutyOfServiceDepart.Controllers
 			int pageNumber = (page ?? 1);
 			return View("GetEmployee", emps.ToPagedList(pageNumber, pageSize));
         }
-
+		
 		[MyAuthorize]
 		[HttpGet]
 		public ViewResult Create()
 		{
 			return View("CreateEmployee");
 		}
+		//[ValidateAntiForgeryToken]
 		[MyAuthorize]
 		[HttpPost]
 		public ActionResult Create([Bind(Include = "Name, Email, Login")]Employee employee)
@@ -62,7 +63,7 @@ namespace DutyOfServiceDepart.Controllers
 		public ActionResult Delete(int id)
 		{
 			Employee employee = db.Employees.Find(id);
-			if (employee != null)
+			if (ModelState.IsValid)
 			{
 				db.Employees.Remove(employee);
 				db.SaveChanges();

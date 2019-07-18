@@ -10,13 +10,13 @@ table {
     font-weight: bold;
     margin-bottom:30px;
 }
-td {
-    padding: 5px 150px 5px 0px;
-}
+/*td {
+    padding: 5px 70px 5px 0px;
+}*/
     table input {
-        width: 200px;
+        width: 150px;
         height: 30px;
-        font-size: 16pt;
+        font-size: 14pt;
         font-family: 'Times New Roman', Times, serif;
  
     }

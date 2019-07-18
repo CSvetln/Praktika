@@ -23,13 +23,13 @@ namespace DutyOfServiceDepart.Models
 			db.DutyLists.Add(new DutyList() { DateDuty = new DateTime(2019, 07, 07), Employee = e, DecrDuty = " " });
 			db.DutyLists.Add(new DutyList() { DateDuty = new DateTime(2019, 08, 07), Employee = e, DecrDuty = " " });
 
-			db.Incidents.Add(new ExtremIncident() { DateIncident = new DateTime(2019, 01, 01), Employee = e, DecsIncident = ""});
-			db.Incidents.Add(new ExtremIncident() { DateIncident = new DateTime(2019, 01, 02), Employee = e, DecsIncident = "" });
-			db.Incidents.Add(new ExtremIncident() { DateIncident = new DateTime(2019, 01, 03), Employee = e, DecsIncident = "" });
+			db.Incidents.Add(new ExtremIncident() { DateIncident = new DateTime(2019, 01, 01), Employee = e, DecsIncident = "", EmployeeId=e.EmployeId});
+			db.Incidents.Add(new ExtremIncident() { DateIncident = new DateTime(2019, 01, 02), Employee = e, DecsIncident = "", EmployeeId = e.EmployeId });
+			db.Incidents.Add(new ExtremIncident() { DateIncident = new DateTime(2019, 01, 03), Employee = e, DecsIncident = "", EmployeeId = e.EmployeId });
 
 			db.Accesses.Add(new Access() { Login = "Petr4896", AllowedEdit = false });
 			db.Accesses.Add(new Access() { Login = "Ivan4896", AllowedEdit = true });
-			//db.Accesses.Add(new Access() { Login = "Sveta-ПК\\Sveta", AllowedEdit = true });
+			
 			db.Accesses.Add(new Access() { Login = "Sveta-ПК\\Sveta", AllowedEdit = true });
 			base.Seed(db);
 		}

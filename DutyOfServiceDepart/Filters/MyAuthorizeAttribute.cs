@@ -15,8 +15,12 @@ namespace DutyOfServiceDepart.Filters
 		public override void OnAuthorization(AuthorizationContext filterContext)
 		{
 			string Login = HttpContext.Current.User.Identity.Name;
-		
-			Access access = db.Accesses.Where(x => x.Login == Login).First();
+
+			Access access;
+			if (db.Accesses.Count() > 0)
+				access = db.Accesses.Where(x => x.Login == Login).First();
+			else
+				access = null;
 
 			if (access == null)
 			{
