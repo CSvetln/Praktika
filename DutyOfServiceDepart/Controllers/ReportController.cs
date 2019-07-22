@@ -12,19 +12,25 @@ namespace DutyOfServiceDepart.Controllers
 {
     public class ReportController : Controller
     {
-		DutyContext db = new DutyContext();
+		
         [HttpGet]
         public ActionResult CreateReport()
         {
-            return View(db.Employees);
+			using (DutyContext db = new DutyContext())
+			{
+				return View(db.Employees);
+			}
         }
 		[HttpPost]
 		public FileResult CreateReport(string EmployeeName, DateTime Date)
 		{
 			int d = 0;
-			foreach (DutyList s in db.DutyLists.Where(x => x.Employee.Name == EmployeeName && x.DateDuty.Year == Date.Year && x.DateDuty.Month == Date.Month).ToList())
+			using (DutyContext db = new DutyContext())
 			{
-				d++;
+				foreach (DutyList s in db.DutyLists.Where(x => x.Employee.Name == EmployeeName && x.DateDuty.Year == Date.Year && x.DateDuty.Month == Date.Month).ToList())
+				{
+					d++;
+				}
 			}
 			var workbook = new XLWorkbook();
 			var worksheet = workbook.Worksheets.Add("Лист1");

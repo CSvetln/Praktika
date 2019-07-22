@@ -1,4 +1,4 @@
-namespace DutyOfServiceDepart.Migrations
+﻿namespace DutyOfServiceDepart.Migrations
 {
     using System;
     using System.Data.Entity;
@@ -10,7 +10,6 @@ namespace DutyOfServiceDepart.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            ContextKey = "DutyOfServiceDepart.Models.DutyContext";
         }
 
         protected override void Seed(DutyOfServiceDepart.Models.DutyContext context)

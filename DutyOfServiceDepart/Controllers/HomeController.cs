@@ -13,10 +13,7 @@ namespace DutyOfServiceDepart.Controllers
 {
 	public class HomeController : Controller
 	{
-		// создаем контекст данных
-		DutyContext db = new DutyContext();
-		IMail sending = new SendingMailRu();
-
+	
 		[HttpGet]
 		public ActionResult Index(DateTime? Start)
 		{
@@ -29,45 +26,50 @@ namespace DutyOfServiceDepart.Controllers
 
 		private Calendar GetCalendar(DateTime Target)
 		{
-			Calendar calendar = new Calendar();
-			calendar.CurrentDate = Target;
-
-			foreach (DutyList s in db.DutyLists.Include(x => x.Employee).Where(x => x.DateDuty.Year == calendar.CurrentDate.Year && x.DateDuty.Month == calendar.CurrentDate.Month).ToList())
+			using (DutyContext db = new DutyContext())
 			{
-				calendar.Duties.Add(s.DateDuty.Day, s.Employee);
+				Calendar calendar = new Calendar();
+				calendar.CurrentDate = Target;
 
+				foreach (DutyList s in db.DutyLists.Include(x => x.Employee).Where(x => x.DateDuty.Year == calendar.CurrentDate.Year && x.DateDuty.Month == calendar.CurrentDate.Month).ToList())
+				{
+					calendar.Duties.Add(s.DateDuty.Day, s.Employee);
+
+				}
+				return calendar;
 			}
-			return calendar;
 		}
 		[MyAuthorize]
 		[HttpPost]
 		public ActionResult Edit(int selectedEmpId, DateTime DateEdit)
 		{
-
-			Employee NewEmployee = db.Employees.Find(selectedEmpId);
-			List<DutyList> dutyList = db.DutyLists.Where(x => x.DateDuty == DateEdit).ToList();
-			if (dutyList.Count != 0)
+			using (DutyContext db = new DutyContext())
 			{
-				foreach (DutyList s in dutyList)
+				Employee NewEmployee = db.Employees.Find(selectedEmpId);
+				List<DutyList> dutyList = db.DutyLists.Where(x => x.DateDuty == DateEdit).ToList();
+				if (dutyList.Count != 0)
 				{
-					db.Entry(s).State = EntityState.Modified;
-					s.Employee = NewEmployee;
+					foreach (DutyList s in dutyList)
+					{
+						db.Entry(s).State = EntityState.Modified;
+						s.Employee = NewEmployee;
+					}
 				}
+				else
+				{
+					DutyList NewDutyList = new DutyList() { DateDuty = DateEdit, Employee = NewEmployee, DecrDuty = String.Empty };
+					db.DutyLists.Add(NewDutyList);
+				}
+				db.SaveChanges();
+				string File = TimeTable(DateEdit);
+				IMail sending = new SendingMailRu();				
+				sending.SendMail(NewEmployee.Email, File, "Изменения в графике дежурств", "Изучите новый график");				
+				return RedirectToAction("Index");
 			}
-			else
-			{
-				DutyList NewDutyList = new DutyList() { DateDuty = DateEdit, Employee = NewEmployee, DecrDuty = String.Empty };
-				db.DutyLists.Add(NewDutyList);
-			}			
-			db.SaveChanges();
-			string File = TimeTable(DateEdit);
-			sending.SendMail(NewEmployee.Email, File, "Изменения в графике дежурств", "Изучите новый график");
-			return RedirectToAction("Index");
 		}
 		private string TimeTable(DateTime CurDate)
-		{
+		{			
 			string path = Server.MapPath("~/Files/График дежурств.xlsx");
-
 			var workbook = new XLWorkbook();
 			var worksheet = workbook.Worksheets.Add("График");
 			worksheet.Range("A1:E1").Row(1).Merge();
@@ -76,10 +78,12 @@ namespace DutyOfServiceDepart.Controllers
 
 			Calendar calendar = new Calendar();
 			calendar.CurrentDate = CurDate;
-
-			foreach (DutyList s in db.DutyLists.Include(x => x.Employee).Where(x => x.DateDuty.Year == calendar.CurrentDate.Year && x.DateDuty.Month == calendar.CurrentDate.Month).ToList())
+			using (DutyContext db = new DutyContext())
 			{
-				calendar.Duties.Add(s.DateDuty.Day, s.Employee);
+				foreach (DutyList s in db.DutyLists.Include(x => x.Employee).Where(x => x.DateDuty.Year == calendar.CurrentDate.Year && x.DateDuty.Month == calendar.CurrentDate.Month).ToList())
+				{
+						calendar.Duties.Add(s.DateDuty.Day, s.Employee);
+				}
 			}
 			worksheet.Cell(2, 1).Value = "Число";
 			worksheet.Cell(2, 1).Style.Font.Bold = true;
@@ -87,7 +91,7 @@ namespace DutyOfServiceDepart.Controllers
 			worksheet.Cell(2, 2).Style.Font.Bold = true;
 			int i = 3;
 			while (true)
-			{
+		    {
 				worksheet.Cell(i, 1).Value = Start.Day.ToString();
 				if (calendar.Duties.ContainsKey(Start.Day))
 				{
@@ -102,21 +106,24 @@ namespace DutyOfServiceDepart.Controllers
 				if (calendar.CurrentDate.Month != Start.Month)
 				{ break; }
 			}
-
 			workbook.SaveAs(path);
-			return path;
+			return path;			
 		}
+
 		[MyAuthorize]
 		public ViewResult SendAll(DateTime CurDate)
 		{
-			
-			string File = TimeTable(CurDate);
-			foreach (Employee e in db.Employees)
+			using (DutyContext db = new DutyContext())
 			{
-				sending.SendMail(e.Email, File, "График дежурств", "Изучите график дежурств на текущий месяц");
+				string File = TimeTable(CurDate);
+				IMail sending = new SendingMailRu();
+				foreach (Employee e in db.Employees)
+				{
+					sending.SendMail(e.Email, File, "График дежурств", "Изучите график дежурств на текущий месяц");
+				}
+
+				return View();
 			}
-						
-			return View();
 		}
 	}
 }

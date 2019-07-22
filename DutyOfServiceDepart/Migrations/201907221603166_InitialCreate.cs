@@ -8,12 +8,21 @@
         public override void Up()
         {
             CreateTable(
+                "dbo.Accesses",
+                c => new
+                    {
+                        AccessId = c.Int(nullable: false, identity: true),
+                        Login = c.String(),
+                        AllowedEdit = c.Boolean(nullable: false),
+                    })
+                .PrimaryKey(t => t.AccessId);
+            
+            CreateTable(
                 "dbo.DutyLists",
                 c => new
                     {
                         DutyId = c.Int(nullable: false, identity: true),
-                        StartDuty = c.DateTime(nullable: false),
-                        FinishDuty = c.DateTime(nullable: false),
+                        DateDuty = c.DateTime(nullable: false),
                         DecrDuty = c.String(),
                         Employee_EmployeId = c.Int(nullable: false),
                     })
@@ -26,11 +35,9 @@
                 c => new
                     {
                         EmployeId = c.Int(nullable: false, identity: true),
-                        FamName = c.String(nullable: false),
                         Name = c.String(nullable: false),
-                        SecName = c.String(),
                         Email = c.String(nullable: false, maxLength: 100),
-                        login = c.String(nullable: false, maxLength: 30),
+                        Login = c.String(nullable: false, maxLength: 100),
                     })
                 .PrimaryKey(t => t.EmployeId);
             
@@ -39,13 +46,13 @@
                 c => new
                     {
                         IncidentId = c.Int(nullable: false, identity: true),
-                        StartIncident = c.DateTime(nullable: false),
-                        FinishIncident = c.DateTime(nullable: false),
-                        DecsIncedent = c.String(),
-                        Employee_EmployeId = c.Int(nullable: false),
+                        DateIncident = c.DateTime(nullable: false),
+                        EmployeeId = c.Int(nullable: false),
+                        DecsIncident = c.String(),
+                        Employee_EmployeId = c.Int(),
                     })
                 .PrimaryKey(t => t.IncidentId)
-                .ForeignKey("dbo.Employees", t => t.Employee_EmployeId, cascadeDelete: true)
+                .ForeignKey("dbo.Employees", t => t.Employee_EmployeId)
                 .Index(t => t.Employee_EmployeId);
             
         }
@@ -59,6 +66,7 @@
             DropTable("dbo.ExtremIncidents");
             DropTable("dbo.Employees");
             DropTable("dbo.DutyLists");
+            DropTable("dbo.Accesses");
         }
     }
 }

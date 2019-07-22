@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Data.Entity.Validation;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using System.Web.Mvc;
 using DutyOfServiceDepart.Filters;
 using DutyOfServiceDepart.Models;
@@ -15,16 +9,16 @@ namespace DutyOfServiceDepart.Controllers
     public class IncidentController : Controller
     {
 		DutyContext db = new DutyContext();
-        // GET: Incident
-        public ActionResult Index(int? page)
-        {
+		// GET: Incident
+		public ActionResult Index(int? page)
+        {			
 			var incs = from s in db.Incidents
-					   select s;
+						   select s;
 			incs = incs.OrderBy(s => s.DateIncident);
-		
+
 			int pageSize = 5;
 			int pageNumber = (page ?? 1);
-			return View("GetIncident", incs.ToPagedList(pageNumber, pageSize));
+			return View("GetIncident", incs.ToPagedList(pageNumber, pageSize));		
 		}
 
 		[MyAuthorize]
@@ -34,7 +28,7 @@ namespace DutyOfServiceDepart.Controllers
 			if (ModelState.IsValid)
 			{
 				db.Incidents.Remove(incident);
-				db.SaveChanges();
+					db.SaveChanges();
 			}
 			return RedirectToAction("Index");
 		}
@@ -59,23 +53,17 @@ namespace DutyOfServiceDepart.Controllers
 				return RedirectToAction("Index");
 			}
 			return View("CreateIncident");
-
-			//catch (DbEntityValidationException ex)
-			//{
-			//	foreach (DbEntityValidationResult validationError in ex.EntityValidationErrors)
-			//	{
-			//		Response.Write("Object: " + validationError.Entry.Entity.ToString());
-			//		Response.Write("");
-
-			//		foreach (DbValidationError err in validationError.ValidationErrors)
-			//		{
-			//			Response.Write(err.ErrorMessage + "");
-
-			//		}
-			//	}
-			//}
-
+		}
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing)
+			{
+				db.Dispose();
+			}
+			base.Dispose(disposing);
 		}
 
 	}
+
 }
+
