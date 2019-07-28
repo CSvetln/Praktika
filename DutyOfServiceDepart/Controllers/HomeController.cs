@@ -7,13 +7,15 @@ using System.Data.Entity;
 using DutyOfServiceDepart.Filters;
 using DutyOfServiceDepart.Mail;
 using ClosedXML.Excel;
-
+using System.IO;
 
 namespace DutyOfServiceDepart.Controllers
 {
 	public class HomeController : Controller
 	{
-	
+		DutyContext db = new DutyContext();
+
+		[Authorize]
 		[HttpGet]
 		public ActionResult Index(DateTime? Start)
 		{
@@ -21,6 +23,9 @@ namespace DutyOfServiceDepart.Controllers
 			DateTime Target1 = Start.HasValue ? Start.Value : DateTime.Now.Date;
 
 			calendar = GetCalendar(Target1);
+			
+			SelectList selectLogin = new SelectList(db.Employees, "EmployeId", "Name");
+			ViewBag.Emp = selectLogin;
 			return View(calendar);
 		}
 
@@ -62,53 +67,84 @@ namespace DutyOfServiceDepart.Controllers
 				}
 				db.SaveChanges();
 				string File = TimeTable(DateEdit);
-				IMail sending = new SendingMailRu();				
-				sending.SendMail(NewEmployee.Email, File, "Изменения в графике дежурств", "Изучите новый график");				
+				IMail sending = new SendingMailRu();
+				
+				sending.SendMail(NewEmployee.Email, File, "Изменения в графике дежурств", "Изучите новый график");		
+				
 				return RedirectToAction("Index");
 			}
 		}
 		private string TimeTable(DateTime CurDate)
-		{			
+		{
 			string path = Server.MapPath("~/Files/График дежурств.xlsx");
-			var workbook = new XLWorkbook();
-			var worksheet = workbook.Worksheets.Add("График");
-			worksheet.Range("A1:E1").Row(1).Merge();
-			DateTime Start = new DateTime(CurDate.Year, CurDate.Month, 1);
-			worksheet.Cell("A" + 1).Value = "График дежурств на " + Start.ToLongDateString() + "-" + Start.AddMonths(1).AddDays(-1).ToLongDateString();
-
-			Calendar calendar = new Calendar();
-			calendar.CurrentDate = CurDate;
-			using (DutyContext db = new DutyContext())
+			FileStream fs;
+			using (fs = new FileStream(path, FileMode.OpenOrCreate, FileAccess.ReadWrite))
 			{
-				foreach (DutyList s in db.DutyLists.Include(x => x.Employee).Where(x => x.DateDuty.Year == calendar.CurrentDate.Year && x.DateDuty.Month == calendar.CurrentDate.Month).ToList())
+				var workbook = new XLWorkbook();
+				var worksheet = workbook.Worksheets.Add("График");
+				worksheet.Range("A1:E1").Row(1).Merge();
+				DateTime Start = new DateTime(CurDate.Year, CurDate.Month, 1);
+				worksheet.Cell("A" + 1).Value = "График дежурств на " + Start.ToLongDateString() + "-" + Start.AddMonths(1).AddDays(-1).ToLongDateString();
+
+				Calendar calendar = new Calendar();
+				calendar.CurrentDate = CurDate;
+				using (DutyContext db = new DutyContext())
 				{
+					foreach (DutyList s in db.DutyLists.Include(x => x.Employee).Where(x => x.DateDuty.Year == calendar.CurrentDate.Year && x.DateDuty.Month == calendar.CurrentDate.Month).ToList())
+					{
 						calendar.Duties.Add(s.DateDuty.Day, s.Employee);
+					}
 				}
-			}
-			worksheet.Cell(2, 1).Value = "Число";
-			worksheet.Cell(2, 1).Style.Font.Bold = true;
-			worksheet.Cell(2, 2).Value = "Дежурный";
-			worksheet.Cell(2, 2).Style.Font.Bold = true;
-			int i = 3;
-			while (true)
-		    {
-				worksheet.Cell(i, 1).Value = Start.Day.ToString();
-				if (calendar.Duties.ContainsKey(Start.Day))
+				worksheet.Cell(2, 1).Value = "Число";
+				worksheet.Cell(2, 1).Style.Font.Bold = true;
+				worksheet.Cell(2, 2).Value = "Дежурный";
+				worksheet.Cell(2, 2).Style.Font.Bold = true;
+				int i = 3;
+				while (true)
 				{
-					worksheet.Cell(i, 2).Value = calendar.Duties[Start.Day].Name;
+					worksheet.Cell(i, 1).Value = Start.Day.ToString();
+					if (calendar.Duties.ContainsKey(Start.Day))
+					{
+						worksheet.Cell(i, 2).Value = calendar.Duties[Start.Day].Name;
+					}
+					else
+					{
+						worksheet.Cell(i, 2).Value = " ";
+					}
+					i++;
+					Start = Start.AddDays(1);
+					if (calendar.CurrentDate.Month != Start.Month)
+					{ break; }
 				}
-				else
+				while (!IsFileInUse(path))
 				{
-					worksheet.Cell(i, 2).Value = " ";
+				
+						workbook.SaveAs(fs);
+						break;
+					
 				}
-				i++;
-				Start = Start.AddDays(1);
-				if (calendar.CurrentDate.Month != Start.Month)
-				{ break; }
+
+				return path;
 			}
-			workbook.SaveAs(path);
-			return path;			
 		}
+		private static bool IsFileInUse(string path)
+		{
+			
+			try
+			{
+				using (var stream = new FileStream(path, FileMode.Open, FileAccess.Read))
+				{
+									
+				}
+			}
+			catch (IOException)
+			{
+				return true;
+			}
+
+			return false;
+		}
+		
 
 		[MyAuthorize]
 		public ViewResult SendAll(DateTime CurDate)
@@ -124,6 +160,14 @@ namespace DutyOfServiceDepart.Controllers
 
 				return View();
 			}
+		}
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing)
+			{
+				db.Dispose();
+			}
+			base.Dispose(disposing);
 		}
 	}
 }

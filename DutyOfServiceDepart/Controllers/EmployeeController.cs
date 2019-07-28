@@ -14,8 +14,8 @@ namespace DutyOfServiceDepart.Controllers
 {
     public class EmployeeController : Controller
     {		
-
-        public ViewResult Index(string sortOrder, string currentFilter, string searchString, int? page)
+		[Authorize]
+		public ViewResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
 			using (DutyContext db = new DutyContext())
 			{

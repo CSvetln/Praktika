@@ -9,7 +9,8 @@ namespace DutyOfServiceDepart.Controllers
     public class IncidentController : Controller
     {
 		DutyContext db = new DutyContext();
-		// GET: Incident
+
+		[Authorize]
 		public ActionResult Index(int? page)
         {			
 			var incs = from s in db.Incidents
@@ -37,6 +38,8 @@ namespace DutyOfServiceDepart.Controllers
 		[HttpGet]
 		public ViewResult Create()
 		{
+			SelectList selectEmp = new SelectList(db.Employees, "EmployeId", "Name");
+			ViewBag.Emp = selectEmp;
 			return View("CreateIncident");
 		}
 

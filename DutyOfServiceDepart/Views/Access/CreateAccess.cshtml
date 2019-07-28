@@ -1,10 +1,10 @@
-﻿
-@model DutyOfServiceDepart.Models.Access
+﻿@model  DutyOfServiceDepart.Models.Access
+
 @{
     ViewBag.Title = "Новый пользователь";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@using DutyOfServiceDepart.Models;
+
 <link rel="stylesheet" href="~/Content/StyleCreate.css">
 <h2>Добавление нового пользователя</h2>
 
@@ -13,15 +13,15 @@
     <h3>Введите необходимые данные:</h3>
     @using (Html.BeginForm("Create", "Access", FormMethod.Post))
     {
-        DutyContext db = new DutyContext();
+
 
 
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <table>
             <tr>
                 <td><p>Login: </p></td>
-                <td> @Html.DropDownList("Login", new SelectList(db.Accesses, "Login", "Login")) </td>
-                <td> @Html.ValidationMessageFor(model => model.Login, "", new { @class = "text-danger" })</td>
+                <td> @Html.DropDownListFor(model => model.Login, ViewBag.Teams as SelectList) </td>
+                <td> @Html.ValidationMessageFor(x => x.Login, "", new { @class = "text-danger" })</td>
             </tr>
 
             <tr>

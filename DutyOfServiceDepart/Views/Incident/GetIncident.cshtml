@@ -18,7 +18,7 @@
         <table>
 
             <tr class="nametab">
-                
+
                 <th><p>Дата аварии</p></th>
                 <th><p>Ответственный за устранение</p></th>
                 <th><p>Описание аварии</p></th>
@@ -26,18 +26,12 @@
             </tr>
             @foreach (ExtremIncident b in Model)
             {
-               
-            <tr>
-
-                <td><p>@b.DateIncident.ToLongDateString()</p></td>
-       
-            <td><p>@b.Employee.Name.ToString()</p></td>
-      
-                <td><p>@b.DecsIncident</p></td>
-
-                <td><p><a class="edrem" href="/Incident/Delete/@b.IncidentId">Удалить</a></p></td>
-            </tr>
-                
+                <tr>
+                    <td><p>@b.DateIncident.ToLongDateString()</p></td>
+                    <td><p>@b.Employee.Name.ToString()</p></td>
+                    <td><p>@b.DecsIncident</p></td>
+                    <td><p><a class="edrem" href="/Incident/Delete/@b.IncidentId">Удалить</a></p></td>
+                </tr>
             }
         </table>
         <br />

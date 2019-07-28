@@ -1,18 +1,16 @@
-﻿
+﻿@using DutyOfServiceDepart.Models;
 @model Calendar
 
 @{
     ViewBag.Title = "Дежурства";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@using DutyOfServiceDepart.Models;
+
 <link rel="stylesheet" href="~/Content/StyleIndex.css">
-@*<link rel="stylesheet" href="~/Content/Site.css">*@
 
 <div>
     <h2 class="a">График дежурств</h2>
-    
-   
+
     <div class="tm-right-column">
         <div class="cal">
             <div style="width:100%; height:1px; clear:both;"></div>
@@ -34,7 +32,8 @@
                 </tr>
             </thead>
 
-            @{ DutyContext db = new DutyContext();
+            @{ 
+                //DutyContext db = new DutyContext();
                 int i = 0;
                 DateTime Start = new DateTime(Model.CurrentDate.Year, Model.CurrentDate.Month, 1);
                 while (Start.DayOfWeek != DayOfWeek.Monday)
@@ -61,7 +60,9 @@
                                     {
                                         <div class="hidden" id="day[@i]">
                                             <input type="hidden" value="@Start" name="DateEdit" />
-                                            @Html.DropDownList("selectedEmpId", db.Employees.ToList().Select(x => new SelectListItem() { Text = x.Name, Value = x.EmployeId.ToString(), Selected = Model.Duties.ContainsKey(Start.Day) && x.EmployeId == Model.Duties[Start.Day].EmployeId }))
+                                            @Html.DropDownList("selectedEmpId", ViewBag.Emp as SelectList)
+                                            @* @Html.DropDownListFor(model => model., ViewBag.Emp as SelectList)*@
+                                            @* @Html.DropDownList("selectedEmpId", db.Employees.ToList().Select(x => new SelectListItem() { Text = x.Name, Value = x.EmployeId.ToString(), Selected = Model.Duties.ContainsKey(Start.Day) && x.EmployeId == Model.Duties[Start.Day].EmployeId }))*@
                                             <input type="submit" value="Сохранить изменения" />
                                         </div>
                                     }
@@ -91,7 +92,8 @@
                                 {
                                     <div class="hidden" id="day[@i]">
                                         <input type="hidden" value="@Start" name="DateEdit" />
-                                        @Html.DropDownList("selectedEmpId", db.Employees.ToList().Select(x => new SelectListItem() { Text = x.Name, Value = x.EmployeId.ToString(), Selected = Model.Duties.ContainsKey(Start.Day) && x.EmployeId == Model.Duties[Start.Day].EmployeId }))
+                                        @Html.DropDownList("selectedEmpId", ViewBag.Emp as SelectList)
+                                     @*   @Html.DropDownList("selectedEmpId", db.Employees.ToList().Select(x => new SelectListItem() { Text = x.Name, Value = x.EmployeId.ToString(), Selected = Model.Duties.ContainsKey(Start.Day) && x.EmployeId == Model.Duties[Start.Day].EmployeId }))*@
                                         <input type="submit" value="Сохранить изменения" />
                                     </div>
                                 }
@@ -109,8 +111,8 @@
             }
         </table>
         <p>
-            
-            @Html.ActionLink("Разослать график дежурств", "SendAll", new { CurDate = Model.CurrentDate})
+
+            @Html.ActionLink("Разослать график дежурств", "SendAll", new { CurDate = Model.CurrentDate })
         </p>
     </div>
 </div>

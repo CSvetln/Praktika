@@ -1,19 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using ClosedXML.Excel;
-using DocumentFormat.OpenXml.ExtendedProperties;
+using DutyOfServiceDepart.Filters;
 using DutyOfServiceDepart.Models;
 
 namespace DutyOfServiceDepart.Controllers
 {
     public class ReportController : Controller
     {
-		
-        [HttpGet]
+		[Authorize]
+		[HttpGet]
         public ActionResult CreateReport()
         {
 			using (DutyContext db = new DutyContext())
@@ -21,6 +19,7 @@ namespace DutyOfServiceDepart.Controllers
 				return View(db.Employees);
 			}
         }
+		[MyAuthorize]
 		[HttpPost]
 		public FileResult CreateReport(string EmployeeName, DateTime Date)
 		{

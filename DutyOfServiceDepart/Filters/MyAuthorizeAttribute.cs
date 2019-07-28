@@ -8,7 +8,8 @@ namespace DutyOfServiceDepart.Filters
 	public class MyAuthorizeAttribute: AuthorizeAttribute
 	{
 		
-		
+
+
 		public override void OnAuthorization(AuthorizationContext filterContext)
 		{
 			using (DutyContext db = new DutyContext())
