@@ -1,4 +1,39 @@
 ﻿
+.but {
+    background-color: #FFFFFF;
+    border: 1px solid #CCCCCC;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+    border-radius: 4px;
+    color: black;
+    font-size: 18px;
+    text-align: center;
+    text-decoration: none;
+    font-family: 'Times New Roman', Times, serif;
+    margin: 10px;
+    width: 90%;
+ 
+}
+
+    .but:hover, but:focus {
+        border-color: rgba(82, 168, 236, 0.8);
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(82, 168, 236, 0.6);
+        outline: 0 none;
+    }
+.hidden select {
+    margin-left: 10px;
+    background: transparent;
+    display: block;
+    width: 90%;
+    border: 1px solid #a7a7a7;
+    color: #32353a;
+    font-family: 16/Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.4;
+    font-weight: normal;
+    vertical-align: top;
+    outline: 0;
+}
 .hidden{
     display: none;
 }
@@ -59,4 +94,30 @@ td {
 tr{
     height:70px;
 }
+
+.send {
+
+    display: block;
+    background-color: #87CEEB;
+    border: 1px solid #CCCCCC;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+    border-radius: 6px;
+    color: black;
+    font-size: 18px;
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 16pt;
+    font-family: 'Times New Roman', Times, serif;
+    margin: 10px auto;
+    padding: 5px;
+    width: 300px;
+}
+
+    .send:hover, send:focus {
+        border-color: rgba(82, 168, 236, 0.8);
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(82, 168, 236, 0.6);
+        outline: 0 none;
+    }
 

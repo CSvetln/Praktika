@@ -10,27 +10,26 @@ namespace DutyOfServiceDepart.Controllers
 {
     public class ReportController : Controller
     {
+		DutyContext db = new DutyContext();
+
 		[Authorize]
 		[HttpGet]
         public ActionResult CreateReport()
-        {
-			using (DutyContext db = new DutyContext())
-			{
-				return View(db.Employees);
-			}
+        {			
+			return View(db.Employees);			
         }
+
 		[MyAuthorize]
 		[HttpPost]
 		public FileResult CreateReport(string EmployeeName, DateTime Date)
 		{
 			int d = 0;
-			using (DutyContext db = new DutyContext())
+			
+			foreach (DutyList s in db.DutyLists.Where(x => x.Employee.Name == EmployeeName && x.DateDuty.Year == Date.Year && x.DateDuty.Month == Date.Month).ToList())
 			{
-				foreach (DutyList s in db.DutyLists.Where(x => x.Employee.Name == EmployeeName && x.DateDuty.Year == Date.Year && x.DateDuty.Month == Date.Month).ToList())
-				{
-					d++;
-				}
+				d++;
 			}
+			
 			var workbook = new XLWorkbook();
 			var worksheet = workbook.Worksheets.Add("Лист1");
 
@@ -60,6 +59,14 @@ namespace DutyOfServiceDepart.Controllers
 				return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Отчёт.xlsx");
 			}
 		}
-		
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing)
+			{
+				db.Dispose();
+			}
+			base.Dispose(disposing);
+		}
+
 	}
 }
