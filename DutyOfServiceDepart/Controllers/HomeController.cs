@@ -6,40 +6,42 @@ using System.Web.Mvc;
 using System.Data.Entity;
 using DutyOfServiceDepart.Filters;
 using DutyOfServiceDepart.Mail;
-using ClosedXML.Excel;
-using System.IO;
 
 namespace DutyOfServiceDepart.Controllers
 {
+
 	public class HomeController : Controller
-	{
+	{		
 		DutyContext db = new DutyContext();
 
 		[Authorize]
 		[HttpGet]
-		public ActionResult Index(DateTime? Start)
+		public ActionResult Index(DateTime? Start) //возвращает представление
 		{
 			Calendar calendar;
-			DateTime Target1 = Start.HasValue ? Start.Value : DateTime.Now.Date;
+			DateTime Target1 = Start ?? DateTime.Now.Date; // Start дата начала месяца, в представлении можно перелистывать месяцы
 
 			calendar = GetCalendar(Target1);
 			
-			SelectList selectLogin = new SelectList(db.Employees, "EmployeId", "Name");
+			SelectList selectLogin = new SelectList(db.Employees, "EmployeId", "Name"); // делаем выборку всех сотрудников в выпадающий список
 			ViewBag.Emp = selectLogin;
 			return View(calendar);
 		}
 
 		private Calendar GetCalendar(DateTime Target)
 		{
+			/*Метод создаёт экземепляр класса Calendar и записывает в него дату, от которой начинать строить 
+			  календарь и дежурных сотрудников в этом месяце */
 			using (DutyContext db = new DutyContext())
 			{
-				Calendar calendar = new Calendar();
-				calendar.CurrentDate = Target;
+				Calendar calendar = new Calendar
+				{
+					CurrentDate = Target
+				};
 
 				foreach (DutyList s in db.DutyLists.Include(x => x.Employee).Where(x => x.DateDuty.Year == calendar.CurrentDate.Year && x.DateDuty.Month == calendar.CurrentDate.Month).ToList())
 				{
-					calendar.Duties.Add(s.DateDuty.Day, s.Employee);
-
+					calendar.Duties.Add(s.DateDuty.Day, s.Employee); // Duties - массив пар значений - число месяца и сотрудник 
 				}
 				return calendar;
 			}
@@ -50,9 +52,9 @@ namespace DutyOfServiceDepart.Controllers
 		{
 			using (DutyContext db = new DutyContext())
 			{
-				Employee NewEmployee = db.Employees.Find(selectedEmpId);
-				List<DutyList> dutyList = db.DutyLists.Where(x => x.DateDuty == DateEdit).ToList();
-				if (dutyList.Count != 0)
+				Employee NewEmployee = db.Employees.Find(selectedEmpId);//находим выбранного на дату дежурства сотрудника 
+				List<DutyList> dutyList = db.DutyLists.Where(x => x.DateDuty == DateEdit).ToList(); //находим дежурства с такой датой
+				if (dutyList.Count != 0) // если такие записи дежурств есть, меняем дежурного
 				{
 					foreach (DutyList s in dutyList)
 					{
@@ -60,102 +62,32 @@ namespace DutyOfServiceDepart.Controllers
 						s.Employee = NewEmployee;
 					}
 				}
-				else
+				else // если таких дежурств нет, создаём новую запись
 				{
 					DutyList NewDutyList = new DutyList() { DateDuty = DateEdit, Employee = NewEmployee, DecrDuty = String.Empty };
 					db.DutyLists.Add(NewDutyList);
 				}
-				db.SaveChanges();
-				string File = TimeTable(DateEdit);
+				db.SaveChanges();				
+
 				IMail sending = new SendingMailRu();
-				
-				sending.SendMail(NewEmployee.Email, File, "Изменения в графике дежурств", "Изучите новый график");		
-				
+				sending.SendMail(NewEmployee.Email, "Изменения в графике дежурств", "Изучите новый график", DateEdit);
+								
 				return RedirectToAction("Index");
 			}
 		}
-		private string TimeTable(DateTime CurDate)
-		{
-			string path = Server.MapPath("~/Files/График дежурств.xlsx");
-			FileStream fs;
-			using (fs = new FileStream(path, FileMode.OpenOrCreate, FileAccess.ReadWrite))
-			{
-				var workbook = new XLWorkbook();
-				var worksheet = workbook.Worksheets.Add("График");
-				worksheet.Range("A1:E1").Row(1).Merge();
-				DateTime Start = new DateTime(CurDate.Year, CurDate.Month, 1);
-				worksheet.Cell("A" + 1).Value = "График дежурств на " + Start.ToLongDateString() + "-" + Start.AddMonths(1).AddDays(-1).ToLongDateString();
-
-				Calendar calendar = new Calendar();
-				calendar.CurrentDate = CurDate;
-				using (DutyContext db = new DutyContext())
-				{
-					foreach (DutyList s in db.DutyLists.Include(x => x.Employee).Where(x => x.DateDuty.Year == calendar.CurrentDate.Year && x.DateDuty.Month == calendar.CurrentDate.Month).ToList())
-					{
-						calendar.Duties.Add(s.DateDuty.Day, s.Employee);
-					}
-				}
-				worksheet.Cell(2, 1).Value = "Число";
-				worksheet.Cell(2, 1).Style.Font.Bold = true;
-				worksheet.Cell(2, 2).Value = "Дежурный";
-				worksheet.Cell(2, 2).Style.Font.Bold = true;
-				int i = 3;
-				while (true)
-				{
-					worksheet.Cell(i, 1).Value = Start.Day.ToString();
-					if (calendar.Duties.ContainsKey(Start.Day))
-					{
-						worksheet.Cell(i, 2).Value = calendar.Duties[Start.Day].Name;
-					}
-					else
-					{
-						worksheet.Cell(i, 2).Value = " ";
-					}
-					i++;
-					Start = Start.AddDays(1);
-					if (calendar.CurrentDate.Month != Start.Month)
-					{ break; }
-				}
-				while (!IsFileInUse(path))
-				{
-				
-						workbook.SaveAs(fs);
-						break;
-					
-				}
-
-				return path;
-			}
-		}
-		private static bool IsFileInUse(string path)
-		{
-			
-			try
-			{
-				using (var stream = new FileStream(path, FileMode.Open, FileAccess.Read))
-				{
-									
-				}
-			}
-			catch (IOException)
-			{
-				return true;
-			}
-
-			return false;
-		}
-		
+						
 
 		[MyAuthorize]
 		public ViewResult SendAll(DateTime CurDate)
 		{
+			
 			using (DutyContext db = new DutyContext())
 			{
-				string File = TimeTable(CurDate);
+		
 				IMail sending = new SendingMailRu();
 				foreach (Employee e in db.Employees)
 				{
-					sending.SendMail(e.Email, File, "График дежурств", "Изучите график дежурств на текущий месяц");
+					sending.SendMail(e.Email, "График дежурств", "Изучите график дежурств на текущий месяц", CurDate);
 				}
 
 				return View();

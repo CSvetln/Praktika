@@ -8,6 +8,7 @@
 
 <link rel="stylesheet" href="~/Content/StyleIndex.css">
 <script src="~/Scripts/script.js"></script>
+
 <div>
     <h2 class="a">График дежурств</h2>
 
@@ -60,11 +61,13 @@
                                         <div class="hidden" id="day[@i]">
                                             <input type="hidden" value="@Start" name="DateEdit" />
                                             @Html.DropDownList("selectedEmpId", ViewBag.Emp as SelectList)
+                                          
                                             <input class="but" type="submit" value="Сохранить изменения" />
                                         </div>
                                     }
+                                    
 
-                                    <a  class="pencil" href="" onclick="funcEdit('day[@i]'); return false;"><img src="~/Content/edit.png" /></a>
+                                    <a class="pencil" href="" onclick="funcEdit('day[@i]'); return false;"><img src="~/Content/edit.png" /></a>
 
                                 }
 
@@ -88,7 +91,7 @@
                                 using (Html.BeginForm("Edit", "Home", FormMethod.Post))
                                 {
                                     <div class="hidden" id="day[@i]">
-                                        <input  type="hidden" value="@Start" name="DateEdit" />
+                                        <input type="hidden" value="@Start" name="DateEdit" />
                                         @Html.DropDownList("selectedEmpId", ViewBag.Emp as SelectList)
                                         <input class="but" type="submit" value="Сохранить изменения" />
                                     </div>
@@ -110,7 +113,7 @@
 
     </div>
     <div class="sendall">
-        @Html.ActionLink("Разослать график дежурств", "SendAll", new { CurDate = Model.CurrentDate }, new { @class = "send", @id = "send1" })
+        @Html.ActionLink("Разослать график", "SendAll", new { CurDate = Model.CurrentDate }, new { @class = "send", @id = "send1" })
     </div>
 
 </div>

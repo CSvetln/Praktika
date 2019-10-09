@@ -192,8 +192,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Mail\IMail.cs" />
-    <Compile Include="Mail\SendingMailRu.cs" />
+    <Compile Include="SendSchedule\IMail.cs" />
+    <Compile Include="SendSchedule\Schedule.cs" />
+    <Compile Include="SendSchedule\SendingMailRu.cs" />
     <Compile Include="Migrations\201907221603166_InitialCreate.cs" />
     <Compile Include="Migrations\201907221603166_InitialCreate.Designer.cs">
       <DependentUpon>201907221603166_InitialCreate.cs</DependentUpon>

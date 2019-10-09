@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DutyOfServiceDepart.SendSchedule;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -11,10 +12,10 @@ namespace DutyOfServiceDepart.Mail
 {
 	public class SendingMailRu:IMail
 	{
-		private string Login = "servisnyy.otdel.suek@mail.ru";
-		private string Password = "suek5863";
+		private const string Login = "servisnyy.otdel.suek@mail.ru";
+		private const string Password = "suek5863";
 
-		public void SendMail(string Email, string File, string Subject, string Body)
+		public void SendMail(string Email, string Subject, string Body, DateTime date)
 		{			
 			SmtpClient Smtp = new SmtpClient("smtp.mail.ru", 25);
 			Smtp.Credentials = new NetworkCredential(Login, Password);
@@ -25,6 +26,7 @@ namespace DutyOfServiceDepart.Mail
 			Message.To.Add(new MailAddress(Email));
 			Message.Subject = Subject;
 			Message.Body = Body;
+			string File = Schedule.GetSchedule(date);
 			Message.Attachments.Add(new Attachment(File));
 
 			Smtp.Send(Message);

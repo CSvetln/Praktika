@@ -8,6 +8,6 @@ namespace DutyOfServiceDepart.Mail
 {
 	interface IMail
 	{
-		  void SendMail(string Email, string File, string Subject, string Body);
+		  void SendMail(string Email, string Subject, string Body, DateTime date);
 	}
 }
