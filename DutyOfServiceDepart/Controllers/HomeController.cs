@@ -68,9 +68,6 @@ namespace DutyOfServiceDepart.Controllers
 					db.DutyLists.Add(NewDutyList);
 				}
 				db.SaveChanges();				
-
-				IMail sending = new SendingMailRu();
-				sending.SendMail(NewEmployee.Email, "Изменения в графике дежурств", "Изучите новый график", DateEdit);
 								
 				return RedirectToAction("Index");
 			}
