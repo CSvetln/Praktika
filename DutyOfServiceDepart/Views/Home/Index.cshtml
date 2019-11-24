@@ -16,7 +16,7 @@
         <div class="cal">
             <div style="width:100%; height:1px; clear:both;"></div>
             <div class="list">@Html.ActionLink("<<", "Index", new { Start = Model.CurrentDate.AddMonths(-1) })</div>
-            <div class="list">@Model.CurrentDate.ToString("MMMMM")</div>
+            <div class="list">@Model.CurrentDate.ToString("MMMMMMMM")</div>
             <div class="list">@Html.ActionLink(">>", "Index", new { Start = Model.CurrentDate.AddMonths(1) })</div>
             <div style="width:100%; height:1px; clear:both;"></div>
         </div>

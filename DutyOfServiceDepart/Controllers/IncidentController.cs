@@ -29,7 +29,7 @@ namespace DutyOfServiceDepart.Controllers
 			if (ModelState.IsValid)
 			{
 				db.Incidents.Remove(incident);
-					db.SaveChanges();
+				db.SaveChanges();
 			}
 			return RedirectToAction("Index");
 		}
