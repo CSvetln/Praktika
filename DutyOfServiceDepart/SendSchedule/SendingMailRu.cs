@@ -5,7 +5,7 @@ using System.Net;
 using System.Net.Mail;
 
 
-namespace DutyOfServiceDepart.Mail
+namespace DutyOfServiceDepart.SendSchedule
 {
 	public class SendingMailRu:IMail
 	{

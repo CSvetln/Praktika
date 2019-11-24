@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DutyOfServiceDepart.Mail
+namespace DutyOfServiceDepart.SendSchedule
 {
 	interface IMail
 	{

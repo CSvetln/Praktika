@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web.Mvc;
 using System.Data.Entity;
 using DutyOfServiceDepart.Filters;
-using DutyOfServiceDepart.Mail;
+using DutyOfServiceDepart.SendSchedule;
 
 namespace DutyOfServiceDepart.Controllers
 {
