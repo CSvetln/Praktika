@@ -1,26 +1,42 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
-    <link href="~/Content/bootstrap.css" rel="stylesheet" />
-    <link href="~/Content/Site1.css" rel="stylesheet" />
+    <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
+
+   
 </head>
 
 <body>
-    <nav class="navbar navbar-light bg-light fixed-top" id="menu">
-        <ul class="nav navbar-nav navbar-dark bg-dark">
-            <li class="nv"><img class="logo" src="~/Content/suek1.png" alt=""></li>
-            <li class="suek"><p>СУЭК</p></li>
-            <li class="nv">@Html.ActionLink("Дежурство", "Index", "Home")</li>
-            <li class="nv">@Html.ActionLink("Сотрудники", "Index", "Employee")</li>
-            <li class="nv">@Html.ActionLink("Аварии", "Index", "Incident")</li>
-            <li class="nv">@Html.ActionLink("Права доступа", "Index", "Access")</li>
-            <li class="nv">@Html.ActionLink("Создать отчёт", "CreateReport", "Report")</li>
-        </ul>
-    </nav>
-    @RenderBody()
+    <div class="container">
+        <div class="tm-blue-bg tm-left-column">
+            <div class="tm-logo-div">
+                <img src="~/Content/suek.png" class="att">
+            </div>
+            <nav class="tm-main-nav">
+                <ul class="tm-main-nav-ul">
+                    <li class="tm-nav-item">
+                        @Html.ActionLink("Дежурство", "Index", "Home")
+                    </li>
+                    <li class="tm-nav-item">
+                        @Html.ActionLink("Сотрудники", "Index", "Employee")
+                    </li>
+                    <li class="tm-nav-item">
+                        @Html.ActionLink("Аварии", "Index", "Incident")
+                    </li>
+                    <li class="tm-nav-item">
+                        @Html.ActionLink("Права доступа", "Index", "Access")
+                    </li>
+                    <li class="tm-nav-item">
+                        @Html.ActionLink("Создать отчёт", "CreateReport", "Report")
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div class="right-column">
+            @RenderBody()
+        </div>
+    </div>
 </body>
 </html>>
