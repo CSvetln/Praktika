@@ -13,6 +13,7 @@ namespace DutyOfServiceDepart.Controllers
 	public class HomeController : Controller
 	{		
 		DutyContext db = new DutyContext();
+		List<String> posts = new List<string>() { "Smtp", "Exchange" };
 
 		[Authorize]
 		[HttpGet]
@@ -23,8 +24,10 @@ namespace DutyOfServiceDepart.Controllers
 
 			calendar = GetCalendar(Target1);
 			
-			SelectList selectLogin = new SelectList(db.Employees, "EmployeId", "Name"); // делаем выборку всех сотрудников в выпадающий список
+			SelectList selectLogin = new SelectList(db.Employees, "EmployeId", "Name");// делаем выборку всех сотрудников в выпадающий список
+			SelectList selectPost = new SelectList(posts);
 			ViewBag.Emp = selectLogin;
+			ViewBag.Posts = selectPost;
 			return View(calendar);
 		}
 
@@ -72,24 +75,53 @@ namespace DutyOfServiceDepart.Controllers
 				return RedirectToAction("Index");
 			}
 		}
-						
+
 
 		[MyAuthorize]
-		public ViewResult SendAll(DateTime CurDate)
+		public ViewResult SendAll(DateTime CurDate, string selectedPost)
 		{
-			
+			switch (selectedPost)
+			{
+				case "Smtp":
+					SendSchedule
+					break;
+				case "Exchange":
+					break;
+			}
 			using (DutyContext db = new DutyContext())
 			{
-		
-				IMail sending = new SendingMailRu();
+
+				IMail sending = new SendingSMTP();
 				foreach (Employee e in db.Employees)
 				{
-					sending.SendMail(e.Email, "График дежурств", "Изучите график дежурств на текущий месяц", CurDate);
+					sending.SendMail(e.Email, "График дежурств", "Изучите график дежурств на текущий месяц");
 				}
 
 				return View();
 			}
 		}
+
+		//[MyAuthorize]
+		//public ViewResult SendAll(DateTime CurDate)
+		//{
+		//	using (DutyContext db = new DutyContext())
+		//	{
+
+		//		EMailMessage sending = new EMailMessage()
+		//		{
+		//			Subject = "График дежурств",
+		//			Body = "Изучите"
+
+		//		};
+		//		foreach (Employee e in db.Employees)
+		//		{
+		//			sending.Send(e.Email);
+		//		}
+
+		//		return View();
+		//	}
+		//}
+
 		protected override void Dispose(bool disposing)
 		{
 			if (disposing)

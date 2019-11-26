@@ -61,11 +61,11 @@
                                         <div class="hidden" id="day[@i]">
                                             <input type="hidden" value="@Start" name="DateEdit" />
                                             @Html.DropDownList("selectedEmpId", ViewBag.Emp as SelectList)
-                                          
+
                                             <input class="but" type="submit" value="Сохранить изменения" />
                                         </div>
                                     }
-                                    
+
 
                                     <a class="pencil" href="" onclick="funcEdit('day[@i]'); return false;"><img src="~/Content/edit.png" /></a>
 
@@ -112,9 +112,17 @@
 
 
     </div>
-    <div class="sendall">
-        @Html.ActionLink("Разослать график", "SendAll", new { CurDate = Model.CurrentDate }, new { @class = "send", @id = "send1" })
+   @using (Html.BeginForm("SendAll", "Home", FormMethod.Post))
+    {
+    <div>
+        <input type="hidden" value="@Model.CurrentDate" name="CurDate" />
+        @Html.DropDownList("selectedPost", ViewBag.Posts as SelectList)
+        <input class="but" type="submit" value="Сохранить изменения" />
     </div>
+    }
+    @*<div class="sendall">
+        @Html.ActionLink("Разослать график", "SendAll", new { CurDate = Model.CurrentDate }, new { @class = "send", @id = "send1" })
+    </div>*@
 
 </div>
 
