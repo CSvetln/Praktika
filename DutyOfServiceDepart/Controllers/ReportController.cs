@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using ClosedXML.Excel;
 using DutyOfServiceDepart.Filters;
 using DutyOfServiceDepart.Models;
+using DutyOfServiceDepart.Reports;
 
 namespace DutyOfServiceDepart.Controllers
 {
@@ -18,47 +19,16 @@ namespace DutyOfServiceDepart.Controllers
         {			
 			return View(db.Employees);			
         }
-
+		
 		[MyAuthorize]
 		[HttpPost]
-		public FileResult CreateReport(string EmployeeName, DateTime Date)
+		public FileResult CreateReport(string employeeName, DateTime date)
 		{
-			int d = 0;
-			
-			foreach (DutyList s in db.DutyLists.Where(x => x.Employee.Name == EmployeeName && x.DateDuty.Year == Date.Year && x.DateDuty.Month == Date.Month).ToList())
-			{
-				d++;
-			}
-			
-			var workbook = new XLWorkbook();
-			var worksheet = workbook.Worksheets.Add("Лист1");
-
-			worksheet.Cell("A" + 1).Value = "Дежурный";
-			worksheet.Cell("B" + 1).Value = "Период";
-			worksheet.Cell("C" + 1).Value = "Количество дежурств";
-
-			worksheet.Cell("A" + 2).Value = EmployeeName;
-			worksheet.Cell("B" + 2).Value = Date.ToLongDateString() + "-" + Date.AddMonths(1).AddDays(-1).ToLongDateString();
-			worksheet.Cell("C" + 2).Value = d;
-
-
-			for (int i = 1; i < 4; i++)
-			{
-				worksheet.Cell(1, i).Style.Font.Bold = true;
-			}
-			worksheet.Cells().Style.Font.FontName = "Times New Roman";
-			worksheet.Cells().Style.Border.BottomBorder = XLBorderStyleValues.Medium;
-			worksheet.Cells().Style.Border.RightBorder = XLBorderStyleValues.Medium;
-			worksheet.Cells().Style.Font.FontSize = 14;
-
-			worksheet.Columns().AdjustToContents(); //ширина столбца по содержимому
-
-			using (MemoryStream stream = new MemoryStream())
-			{
-				workbook.SaveAs(stream);
-				return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Отчёт.xlsx");
-			}
+			Report report = new Report();
+			MemoryStream stream = report.MakeReport(new ReportClosedXML(), employeeName, date);
+			return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Отчёт.xlsx");
 		}
+
 		protected override void Dispose(bool disposing)
 		{
 			if (disposing)
@@ -67,6 +37,5 @@ namespace DutyOfServiceDepart.Controllers
 			}
 			base.Dispose(disposing);
 		}
-
 	}
 }

@@ -8,10 +8,15 @@ namespace DutyOfServiceDepart.Controllers
 {
     public class ErrorController : Controller
     {
-        // GET: Error
+     
         public ActionResult NoAuthorization()
         {
             return View();
         }
-    }
+
+		public ActionResult NotAvailable()
+		{
+			return View();
+		}
+	}
 }

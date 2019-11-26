@@ -49,7 +49,7 @@ namespace DutyOfServiceDepart.Controllers
 		{
 			return View("CreateEmployee");
 		}
-		//[ValidateAntiForgeryToken]
+
 		[MyAuthorize]
 		[HttpPost]
 		public ActionResult Create([Bind(Include = "Name, Email, Login")]Employee employee)

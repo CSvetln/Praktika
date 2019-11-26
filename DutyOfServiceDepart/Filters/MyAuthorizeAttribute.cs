@@ -7,9 +7,6 @@ namespace DutyOfServiceDepart.Filters
 {
 	public class MyAuthorizeAttribute: AuthorizeAttribute
 	{
-		
-
-
 		public override void OnAuthorization(AuthorizationContext filterContext)
 		{
 			using (DutyContext db = new DutyContext())
@@ -20,7 +17,8 @@ namespace DutyOfServiceDepart.Filters
 				if (db.Accesses.Count() > 0)
 					access = db.Accesses.Where(x => x.Login == Login).FirstOrDefault();
 
-
+			
+				
 				if (access == null)
 				{
 					filterContext.Result = new RedirectToRouteResult(
@@ -35,6 +33,7 @@ namespace DutyOfServiceDepart.Filters
 							new System.Web.Routing.RouteValueDictionary {
 					{ "controller", "Home" }, { "action", "Index" }});
 					}
+
 				}
 			}
 		}
