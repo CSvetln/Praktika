@@ -1,0 +1,34 @@
+﻿body {
+    background-color: #C0C0C0;
+}
+#menu {
+    background-color: #6A5ACD;  
+}
+.suek p {
+    font-size: 40px;
+    font-weight:900;
+    color: black;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    padding-top:7px;
+    padding-right:25px;
+}
+.nv a {
+    color: aliceblue;
+    text-align: center;
+    font-size: 23px;
+    margin-top: 12px;
+}
+nav a:hover {
+    color: #00008B; 
+ }
+.logo {
+    height: 70px;
+    width: 70px;
+    margin-left: 50px;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}

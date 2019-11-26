@@ -222,6 +222,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\PagedList.css" />
+    <Content Include="Content\Site1.css" />
     <Content Include="Content\StyleCreate.css" />
     <Content Include="Content\StyleGet.css" />
     <Content Include="Content\StyleIndex.css" />
