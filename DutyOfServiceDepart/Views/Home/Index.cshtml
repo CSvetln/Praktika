@@ -90,7 +90,7 @@
 
                                 using (Html.BeginForm("Edit", "Home", FormMethod.Post))
                                 {
-                                    <div class="hidden" id="day[@i]">
+                                    <div class="my" id="day[@i]" style="visibility: hidden">
                                         <input type="hidden" value="@Start" name="DateEdit" />
                                         @Html.DropDownList("selectedEmpId", ViewBag.Emp as SelectList)
                                         <input class="but" type="submit" value="Сохранить изменения" />
