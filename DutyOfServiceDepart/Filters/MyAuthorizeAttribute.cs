@@ -31,7 +31,7 @@ namespace DutyOfServiceDepart.Filters
 					{
 						filterContext.Result = new RedirectToRouteResult(
 							new System.Web.Routing.RouteValueDictionary {
-					{ "controller", "Home" }, { "action", "Index" }});
+					{ "controller", "Error" }, { "action", "NotAvailable" }});
 					}
 
 				}

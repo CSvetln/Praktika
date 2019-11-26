@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web.Mvc;
 using System.Data.Entity;
 using DutyOfServiceDepart.Filters;
-using DutyOfServiceDepart.SendSchedule;
+using DutyOfServiceDepart.Mail;
 
 namespace DutyOfServiceDepart.Controllers
 {
@@ -70,9 +70,6 @@ namespace DutyOfServiceDepart.Controllers
 					db.DutyLists.Add(newDutyList);
 				}
 				db.SaveChanges();				
-
-				IMail sending = new SendingMailRu();
-				sending.SendMail(NewEmployee.Email, "Изменения в графике дежурств", "Изучите новый график", DateEdit);
 								
 				return RedirectToAction("Index");
 			}

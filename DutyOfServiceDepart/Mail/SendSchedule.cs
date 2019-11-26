@@ -5,7 +5,7 @@ using System.Linq;
 using System.Net.Mail;
 using System.Web;
 
-namespace DutyOfServiceDepart.SendSchedule
+namespace DutyOfServiceDepart.Mail
 {
 	public class SendSchedule
 	{

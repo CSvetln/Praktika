@@ -7,7 +7,7 @@ using System.IO;
 using System.Web.Hosting;
 using System.Web.Mvc;
 
-namespace DutyOfServiceDepart.SendSchedule
+namespace DutyOfServiceDepart.Mail
 {
 	public class Schedule
 	{

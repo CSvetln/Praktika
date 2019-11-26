@@ -1,10 +1,8 @@
 ﻿using ClosedXML.Excel;
 using DutyOfServiceDepart.Models;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Web;
 
 namespace DutyOfServiceDepart.Reports
 {
@@ -49,7 +47,7 @@ namespace DutyOfServiceDepart.Reports
 				workBook.SaveAs(stream);
 				return stream;
 			}
-			
+
 		}
 	}
 }
