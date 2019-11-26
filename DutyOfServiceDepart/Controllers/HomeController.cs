@@ -77,21 +77,27 @@ namespace DutyOfServiceDepart.Controllers
 
 
 		[MyAuthorize]
-		public ViewResult SendAll(string selectedPost, DateTime CurDate)
+		public ViewResult SendAll(DateTime CurDate)
 		{
 			switch (selectedPost)
 			{
 				case "Smtp":
-					SendSchedule send = new SendSchedule(db.Employees.Select(x=>x.Email).ToList(), "График дежурств", "Изучите график дежурств на текущий месяц", CurDate);
-					send.Send(new SendingSMTP());
+					SendSchedule
 					break;
 				case "Exchange":
 					break;
 			}
-			
+			using (DutyContext db = new DutyContext())
+			{
+
+				IMail sending = new SendingSMTP();
+				foreach (Employee e in db.Employees)
+				{
+					sending.SendMail(e.Email, "График дежурств", "Изучите график дежурств на текущий месяц", CurDate);
+				}
 
 				return View();
-			
+			}
 		}
 
 		//[MyAuthorize]
