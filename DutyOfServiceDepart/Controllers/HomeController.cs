@@ -9,7 +9,6 @@ using DutyOfServiceDepart.SendSchedule;
 
 namespace DutyOfServiceDepart.Controllers
 {
-
 	public class HomeController : Controller
 	{		
 		DutyContext db = new DutyContext();
@@ -17,12 +16,12 @@ namespace DutyOfServiceDepart.Controllers
 
 		[Authorize]
 		[HttpGet]
-		public ActionResult Index(DateTime? Start) //возвращает представление
+		public ActionResult Index(DateTime? start) //возвращает представление
 		{
 			Calendar calendar;
-			DateTime Target1 = Start ?? DateTime.Now.Date; // Start дата начала месяца, в представлении можно перелистывать месяцы
+			DateTime target1 = start ?? DateTime.Now.Date; // Start дата начала месяца, в представлении можно перелистывать месяцы
 
-			calendar = GetCalendar(Target1);
+			calendar = GetCalendar(target1);
 			
 			SelectList selectLogin = new SelectList(db.Employees, "EmployeId", "Name");// делаем выборку всех сотрудников в выпадающий список
 			SelectList selectPost = new SelectList(posts);
@@ -31,7 +30,7 @@ namespace DutyOfServiceDepart.Controllers
 			return View(calendar);
 		}
 
-		private Calendar GetCalendar(DateTime Target)
+		private Calendar GetCalendar(DateTime target)
 		{
 			/*Метод создаёт экземепляр класса Calendar и записывает в него дату, от которой начинать строить 
 			  календарь и дежурных сотрудников в этом месяце */
@@ -39,7 +38,7 @@ namespace DutyOfServiceDepart.Controllers
 			{
 				Calendar calendar = new Calendar
 				{
-					CurrentDate = Target
+					CurrentDate = target
 				};
 
 				foreach (DutyList s in db.DutyLists.Include(x => x.Employee).Where(x => x.DateDuty.Year == calendar.CurrentDate.Year && x.DateDuty.Month == calendar.CurrentDate.Month).ToList())
@@ -51,26 +50,29 @@ namespace DutyOfServiceDepart.Controllers
 		}
 		[MyAuthorize]
 		[HttpPost]
-		public ActionResult Edit(int selectedEmpId, DateTime DateEdit)
+		public ActionResult Edit(int selectedEmpId, DateTime dateEdit)
 		{
 			using (DutyContext db = new DutyContext())
 			{
-				Employee NewEmployee = db.Employees.Find(selectedEmpId);//находим выбранного на дату дежурства сотрудника 
-				List<DutyList> dutyList = db.DutyLists.Where(x => x.DateDuty == DateEdit).ToList(); //находим дежурства с такой датой
+				Employee newEmployee = db.Employees.Find(selectedEmpId);//находим выбранного на дату дежурства сотрудника 
+				List<DutyList> dutyList = db.DutyLists.Where(x => x.DateDuty == dateEdit).ToList(); //находим дежурства с такой датой
 				if (dutyList.Count != 0) // если такие записи дежурств есть, меняем дежурного
 				{
 					foreach (DutyList s in dutyList)
 					{
 						db.Entry(s).State = EntityState.Modified;
-						s.Employee = NewEmployee;
+						s.Employee = newEmployee;
 					}
 				}
 				else // если таких дежурств нет, создаём новую запись
 				{
-					DutyList NewDutyList = new DutyList() { DateDuty = DateEdit, Employee = NewEmployee, DecrDuty = String.Empty };
-					db.DutyLists.Add(NewDutyList);
+					DutyList newDutyList = new DutyList() { DateDuty = dateEdit, Employee = newEmployee, DecrDuty = String.Empty };
+					db.DutyLists.Add(newDutyList);
 				}
 				db.SaveChanges();				
+
+				IMail sending = new SendingMailRu();
+				sending.SendMail(NewEmployee.Email, "Изменения в графике дежурств", "Изучите новый график", DateEdit);
 								
 				return RedirectToAction("Index");
 			}
@@ -78,7 +80,7 @@ namespace DutyOfServiceDepart.Controllers
 
 
 		[MyAuthorize]
-		public ViewResult SendAll(DateTime CurDate, string selectedPost)
+		public ViewResult SendAll(DateTime CurDate)
 		{
 			switch (selectedPost)
 			{
@@ -94,7 +96,7 @@ namespace DutyOfServiceDepart.Controllers
 				IMail sending = new SendingSMTP();
 				foreach (Employee e in db.Employees)
 				{
-					sending.SendMail(e.Email, "График дежурств", "Изучите график дежурств на текущий месяц");
+					sending.SendMail(e.Email, "График дежурств", "Изучите график дежурств на текущий месяц", CurDate);
 				}
 
 				return View();
