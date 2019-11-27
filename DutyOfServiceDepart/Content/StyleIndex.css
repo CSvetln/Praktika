@@ -1,4 +1,10 @@
-﻿
+﻿.hih{
+    color:brown;
+}
+table .hi {
+    display: none !important;
+    background-color: black;
+}
 .but {
     background-color: #FFFFFF;
     border: 1px solid #CCCCCC;
@@ -34,9 +40,7 @@
     vertical-align: top;
     outline: 0;
 }
-.hidden{
-    display: none;
-}
+
 
 img{
     width:20px;

@@ -7,12 +7,14 @@
 }
 
 <link rel="stylesheet" href="~/Content/StyleIndex.css">
-<script src="~/Scripts/script.js"></script>
-
+<link href="~/Content/index.css" rel="stylesheet" />
+@*<script src="~/Scripts/script.js"></script>*@
+<script src="~/Scripts/Edit.js"></script>
 <div>
     <h2 class="a">График дежурств</h2>
 
-    <div class="tm-right-column">
+    <div class="right-column">
+
         <div class="cal">
             <div style="width:100%; height:1px; clear:both;"></div>
             <div class="list">@Html.ActionLink("<<", "Index", new { Start = Model.CurrentDate.AddMonths(-1) })</div>
@@ -43,9 +45,13 @@
                 while (true)
                 {
                     <tr>
+
                         @while (Start.DayOfWeek != DayOfWeek.Sunday)
                         {
                             <td>
+
+
+
                                 @if (Start.Month == Model.CurrentDate.Month)
                                 {
                                     <div class="day">@Start.Day</div>
@@ -56,18 +62,17 @@
                                         </div>
                                     }
 
-                                    using (Html.BeginForm("Edit", "Home", FormMethod.Post))
+                                    using (Html.BeginForm("Edit", "Home", FormMethod.Post, new { @class = "my" }))
                                     {
-                                        <div class="hidden" id="day[@i]">
+                                        <div class="hid">
                                             <input type="hidden" value="@Start" name="DateEdit" />
                                             @Html.DropDownList("selectedEmpId", ViewBag.Emp as SelectList)
-                                          
-                                            <input class="but" type="submit" value="Сохранить изменения" />
+                                            <input class="but" type="submit" value="Сохранить изменения" />                                          
                                         </div>
                                     }
-                                    
 
-                                    <a class="pencil" href="" onclick="funcEdit('day[@i]'); return false;"><img src="~/Content/edit.png" /></a>
+
+                                    <a class="pencil" href="" onclick="funcEdit('hid'); return false;"><img src="~/Content/edit.png" /></a>
 
                                 }
 
@@ -90,14 +95,14 @@
 
                                 using (Html.BeginForm("Edit", "Home", FormMethod.Post))
                                 {
-                                    <div class="my" id="day[@i]" style="visibility: hidden">
+                                    <div class="hid">
                                         <input type="hidden" value="@Start" name="DateEdit" />
                                         @Html.DropDownList("selectedEmpId", ViewBag.Emp as SelectList)
                                         <input class="but" type="submit" value="Сохранить изменения" />
                                     </div>
                                 }
 
-                                <a class="pencil" href="" onclick="funcEdit('day[@i]'); return false;"><img src="~/Content/edit.png" /></a>
+                                <a class="pencil" href="" onclick="funcEdit('hid'); return false;"><img src="~/Content/edit.png" /></a>
 
                             }
                         </td>
