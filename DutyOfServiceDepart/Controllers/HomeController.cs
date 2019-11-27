@@ -77,49 +77,21 @@ namespace DutyOfServiceDepart.Controllers
 
 
 		[MyAuthorize]
-		public ViewResult SendAll(DateTime CurDate)
+		public ViewResult SendAll(string selectedPost, DateTime curDate)
 		{
 			switch (selectedPost)
 			{
 				case "Smtp":
-					SendSchedule
+					SendSchedule sendSchedule = new SendSchedule(db.Employees.Select(x=>x.Email).ToList(), "График дежурств", "Изучите график дежурств на текущий месяц", curDate);
+					sendSchedule.Send(new SendingSMTP());
 					break;
 				case "Exchange":
 					break;
 			}
-			using (DutyContext db = new DutyContext())
-			{
-
-				IMail sending = new SendingSMTP();
-				foreach (Employee e in db.Employees)
-				{
-					sending.SendMail(e.Email, "График дежурств", "Изучите график дежурств на текущий месяц", CurDate);
-				}
-
-				return View();
-			}
+			return View();
 		}
 
-		//[MyAuthorize]
-		//public ViewResult SendAll(DateTime CurDate)
-		//{
-		//	using (DutyContext db = new DutyContext())
-		//	{
 
-		//		EMailMessage sending = new EMailMessage()
-		//		{
-		//			Subject = "График дежурств",
-		//			Body = "Изучите"
-
-		//		};
-		//		foreach (Employee e in db.Employees)
-		//		{
-		//			sending.Send(e.Email);
-		//		}
-
-		//		return View();
-		//	}
-		//}
 
 		protected override void Dispose(bool disposing)
 		{
