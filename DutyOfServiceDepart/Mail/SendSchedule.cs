@@ -12,7 +12,6 @@ namespace DutyOfServiceDepart.Mail
 		public List<string> Emails { get; set; }
 		public string Subject { get; set; }
 		public string Body { get; set; }
-		public Attachment Attachment { get; set; }
 		public DateTime DateSchedule { get; set; }
 
 		public SendSchedule(List<string> emails, string subject, string body, DateTime dateSchedule)
@@ -21,19 +20,18 @@ namespace DutyOfServiceDepart.Mail
 			this.Subject = subject;
 			this.Body = body;
 			this.DateSchedule = dateSchedule;
-			this.Attachment = GetAttachment();
 		}
 
-		private Attachment GetAttachment()
+		private MemoryStream GetAttachment()
 		{
-			MemoryStream stream = Schedule.GetSchedule(DateSchedule);
-			return new Attachment(stream, "График.xlsx");					
+			return Schedule.GetSchedule(DateSchedule);
+						
 		}
 		public void Send(IMail mail)
 		{
 			foreach (string email in Emails)
 			{
-				mail.SendMail(email, Subject, Body, Attachment);
+				mail.SendMail(email, Subject, Body, GetAttachment());
 			}
 		}
 

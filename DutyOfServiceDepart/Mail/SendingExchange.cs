@@ -1,60 +1,29 @@
 ﻿using Microsoft.Exchange.WebServices.Data;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 
 namespace DutyOfServiceDepart.Mail
 {
-	public class EmailAttachment
+	public class SendingExchange:IMail
 	{
-		public String Name { get; set; }
-
-		public byte[] Content { get; set; }
-	}
-
-	public class EMailMessage
-	{
-		public String Subject { get; set; }
-
-		public String Body { get; set; }
-
-		public EmailAttachment Attachment { get; set; }
-
-		public bool IsImportant { get; set; } = false;
-
-		public void Send(String ToAddress, String[] CcRecipients = null)
+		public void SendMail(string email, string subject, string body, MemoryStream attachment)
 		{
-			Send(new string[] { ToAddress }, CcRecipients);
-		}
+			ExchangeService service = new ExchangeService(ExchangeVersion.Exchange2007_SP1) { UseDefaultCredentials = true };
 
-		public void Send(String[] ToAddresses, String[] CcRecipients = null)
-		{
-			if (!ToAddresses.Any())
+			service.AutodiscoverUrl(Environment.UserName + "@suek.ru", RedirectionUrlValidationCallback);
+
+			EmailMessage Email = new EmailMessage(service) { Subject = subject, Body = body, Importance = Importance.Normal };
+
+			Email.ToRecipients.Add(email);
+
+			if (attachment != null)
 			{
-				return;
+				Email.Attachments.AddFileAttachment("График.xlsx", attachment);
 			}
-
-			ExchangeService service = new ExchangeService(ExchangeVersion.Exchange2007_SP1);// { UseDefaultCredentials = true };
-			service.Credentials = new WebCredentials("servisnyy.otdel.suek@mail.ru", "suek5863", "MYDOMAIN");
-			//service.EnableScpLookup = false;
-			service.AutodiscoverUrl("servisnyy.otdel.suek@mail.ru");//, RedirectionUrlValidationCallback);
-
-			EmailMessage Email = new EmailMessage(service) { Subject = Subject, Body = Body, Importance = IsImportant ? Importance.High : Importance.Normal };
-
-			Email.ToRecipients.AddRange(ToAddresses);
-
-			if (Attachment != null)
-			{
-				Email.Attachments.AddFileAttachment(Attachment.Name, Attachment.Content);
-			}
-			if (CcRecipients != null)
-			{
-				foreach (String CcRecipient in CcRecipients)
-				{
-					Email.BccRecipients.Add(new EmailAddress(CcRecipient));
-				}
-			}
+			
 			Email.Save();
 			Email.Send();
 
@@ -63,16 +32,15 @@ namespace DutyOfServiceDepart.Mail
 
 		private static bool RedirectionUrlValidationCallback(string redirectionUrl)
 		{
-			return true;
-			//bool result = false;
+			bool result = false;
 
-			//Uri redirectionUri = new Uri(redirectionUrl);
+			Uri redirectionUri = new Uri(redirectionUrl);
 
-			//if (redirectionUri.Scheme == "https")
-			//{
-			//	result = true;
-			//}
-			//return result;
+			if (redirectionUri.Scheme == "https")
+			{
+				result = true;
+			}
+			return result;
 		}
 	}
 }
