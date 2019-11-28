@@ -9,12 +9,12 @@ namespace DutyOfServiceDepart.Mail
 {
 	public class SendSchedule
 	{
-		public List<string> Emails { get; set; }
+		public string[] Emails { get; set; }
 		public string Subject { get; set; }
 		public string Body { get; set; }
 		public DateTime DateSchedule { get; set; }
 
-		public SendSchedule(List<string> emails, string subject, string body, DateTime dateSchedule)
+		public SendSchedule(string[] emails, string subject, string body, DateTime dateSchedule)
 		{
 			this.Emails = emails;
 			this.Subject = subject;

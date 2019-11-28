@@ -79,7 +79,7 @@ namespace DutyOfServiceDepart.Controllers
 		[MyAuthorize]
 		public ViewResult SendAll(string selectedPost, DateTime curDate)
 		{
-			SendSchedule sendSchedule = new SendSchedule(db.Employees.Select(x => x.Email).ToList(), "График дежурств", "Изучите график дежурств на текущий месяц", curDate);
+			SendSchedule sendSchedule = new SendSchedule(db.Employees.Select(x => x.Email).ToArray(), "График дежурств", "Изучите график дежурств на текущий месяц", curDate);
 			switch (selectedPost)
 			{
 				case "Smtp":					
