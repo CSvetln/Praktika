@@ -60,7 +60,7 @@
                                     {
                                         <div class="hidden" id="day[@i]">
                                             <input type="hidden" value="@Start" name="dateEdit" />
-                                            @Html.DropDownList("selectedEmpId", ViewBag.Emp as SelectList)
+                                            @Html.DropDownList("selectedEmpId", Model.Emps)
 
                                             <input class="but" type="submit" value="Сохранить изменения" />
                                         </div>
@@ -92,7 +92,7 @@
                                 {
                                     <div class="hidden" id="day[@i]">
                                         <input type="hidden" value="@Start" name="DateEdit" />
-                                        @Html.DropDownList("selectedEmpId", ViewBag.Emp as SelectList)
+                                        @Html.DropDownList("selectedEmpId", Model.Emps)
                                         <input class="but" type="submit" value="Сохранить изменения" />
                                     </div>
                                 }
@@ -116,7 +116,7 @@
     {
     <div>
         <input type="hidden" value="@Model.CurrentDate" name="curDate" />
-        @Html.DropDownList("selectedPost", ViewBag.Posts as SelectList)
+        @Html.DropDownList("selectedPost", Model.Posts)
         <input class="but" type="submit" value="Разослать всем" />
     </div>
     }

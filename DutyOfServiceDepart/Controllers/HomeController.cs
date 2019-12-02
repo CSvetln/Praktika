@@ -23,10 +23,10 @@ namespace DutyOfServiceDepart.Controllers
 
 			calendar = GetCalendar(target1);
 			
-			SelectList selectLogin = new SelectList(db.Employees, "EmployeId", "Name");// делаем выборку всех сотрудников в выпадающий список
-			SelectList selectPost = new SelectList(posts);
-			ViewBag.Emp = selectLogin;
-			ViewBag.Posts = selectPost;
+			calendar.Emps = new SelectList(db.Employees, "EmployeId", "Name");// делаем выборку всех сотрудников в выпадающий список
+			calendar.Posts = new SelectList(posts);
+			//ViewBag.Emp = selectLogin;
+			//ViewBag.Posts = selectPost;
 			return View(calendar);
 		}
 
