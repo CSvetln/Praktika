@@ -18,36 +18,18 @@ namespace DutyOfServiceDepart.Controllers
 		[HttpGet]
 		public ActionResult Index(DateTime? start) //возвращает представление
 		{
-			Calendar calendar;
+			
 			DateTime target1 = start ?? DateTime.Now.Date; // Start дата начала месяца, в представлении можно перелистывать месяцы
 
-			calendar = GetCalendar(target1);
-			
+			Calendar calendar = Calendar.GetCalendar(target1);
+
 			calendar.Emps = new SelectList(db.Employees, "EmployeId", "Name");// делаем выборку всех сотрудников в выпадающий список
 			calendar.Posts = new SelectList(posts);
-			//ViewBag.Emp = selectLogin;
-			//ViewBag.Posts = selectPost;
+			
 			return View(calendar);
 		}
+	
 
-		private Calendar GetCalendar(DateTime target)
-		{
-			/*Метод создаёт экземепляр класса Calendar и записывает в него дату, от которой начинать строить 
-			  календарь и дежурных сотрудников в этом месяце */
-			using (DutyContext db = new DutyContext())
-			{
-				Calendar calendar = new Calendar
-				{
-					CurrentDate = target
-				};
-
-				foreach (DutyList s in db.DutyLists.Include(x => x.Employee).Where(x => x.DateDuty.Year == calendar.CurrentDate.Year && x.DateDuty.Month == calendar.CurrentDate.Month).ToList())
-				{
-					calendar.Duties.Add(s.DateDuty.Day, s.Employee); // Duties - массив пар значений - число месяца и сотрудник 
-				}
-				return calendar;
-			}
-		}
 		[MyAuthorize]
 		[HttpPost]
 		public ActionResult Edit(int selectedEmpId, DateTime dateEdit)
