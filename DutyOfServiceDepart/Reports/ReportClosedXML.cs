@@ -8,13 +8,23 @@ namespace DutyOfServiceDepart.Reports
 {
 	public class ReportClosedXML : IReport
 	{
-		public MemoryStream CreateReport(string employeeName, DateTime date)
+		String EmployeeName { get; set; }
+		DateTime Date { get; set; }
+
+		public ReportClosedXML(string employeeName, DateTime date)
+		{
+			this.EmployeeName = employeeName;
+			this.Date = date;
+		}
+
+		public MemoryStream CreateReport()
 		{
 			int d = 0;
 
 			using (DutyContext db = new DutyContext())
 			{
-				var dutyLists = db.DutyLists.Where(x => x.Employee.Name == employeeName && x.DateDuty.Year == date.Year && x.DateDuty.Month == date.Month).ToList();
+				var dutyLists = db.DutyLists.Where(x => x.Employee.Name == EmployeeName && x.DateDuty.Year == Date.Year && x.DateDuty.Month == Date.Month).ToList();
+
 				foreach (DutyList s in dutyLists)
 				{
 					d++;
@@ -22,14 +32,14 @@ namespace DutyOfServiceDepart.Reports
 			}
 
 			var workBook = new XLWorkbook();
-			var workSheet = workBook.Worksheets.Add(date.ToString("MMMMMMMM"));
+			var workSheet = workBook.Worksheets.Add(Date.ToString("MMMMMMMM"));
 
 			workSheet.Cell("A" + 1).Value = "Дежурный";
 			workSheet.Cell("B" + 1).Value = "Период";
 			workSheet.Cell("C" + 1).Value = "Количество дежурств";
 
-			workSheet.Cell("A" + 2).Value = employeeName;
-			workSheet.Cell("B" + 2).Value = date.ToLongDateString() + "-" + date.AddMonths(1).AddDays(-1).ToLongDateString();
+			workSheet.Cell("A" + 2).Value = EmployeeName;
+			workSheet.Cell("B" + 2).Value = Date.ToLongDateString() + "-" + Date.AddMonths(1).AddDays(-1).ToLongDateString();
 			workSheet.Cell("C" + 2).Value = d;
 
 

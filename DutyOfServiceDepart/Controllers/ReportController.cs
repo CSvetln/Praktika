@@ -23,7 +23,7 @@ namespace DutyOfServiceDepart.Controllers
 		public FileResult CreateReport(string employeeName, DateTime date)
 		{
 			Report report = new Report();
-			using (MemoryStream stream = report.MakeReport(new ReportClosedXML(), employeeName, date))
+			using (MemoryStream stream = report.MakeReport(new ReportClosedXML(employeeName, date)))
 			{
 				return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Отчёт.xlsx");
 			}

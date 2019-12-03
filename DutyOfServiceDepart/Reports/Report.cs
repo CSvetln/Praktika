@@ -8,9 +8,9 @@ namespace DutyOfServiceDepart.Reports
 {
 	public class Report
 	{
-		public MemoryStream MakeReport(IReport report, string employeeName, DateTime date)
+		public MemoryStream MakeReport(IReport report)
 		{
-			return report.CreateReport(employeeName, date);
+			return report.CreateReport();
 		}
 	}
 }

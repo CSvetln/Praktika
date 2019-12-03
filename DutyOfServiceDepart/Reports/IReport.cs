@@ -5,6 +5,6 @@ namespace DutyOfServiceDepart.Reports
 {
 	public interface IReport
 	{
-		MemoryStream CreateReport(string EmployeeName, DateTime Date);
+		MemoryStream CreateReport();
 	}
 }
