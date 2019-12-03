@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Net.Mail;
-using System.Web;
 
 namespace DutyOfServiceDepart.Mail
 {
@@ -24,9 +20,9 @@ namespace DutyOfServiceDepart.Mail
 
 		private MemoryStream GetAttachment()
 		{
-			return Schedule.GetSchedule(DateSchedule);
-						
+			return Schedule.GetSchedule(DateSchedule);			
 		}
+
 		public void Send(IMail mail)
 		{
 			foreach (string email in Emails)
@@ -34,6 +30,5 @@ namespace DutyOfServiceDepart.Mail
 				mail.SendMail(email, Subject, Body, GetAttachment());
 			}
 		}
-
 	}
 }

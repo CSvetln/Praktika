@@ -16,11 +16,8 @@ namespace DutyOfServiceDepart.Controllers
 
 		[Authorize]
 		[HttpGet]
-		public ActionResult Index(DateTime? start) //возвращает представление
-		{
-			
-			 // Start дата начала месяца, в представлении можно перелистывать месяцы
-
+		public ActionResult Index(DateTime? start) // Start дата начала месяца, в представлении можно перелистывать месяцы
+		{					 
 			Calendar calendar = Calendar.GetCalendar(start);
 
 			calendar.Emps = new SelectList(db.Employees, "EmployeId", "Name");// делаем выборку всех сотрудников в выпадающий список
@@ -29,7 +26,6 @@ namespace DutyOfServiceDepart.Controllers
 			return View(calendar);
 		}
 	
-
 		[MyAuthorize]
 		[HttpPost]
 		public ActionResult Edit(int selectedEmpId, DateTime dateEdit)
@@ -57,7 +53,6 @@ namespace DutyOfServiceDepart.Controllers
 			}
 		}
 
-
 		[MyAuthorize]
 		public ViewResult SendAll(string selectedPost, DateTime curDate)
 		{
@@ -73,8 +68,6 @@ namespace DutyOfServiceDepart.Controllers
 			}
 			return View();
 		}
-
-
 
 		protected override void Dispose(bool disposing)
 		{

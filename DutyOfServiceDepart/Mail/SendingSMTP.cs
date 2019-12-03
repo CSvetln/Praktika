@@ -2,7 +2,6 @@
 using System.Net;
 using System.Net.Mail;
 
-
 namespace DutyOfServiceDepart.Mail
 {
 	public class SendingSMTP:IMail
@@ -29,6 +28,5 @@ namespace DutyOfServiceDepart.Mail
 			Message.Dispose();
 			Smtp.Dispose();		
 		}
-			
 	}
 }

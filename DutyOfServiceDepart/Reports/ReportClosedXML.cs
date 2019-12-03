@@ -11,9 +11,11 @@ namespace DutyOfServiceDepart.Reports
 		public MemoryStream CreateReport(string employeeName, DateTime date)
 		{
 			int d = 0;
+
 			using (DutyContext db = new DutyContext())
 			{
-				foreach (DutyList s in db.DutyLists.Where(x => x.Employee.Name == employeeName && x.DateDuty.Year == date.Year && x.DateDuty.Month == date.Month).ToList())
+				var dutyLists = db.DutyLists.Where(x => x.Employee.Name == employeeName && x.DateDuty.Year == date.Year && x.DateDuty.Month == date.Month).ToList();
+				foreach (DutyList s in dutyLists)
 				{
 					d++;
 				}
@@ -35,6 +37,7 @@ namespace DutyOfServiceDepart.Reports
 			{
 				workSheet.Cell(1, i).Style.Font.Bold = true;
 			}
+
 			workSheet.Cells().Style.Font.FontName = "Times New Roman";
 			workSheet.Cells().Style.Border.BottomBorder = XLBorderStyleValues.Medium;
 			workSheet.Cells().Style.Border.RightBorder = XLBorderStyleValues.Medium;
@@ -47,7 +50,6 @@ namespace DutyOfServiceDepart.Reports
 				workBook.SaveAs(stream);
 				return stream;
 			}
-
 		}
 	}
 }

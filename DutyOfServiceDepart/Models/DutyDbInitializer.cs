@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
-using System.Web;
 
 namespace DutyOfServiceDepart.Models
 {
@@ -31,6 +28,7 @@ namespace DutyOfServiceDepart.Models
 			db.Accesses.Add(new Access() { Login = "Ivan4896", AllowedEdit = true });
 
 			db.Accesses.Add(new Access() { Login = "Sveta-ПК\\Sveta", AllowedEdit = true });
+
 			base.Seed(db);
 		}
 	}

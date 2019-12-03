@@ -16,7 +16,6 @@ namespace DutyOfServiceDepart.Controllers
 			var incs = from s in db.Incidents
 						   select s;
 			incs = incs.OrderBy(s => s.DateIncident);
-
 			int pageSize = 5;
 			int pageNumber = (page ?? 1);
 			return View("GetIncident", incs.ToPagedList(pageNumber, pageSize));		
@@ -57,6 +56,7 @@ namespace DutyOfServiceDepart.Controllers
 			}
 			return View("CreateIncident");
 		}
+
 		protected override void Dispose(bool disposing)
 		{
 			if (disposing)
@@ -65,8 +65,6 @@ namespace DutyOfServiceDepart.Controllers
 			}
 			base.Dispose(disposing);
 		}
-
 	}
-
 }
 

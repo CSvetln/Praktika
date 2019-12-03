@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Entity.Validation;
 using System.Linq;
-using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using DutyOfServiceDepart.Filters;
 using DutyOfServiceDepart.Models;
@@ -13,11 +8,10 @@ using PagedList;
 namespace DutyOfServiceDepart.Controllers
 {
     public class EmployeeController : Controller
-    {		
+    {
 		[Authorize]
 		public ViewResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
-
 			using (DutyContext db = new DutyContext())
 			{
 				ViewBag.CurrentSort = sortOrder;
@@ -65,6 +59,7 @@ namespace DutyOfServiceDepart.Controllers
 				return View("CreateEmployee");
 			}
 		}
+
 		[MyAuthorize]
 		public ActionResult Delete(int id)
 		{
@@ -79,8 +74,5 @@ namespace DutyOfServiceDepart.Controllers
 				return RedirectToAction("Index");
 			}
 		}
-		
 	}
-
-	
 }

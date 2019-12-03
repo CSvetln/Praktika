@@ -17,23 +17,21 @@ namespace DutyOfServiceDepart.Filters
 				if (db.Accesses.Count() > 0)
 					access = db.Accesses.Where(x => x.Login == Login).FirstOrDefault();
 
-			
-				
 				if (access == null)
 				{
 					filterContext.Result = new RedirectToRouteResult(
 						new System.Web.Routing.RouteValueDictionary {
 					{ "controller", "Error" }, { "action", "NoAuthorization" }});
 				}
+
 				else
 				{
 					if (!access.AllowedEdit)
 					{
 						filterContext.Result = new RedirectToRouteResult(
 							new System.Web.Routing.RouteValueDictionary {
-					{ "controller", "Error" }, { "action", "NotAvailable" }});
+						{ "controller", "Error" }, { "action", "NotAvailable" }});
 					}
-
 				}
 			}
 		}

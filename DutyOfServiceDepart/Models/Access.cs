@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace DutyOfServiceDepart.Models
 {
@@ -10,7 +6,9 @@ namespace DutyOfServiceDepart.Models
 	{
 		[Key]
 		public int AccessId { get; set; }
+
 		public string Login { get; set; }
+
 		public bool AllowedEdit { get; set; }
 	}
 }

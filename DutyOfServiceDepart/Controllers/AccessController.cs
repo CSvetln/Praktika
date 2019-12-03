@@ -16,7 +16,6 @@ namespace DutyOfServiceDepart.Controllers
 			var incs = from s in db.Accesses
 						   select s;
 			incs = incs.OrderBy(s => s.Login);
-
 			int pageSize = 5;
 			int pageNumber = (page ?? 1);
 			return View("GetAccess", incs.ToPagedList(pageNumber, pageSize));
@@ -32,7 +31,6 @@ namespace DutyOfServiceDepart.Controllers
 			SelectList selectLogin = new SelectList(loginQuery);
 			ViewBag.Login = selectLogin;
 			return View("CreateAccess");
-			
 		}
 		
 		[MyAuthorize]
@@ -59,7 +57,6 @@ namespace DutyOfServiceDepart.Controllers
 				db.SaveChanges();
 			}
 			return RedirectToAction("Index");
-			
 		}
 
 		protected override void Dispose(bool disposing)
