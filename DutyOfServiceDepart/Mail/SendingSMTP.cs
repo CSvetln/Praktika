@@ -1,13 +1,14 @@
 ﻿using System.IO;
 using System.Net;
 using System.Net.Mail;
+using System.Web.Configuration;
 
 namespace DutyOfServiceDepart.Mail
 {
 	public class SendingSMTP:IMail
 	{
-		private const string login = "servisnyy.otdel.suek@mail.ru";
-		private const string password = "suek5863";
+		private string login = WebConfigurationManager.AppSettings["lodin"];
+		private string password = WebConfigurationManager.AppSettings["pass"];
 
 		public void SendMail(string email, string subject, string body, MemoryStream attachment)
 		{			

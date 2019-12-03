@@ -6,26 +6,31 @@ using System.Web.Mvc;
 using System.Data.Entity;
 using DutyOfServiceDepart.Filters;
 using DutyOfServiceDepart.Mail;
+using System.Web.Configuration;
 
 namespace DutyOfServiceDepart.Controllers
 {
 	public class HomeController : Controller
 	{		
 		DutyContext db = new DutyContext();
-		List<String> posts = new List<string>() { "Smtp", "Exchange" };
-
+		List<string> posts = new List<string>();
+		
 		[Authorize]
 		[HttpGet]
 		public ActionResult Index(DateTime? start) // Start дата начала месяца, в представлении можно перелистывать месяцы
-		{					 
+		{
 			Calendar calendar = Calendar.GetCalendar(start);
 
 			calendar.Emps = new SelectList(db.Employees, "EmployeId", "Name");// делаем выборку всех сотрудников в выпадающий список
+
+			posts.Add(WebConfigurationManager.AppSettings["Post1"]);
+			posts.Add(WebConfigurationManager.AppSettings["Post2"]);
+
 			calendar.Posts = new SelectList(posts);
-			
+
 			return View(calendar);
 		}
-	
+
 		[MyAuthorize]
 		[HttpPost]
 		public ActionResult Edit(int selectedEmpId, DateTime dateEdit)

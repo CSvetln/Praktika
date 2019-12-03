@@ -18,8 +18,13 @@
             <div class="list">@Html.ActionLink("<<", "Index", new { start = Model.CurrentDate.AddMonths(-1) })</div>
             <div class="list">@Model.CurrentDate.ToString("MMMMMMMM")</div>
             <div class="list">@Html.ActionLink(">>", "Index", new { start = Model.CurrentDate.AddMonths(1) })</div>
-            <div style="width:100%; height:1px; clear:both;"></div>
+            @*//<div style="width:100%; height:1px; clear:both;"></div>*@
         </div>
+        @*<div>
+            @foreach(var t in @ViewBag.p)
+            {<p>@t.ToString()</p> }
+            
+        </div>*@
         <table id="calendar" border="1" align="center">
             <thead>
                 <tr class="week">
