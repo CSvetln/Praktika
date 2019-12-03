@@ -7,6 +7,7 @@
 }
 
 <link rel="stylesheet" href="~/Content/StyleIndex.css">
+<link href="~/Content/StyleSheet1.css" rel="stylesheet" />
 <script src="~/Scripts/script.js"></script>
 
 <div>
@@ -18,13 +19,9 @@
             <div class="list">@Html.ActionLink("<<", "Index", new { start = Model.CurrentDate.AddMonths(-1) })</div>
             <div class="list">@Model.CurrentDate.ToString("MMMMMMMM")</div>
             <div class="list">@Html.ActionLink(">>", "Index", new { start = Model.CurrentDate.AddMonths(1) })</div>
-            @*//<div style="width:100%; height:1px; clear:both;"></div>*@
+            <div class="space"></div>
+
         </div>
-        @*<div>
-            @foreach(var t in @ViewBag.p)
-            {<p>@t.ToString()</p> }
-            
-        </div>*@
         <table id="calendar" border="1" align="center">
             <thead>
                 <tr class="week">
@@ -117,15 +114,15 @@
 
 
     </div>
-   @using (Html.BeginForm("SendAll", "Home", FormMethod.Post))
+    @using (Html.BeginForm("SendAll", "Home", FormMethod.Post))
     {
-    <div>
-        <input type="hidden" value="@Model.CurrentDate" name="curDate" />
-        @Html.DropDownList("selectedPost", Model.Posts)
-        <input class="but" type="submit" value="Разослать всем" />
-    </div>
+        <div>
+            <input type="hidden" value="@Model.CurrentDate" name="curDate" />
+            @Html.DropDownList("selectedPost", Model.Posts)
+            <input class="but" type="submit" value="Разослать всем" />
+        </div>
     }
-   
+
 
 </div>
 

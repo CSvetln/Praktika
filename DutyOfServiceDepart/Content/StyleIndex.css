@@ -1,4 +1,5 @@
 ﻿
+
 .but {
     background-color: #FFFFFF;
     border: 1px solid #CCCCCC;
@@ -41,9 +42,7 @@
 img{
     width:20px;
 }
-table {
-   
-}
+
 .day {
     text-align: right;
     font-size: 16pt;
@@ -120,4 +119,8 @@ tr{
         box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(82, 168, 236, 0.6);
         outline: 0 none;
     }
-
+.space {
+    width: 100%;
+    height: 1px;
+    clear: both;
+}
