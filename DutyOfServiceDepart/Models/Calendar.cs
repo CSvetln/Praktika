@@ -27,8 +27,8 @@ namespace DutyOfServiceDepart.Models
 				{
 					CurrentDate = target
 				};
-
-				foreach (DutyList s in db.DutyLists.Include(x => x.Employee).Where(x => x.DateDuty.Year == calendar.CurrentDate.Year && x.DateDuty.Month == calendar.CurrentDate.Month).ToList())
+				var dutyLists = db.DutyLists.Include(x => x.Employee).Where(x => x.DateDuty.Year == calendar.CurrentDate.Year && x.DateDuty.Month == calendar.CurrentDate.Month).ToList();
+				foreach (DutyList s in dutyLists)
 				{
 					calendar.Duties.Add(s.DateDuty.Day, s.Employee); // Duties - массив пар значений - число месяца и сотрудник 
 				}
