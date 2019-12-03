@@ -31,7 +31,7 @@ namespace DutyOfServiceDepart.Controllers
 		public ActionResult Edit(int selectedEmpId, DateTime dateEdit)
 		{
 			Employee newEmployee = db.Employees.Find(selectedEmpId);//находим выбранного на дату дежурства сотрудника 
-			DutyList duty = db.DutyLists.Where(x => x.DateDuty == dateEdit).FirstOrDefault(); //находим дежурство с такой датой
+			DutyList duty = db.DutyLists.FirstOrDefault(x => x.DateDuty == dateEdit); //находим дежурство с такой датой
 
 			if (duty != null) // если такие записи дежурств есть, меняем дежурного
 			{
