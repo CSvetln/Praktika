@@ -13,9 +13,7 @@ namespace DutyOfServiceDepart.Filters
 			{
 				string Login = HttpContext.Current.User.Identity.Name;
 
-				Access access = new Access();
-				if (db.Accesses.Count() > 0)
-					access = db.Accesses.Where(x => x.Login == Login).FirstOrDefault();
+				Access access = db.Accesses.Where(x => x.Login == Login).FirstOrDefault();
 
 				if (access == null)
 				{
