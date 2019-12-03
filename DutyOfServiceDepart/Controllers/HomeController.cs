@@ -31,15 +31,12 @@ namespace DutyOfServiceDepart.Controllers
 		public ActionResult Edit(int selectedEmpId, DateTime dateEdit)
 		{
 			Employee newEmployee = db.Employees.Find(selectedEmpId);//находим выбранного на дату дежурства сотрудника 
-			List<DutyList> dutyList = db.DutyLists.Where(x => x.DateDuty == dateEdit).ToList(); //находим дежурства с такой датой
+			DutyList duty = db.DutyLists.Where(x => x.DateDuty == dateEdit).FirstOrDefault(); //находим дежурство с такой датой
 
-			if (dutyList.Count != 0) // если такие записи дежурств есть, меняем дежурного
+			if (duty != null) // если такие записи дежурств есть, меняем дежурного
 			{
-				foreach (DutyList s in dutyList)
-				{
-					db.Entry(s).State = EntityState.Modified;
-					s.Employee = newEmployee;
-				}
+				db.Entry(duty).State = EntityState.Modified;
+				duty.Employee = newEmployee;
 			}
 			else // если таких дежурств нет, создаём новую запись
 			{
