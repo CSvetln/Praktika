@@ -23,8 +23,10 @@ namespace DutyOfServiceDepart.Controllers
 		public FileResult CreateReport(string employeeName, DateTime date)
 		{
 			Report report = new Report();
-			MemoryStream stream = report.MakeReport(new ReportClosedXML(), employeeName, date);
-			return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Отчёт.xlsx");
+			using (MemoryStream stream = report.MakeReport(new ReportClosedXML(), employeeName, date))
+			{
+				return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Отчёт.xlsx");
+			}
 		}
 
 		protected override void Dispose(bool disposing)
