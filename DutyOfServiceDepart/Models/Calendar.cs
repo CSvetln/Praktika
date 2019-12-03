@@ -16,8 +16,9 @@ namespace DutyOfServiceDepart.Models
 		public SelectList Posts { get; set; }
 		
 
-		public static Calendar GetCalendar(DateTime target)
+		public static Calendar GetCalendar(DateTime? start)
 		{
+			DateTime target = start ?? DateTime.Now.Date;
 			/*Метод создаёт экземепляр класса Calendar и записывает в него дату, от которой начинать строить 
 			  календарь и дежурных сотрудников в этом месяце */
 			using (DutyContext db = new DutyContext())

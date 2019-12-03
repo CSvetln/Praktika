@@ -19,9 +19,9 @@ namespace DutyOfServiceDepart.Controllers
 		public ActionResult Index(DateTime? start) //возвращает представление
 		{
 			
-			DateTime target1 = start ?? DateTime.Now.Date; // Start дата начала месяца, в представлении можно перелистывать месяцы
+			 // Start дата начала месяца, в представлении можно перелистывать месяцы
 
-			Calendar calendar = Calendar.GetCalendar(target1);
+			Calendar calendar = Calendar.GetCalendar(start);
 
 			calendar.Emps = new SelectList(db.Employees, "EmployeId", "Name");// делаем выборку всех сотрудников в выпадающий список
 			calendar.Posts = new SelectList(posts);
