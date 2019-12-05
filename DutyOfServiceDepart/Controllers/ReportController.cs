@@ -1,9 +1,10 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Web.Mvc;
 using DutyOfServiceDepart.Filters;
 using DutyOfServiceDepart.Models;
-using DutyOfServiceDepart.Reports;
+using Infrastructure.Reports;
 
 namespace DutyOfServiceDepart.Controllers
 {
@@ -23,7 +24,17 @@ namespace DutyOfServiceDepart.Controllers
 		public FileResult CreateReport(string employeeName, DateTime date)
 		{
 			Report report = new Report();
-			using (MemoryStream stream = report.MakeReport(new ReportClosedXML(employeeName, date)))
+			int d = 0;
+
+			
+			var dutyLists = db.DutyLists.Where(x => x.Employee.Name == employeeName && x.DateDuty.Year == date.Year && x.DateDuty.Month == date.Month).ToList();
+
+			foreach (DutyList s in dutyLists)
+			{
+				d++;
+			}
+			
+			using (MemoryStream stream = report.MakeReport(new ReportClosedXML(employeeName, d, date)))
 			{
 				return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Отчёт.xlsx");
 			}

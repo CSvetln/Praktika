@@ -1,35 +1,36 @@
 ﻿using ClosedXML.Excel;
-using DutyOfServiceDepart.Models;
 using System;
 using System.IO;
 using System.Linq;
 
-namespace DutyOfServiceDepart.Reports
+namespace Infrastructure.Reports
 {
 	public class ReportClosedXML : IReport
 	{
 		String EmployeeName { get; set; }
+		int AmountDuty { get; set; }
 		DateTime Date { get; set; }
 
-		public ReportClosedXML(string employeeName, DateTime date)
+		public ReportClosedXML(string employeeName,int amountDuty, DateTime date)
 		{
 			this.EmployeeName = employeeName;
+			this.AmountDuty = amountDuty;
 			this.Date = date;
 		}
 
 		public MemoryStream CreateReport()
 		{
-			int d = 0;
+			//int d = 0;
 
-			using (DutyContext db = new DutyContext())
-			{
-				var dutyLists = db.DutyLists.Where(x => x.Employee.Name == EmployeeName && x.DateDuty.Year == Date.Year && x.DateDuty.Month == Date.Month).ToList();
+			//using (DutyContext db = new DutyContext())
+			//{
+			//	var dutyLists = db.DutyLists.Where(x => x.Employee.Name == EmployeeName && x.DateDuty.Year == Date.Year && x.DateDuty.Month == Date.Month).ToList();
 
-				foreach (DutyList s in dutyLists)
-				{
-					d++;
-				}
-			}
+			//	foreach (DutyList s in dutyLists)
+			//	{
+			//		d++;
+			//	}
+			//}
 
 			var workBook = new XLWorkbook();
 			var workSheet = workBook.Worksheets.Add(Date.ToString("MMMMMMMM"));
@@ -40,7 +41,7 @@ namespace DutyOfServiceDepart.Reports
 
 			workSheet.Cell("A" + 2).Value = EmployeeName;
 			workSheet.Cell("B" + 2).Value = Date.ToLongDateString() + "-" + Date.AddMonths(1).AddDays(-1).ToLongDateString();
-			workSheet.Cell("C" + 2).Value = d;
+			workSheet.Cell("C" + 2).Value = AmountDuty;
 
 
 			for (int i = 1; i < 4; i++)

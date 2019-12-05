@@ -5,8 +5,8 @@ using System.Linq;
 using System.Web.Mvc;
 using System.Data.Entity;
 using DutyOfServiceDepart.Filters;
-using DutyOfServiceDepart.Mail;
 using System.Web.Configuration;
+using Infrastructure.Mail;
 
 namespace DutyOfServiceDepart.Controllers
 {
@@ -56,11 +56,23 @@ namespace DutyOfServiceDepart.Controllers
 		[MyAuthorize]
 		public ViewResult SendAll(string selectedPost, DateTime curDate)
 		{
-			SendSchedule sendSchedule = new SendSchedule(db.Employees.Select(x => x.Email).ToArray(), "График дежурств", "Изучите график дежурств на текущий месяц", curDate);
+			string login = WebConfigurationManager.AppSettings["login"];
+			string pass = WebConfigurationManager.AppSettings["pass"];
+
+			Dictionary<int, string> duties = new Dictionary<int, string>();
+
+
+			foreach (DutyList s in db.DutyLists.Include(x => x.Employee).Where(x => x.DateDuty.Year == curDate.Year && x.DateDuty.Month == curDate.Month).ToList())
+			{
+				duties.Add(s.DateDuty.Day, s.Employee.Name);
+			}
+
+
+			SendSchedule sendSchedule = new SendSchedule(db.Employees.Select(x => x.Email).ToArray(), "График дежурств", "Изучите график дежурств на текущий месяц", curDate, duties);
 			switch (selectedPost)
 			{
-				case "Smtp":					
-					sendSchedule.Send(new SendingSMTP());
+				case "SMTP":					
+					sendSchedule.Send(new SendingSMTP(login, pass));
 					break;
 				case "Exchange":
 					sendSchedule.Send(new SendingExchange());
