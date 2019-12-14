@@ -207,6 +207,10 @@
     <Compile Include="Migrations\201907221603166_InitialCreate.Designer.cs">
       <DependentUpon>201907221603166_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912141637228_Holiday.cs" />
+    <Compile Include="Migrations\201912141637228_Holiday.Designer.cs">
+      <DependentUpon>201912141637228_Holiday.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Access.cs" />
     <Compile Include="Models\Calendar.cs" />
@@ -215,6 +219,7 @@
     <Compile Include="Models\DutyList.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\ExtremIncident.cs" />
+    <Compile Include="Models\Holidays.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -273,6 +278,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201907221603166_InitialCreate.resx">
       <DependentUpon>201907221603166_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912141637228_Holiday.resx">
+      <DependentUpon>201912141637228_Holiday.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
