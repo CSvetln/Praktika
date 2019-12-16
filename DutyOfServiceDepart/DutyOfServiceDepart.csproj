@@ -198,11 +198,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Mail\IMail.cs" />
-    <Compile Include="Mail\Schedule.cs" />
-    <Compile Include="Mail\SendSchedule.cs" />
-    <Compile Include="Mail\SendingExchange.cs" />
-    <Compile Include="Mail\SendingSMTP.cs" />
     <Compile Include="Migrations\201907221603166_InitialCreate.cs" />
     <Compile Include="Migrations\201907221603166_InitialCreate.Designer.cs">
       <DependentUpon>201907221603166_InitialCreate.cs</DependentUpon>
@@ -269,9 +264,14 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="packages.config" />
     <Content Include="Views\Error\NotAvailable.cshtml" />
   </ItemGroup>

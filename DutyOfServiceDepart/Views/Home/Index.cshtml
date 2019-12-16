@@ -114,11 +114,11 @@
 
 
     </div>
+
     @using (Html.BeginForm("SendAll", "Home", FormMethod.Post))
     {
         <div>
             <input type="hidden" value="@Model.CurrentDate" name="curDate" />
-            @Html.DropDownList("selectedPost", Model.Posts)
             <input class="but" type="submit" value="Разослать всем" />
         </div>
     }

@@ -14,7 +14,7 @@ namespace DutyOfServiceDepart.Models
 
 		public SelectList Emps { get; set; }
 
-		public SelectList Posts { get; set; }
+		//public SelectList Posts { get; set; }
 		
 		public static Calendar GetCalendar(DateTime? start)
 		{

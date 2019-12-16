@@ -23,10 +23,10 @@ namespace DutyOfServiceDepart.Controllers
 
 			calendar.Emps = new SelectList(db.Employees, "EmployeId", "Name");// делаем выборку всех сотрудников в выпадающий список
 
-			posts.Add(WebConfigurationManager.AppSettings["Post1"]);
-			posts.Add(WebConfigurationManager.AppSettings["Post2"]);
+			//posts.Add(WebConfigurationManager.AppSettings["Post1"]);
+			//posts.Add(WebConfigurationManager.AppSettings["Post2"]);
 
-			calendar.Posts = new SelectList(posts);
+			//calendar.Posts = new SelectList(posts);
 
 			return View(calendar);
 		}
@@ -54,7 +54,7 @@ namespace DutyOfServiceDepart.Controllers
 		}
 	
 		[MyAuthorize]
-		public ViewResult SendAll(string selectedPost, DateTime curDate)
+		public ViewResult SendAll(DateTime curDate)
 		{
 			string login = WebConfigurationManager.AppSettings["login"];
 			string pass = WebConfigurationManager.AppSettings["pass"];
@@ -69,6 +69,7 @@ namespace DutyOfServiceDepart.Controllers
 
 
 			SendSchedule sendSchedule = new SendSchedule(db.Employees.Select(x => x.Email).ToArray(), "График дежурств", "Изучите график дежурств на текущий месяц", curDate, duties);
+			string selectedPost =WebConfigurationManager.AppSettings["Post"];
 			switch (selectedPost)
 			{
 				case "SMTP":					
