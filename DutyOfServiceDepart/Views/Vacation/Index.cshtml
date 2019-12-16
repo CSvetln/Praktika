@@ -1,0 +1,31 @@
+﻿@using DutyOfServiceDepart.Models;
+@model Calendar
+
+@{
+    ViewBag.Title = "Дежурства";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/Content/StyleIndex.css">
+<link href="~/Content/StyleSheet1.css" rel="stylesheet" />
+<script src="~/Scripts/script.js"></script>
+
+<div>
+    <h2 class="a">График дежурств</h2>
+
+
+    <div class="tm-right-column">
+        <div class="cal">
+            <div style="width:100%; height:1px; clear:both;"></div>
+            <div class="list">@Html.ActionLink("<<", "Index", new { start = Model.CurrentDate.AddMonths(-1) })</div>
+            <div class="list">@Model.CurrentDate.ToString("MMMMMMMM")</div>
+            <div class="list">@Html.ActionLink(">>", "Index", new { start = Model.CurrentDate.AddMonths(1) })</div>
+            <div class="space"></div>
+
+        </div>
+
+        @Helpers.Calendar(Model)
+
+    </div>
+</div>
+

@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using System.Web.WebPages.Html;
 using System.Data.Entity;
 using DutyOfServiceDepart.Filters;
 using System.Web.Configuration;
@@ -14,7 +13,6 @@ namespace DutyOfServiceDepart.Controllers
 	public class HomeController : Controller
 	{		
 		DutyContext db = new DutyContext();
-		List<string> posts = new List<string>();
 		
 		[Authorize]
 		[HttpGet]

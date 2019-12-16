@@ -15,5 +15,6 @@ namespace DutyOfServiceDepart.Models
 		{
 			this.Holiday = holiday;
 		}
+
 	}
 }

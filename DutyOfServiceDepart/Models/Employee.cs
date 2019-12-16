@@ -21,6 +21,17 @@ namespace DutyOfServiceDepart.Models
 		[MaxLength(100)]
 		[Required]
 		public string Login { get; set; }
-	
+
+		public Employee(string name, string email, string login)
+		{
+			this.Name = name;
+			this.Email = email;
+			this.Login = login;
+		}
+
+		public Employee()
+		{
+		}
+
 	}
 }
