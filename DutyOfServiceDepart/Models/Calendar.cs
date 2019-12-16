@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.Mvc;
+//using System.Web.Mvc;
+using System.Web.WebPages.Html;
 using System.Data.Entity;
 
 namespace DutyOfServiceDepart.Models
@@ -12,9 +13,7 @@ namespace DutyOfServiceDepart.Models
 
 		public DateTime CurrentDate { get; set; }
 
-		public SelectList Emps { get; set; }
-
-		//public SelectList Posts { get; set; }
+		public List<Employee> Emps { get; set; }
 		
 		public static Calendar GetCalendar(DateTime? start)
 		{

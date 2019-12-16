@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using System.Web.WebPages.Html;
 using System.Data.Entity;
 using DutyOfServiceDepart.Filters;
 using System.Web.Configuration;
@@ -21,7 +22,7 @@ namespace DutyOfServiceDepart.Controllers
 		{
 			Calendar calendar = Calendar.GetCalendar(start);
 
-			calendar.Emps = new SelectList(db.Employees, "EmployeId", "Name");// делаем выборку всех сотрудников в выпадающий список
+			calendar.Emps = db.Employees.ToList();// делаем выборку всех сотрудников в выпадающий список
 
 			return View(calendar);
 		}

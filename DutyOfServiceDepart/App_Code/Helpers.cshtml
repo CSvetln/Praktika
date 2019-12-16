@@ -1,4 +1,6 @@
 ﻿@using DutyOfServiceDepart.Models;
+@*@using System.Web.Mvc;*@
+
 @helper Calendar(Calendar calendar)
 {
     <table id="calendar">
@@ -28,7 +30,7 @@
                     {
                         <td>
                             @if (Start.Month == calendar.CurrentDate.Month)
-                             {
+                            {
                                 <div class="day">@Start.Day</div>
                                 if (calendar.Duties.ContainsKey(Start.Day))
                                 {
@@ -37,21 +39,26 @@
                                     </div>
                                 }
 
-                                    <form>
-                                        <div class="hidden" id="day[@i]">
-                                            <input type="hidden" value="@Start" name="dateEdit" />
-                                           @* @Html.DropDownList("selectedEmpId", calendar.Emps as SelectListItem)*@
-                                            <input class="but" type="submit" value="Сохранить изменения" />
-                                        </div>
-                                    </form>
-                        
+                                <form method="post" action="/Home/Edit">
+                                    <div class="hidden" id="day[@i]">
+                                        <input type="hidden" value="@Start" name="dateEdit" />                                      
+                                        <select size="3" name="selectedEmpId">
+                                            @foreach (var e in calendar.Emps)
+                                            {
+                                            <option value="@e.EmployeId">@e.Name</option>
+                                            }
+                                        </select>
+                                        <input class="but" type="submit" value="Сохранить изменения" />
+                                    </div>
+                                </form>
+
                                 <a class="pencil" href="" onclick="funcEdit('day[@i]'); return false;"><img src="~/Content/edit.png" /></a>
 
-                             }
+                            }
                         </td>
                         i++;
                         Start = Start.AddDays(1);
-                     }
+                    }
                     <td>
                         @if (Start.Month == calendar.CurrentDate.Month)
                         {
@@ -65,13 +72,18 @@
                                 </div>
                             }
 
-                                <form>
-                                    <div class="hidden" id="day[@i]">
-                                        <input type="hidden" value="@Start" name="DateEdit" />
-                                      @*  @Html.DropDownList("selectedEmpId", calendar.Emps)*@
-                                        <input class="but" type="submit" value="Сохранить изменения" />
-                                    </div>
-                                </form>
+                            <form method="post" action="/Home/Edit">
+                                <div class="hidden" id="day[@i]">
+                                    <input type="hidden" value="@Start" name="dateEdit" />
+                                    <select size="3" name="selectedEmpId">
+                                        @foreach (var e in calendar.Emps)
+                                        {
+                                            <option value="@e.EmployeId">@e.Name</option>
+                                        }
+                                    </select>
+                                    <input class="but" type="submit" value="Сохранить изменения" />
+                                </div>
+                            </form>
 
                             <a class="pencil" href="" onclick="funcEdit('day[@i]'); return false;"><img src="~/Content/edit.png" /></a>
 
