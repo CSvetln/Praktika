@@ -1,0 +1,88 @@
+﻿@using DutyOfServiceDepart.Models;
+@helper Calendar(Calendar calendar)
+{
+    <table id="calendar">
+        <thead>
+            <tr class="week">
+                <td>ПН</td>
+                <td>ВТ</td>
+                <td>СР</td>
+                <td>ЧТ</td>
+                <td>ПТ</td>
+                <td>СБ</td>
+                <td>ВС</td>
+            </tr>
+        </thead>
+
+        @{
+            int i = 0;
+            DateTime Start = new DateTime(calendar.CurrentDate.Year, calendar.CurrentDate.Month, 1);
+            while (Start.DayOfWeek != DayOfWeek.Monday)
+            {
+                Start = Start.AddDays(-1);
+            }
+            while (true)
+            {
+                <tr>
+                    @while (Start.DayOfWeek != DayOfWeek.Sunday)
+                    {
+                        <td>
+                            @if (Start.Month == calendar.CurrentDate.Month)
+                             {
+                                <div class="day">@Start.Day</div>
+                                if (calendar.Duties.ContainsKey(Start.Day))
+                                {
+                                    <div class="fam">
+                                        @calendar.Duties[Start.Day].Name
+                                    </div>
+                                }
+
+                                    <form>
+                                        <div class="hidden" id="day[@i]">
+                                            <input type="hidden" value="@Start" name="dateEdit" />
+                                           @* @Html.DropDownList("selectedEmpId", calendar.Emps as SelectListItem)*@
+                                            <input class="but" type="submit" value="Сохранить изменения" />
+                                        </div>
+                                    </form>
+                        
+                                <a class="pencil" href="" onclick="funcEdit('day[@i]'); return false;"><img src="~/Content/edit.png" /></a>
+
+                             }
+                        </td>
+                        i++;
+                        Start = Start.AddDays(1);
+                     }
+                    <td>
+                        @if (Start.Month == calendar.CurrentDate.Month)
+                        {
+                            <div class="day">
+                                @Start.Day
+                            </div>
+                            if (calendar.Duties.ContainsKey(Start.Day))
+                            {
+                                <div class="fam">
+                                    @calendar.Duties[Start.Day].Name
+                                </div>
+                            }
+
+                                <form>
+                                    <div class="hidden" id="day[@i]">
+                                        <input type="hidden" value="@Start" name="DateEdit" />
+                                      @*  @Html.DropDownList("selectedEmpId", calendar.Emps)*@
+                                        <input class="but" type="submit" value="Сохранить изменения" />
+                                    </div>
+                                </form>
+
+                            <a class="pencil" href="" onclick="funcEdit('day[@i]'); return false;"><img src="~/Content/edit.png" /></a>
+
+                        }
+                    </td>
+                </tr>
+                i++;
+                Start = Start.AddDays(1);
+                if (calendar.CurrentDate.Month != Start.Month)
+                { break; }
+            }
+        }
+    </table>
+}

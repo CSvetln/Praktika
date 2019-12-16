@@ -23,11 +23,6 @@ namespace DutyOfServiceDepart.Controllers
 
 			calendar.Emps = new SelectList(db.Employees, "EmployeId", "Name");// делаем выборку всех сотрудников в выпадающий список
 
-			//posts.Add(WebConfigurationManager.AppSettings["Post1"]);
-			//posts.Add(WebConfigurationManager.AppSettings["Post2"]);
-
-			//calendar.Posts = new SelectList(posts);
-
 			return View(calendar);
 		}
 
