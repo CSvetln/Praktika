@@ -5,18 +5,17 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
-    @*@Styles.Render("~/Content/css")*@
-    @*@Scripts.Render("~/bundles/modernizr")*@
-    <link href="~/Content/bootstrap.css" rel="stylesheet" />
-
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
     <link href="~/Content/Site1.css" rel="stylesheet" />
 </head>
 
 <body>
-    <nav class="navbar navbar-light bg-light fixed-top" id="menu">
-        <ul class="nav navbar-nav navbar-dark bg-dark">
-            <li class="nv"><img class="logo" src="~/Content/suek1.png" alt=""></li>
-            <li class="suek"><p>СУЭК</p></li>
+    <nav class="navbar fixed-top" id="menu">
+       @* <p class="navbar-brand">СУЭК</p>*@
+        <ul class="nav navbar-nav">
+            <li><img class="logo" src="~/Content/suek.png" alt=""></li>
+           @* <li class="navbar-brand">СУЭК</li>*@
             <li class="nv">@Html.ActionLink("Дежурство", "Index", "Home")</li>
             <li class="nv">@Html.ActionLink("Отпуска", "Index", "Vacation")</li>
             <li class="nv">@Html.ActionLink("Сотрудники", "Index", "Employee")</li>
@@ -28,8 +27,8 @@
     <div class="container body-content">
         @RenderBody()
     </div>
-    @*@Scripts.Render("~/bundles/jquery")
-        @Scripts.Render("~/bundles/bootstrap")
-        @RenderSection("scripts", required: false)*@
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
 </body>
 </html>
