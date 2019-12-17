@@ -2,7 +2,10 @@
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     color:black;
 }
-
+h2{
+    font-family:Cambria;
+    font-weight:500;
+}
 .logo {
     margin-left: 10px;
     width: 90px;
@@ -18,7 +21,9 @@ img {
 
 .navbar {
     background-color: #6699CC;
-    color:white;
+    color: white;
+    border-radius: 0px; 
+
 }
 .nv {
     list-style: none;

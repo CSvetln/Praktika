@@ -1,6 +1,4 @@
-﻿
-
-.but {
+﻿.but {
     background-color: #FFFFFF;
     border: 1px solid #CCCCCC;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
@@ -15,12 +13,21 @@
     width: 90%;
  
 }
+.row p {
+    display: inline-block;
+    margin-left: 50px;
+    font-family: Cambria;
+    font-size: 20px;
+}
+#month {
+     
+}
 
-    .but:hover, but:focus {
-        border-color: rgba(82, 168, 236, 0.8);
-        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(82, 168, 236, 0.6);
-        outline: 0 none;
-    }
+.but:hover, but:focus {
+    border-color: rgba(82, 168, 236, 0.8);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(82, 168, 236, 0.6);
+    outline: 0 none;
+}
 .hidden select {
     margin-left: 10px;
     background: transparent;
