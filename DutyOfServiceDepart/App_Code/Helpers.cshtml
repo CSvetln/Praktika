@@ -1,9 +1,9 @@
 ﻿@using DutyOfServiceDepart.Models;
-@*@using System.Web.Mvc;*@
 
 @helper Calendar(Calendar calendar)
 {
-    <table id="calendar">
+
+    <table id="calendar" border="1">
         <thead>
             <tr class="week">
                 <td>ПН</td>
@@ -28,32 +28,37 @@
                 <tr>
                     @while (Start.DayOfWeek != DayOfWeek.Sunday)
                     {
-                        <td>
+                        <td class="active">
                             @if (Start.Month == calendar.CurrentDate.Month)
                             {
-                                <div class="day">@Start.Day</div>
-                                if (calendar.Duties.ContainsKey(Start.Day))
+                                <div class="day">
+                                    <a class="dis" href="" onclick="funcEdit('day[@i]'); return false;">
+                                        @Start.Day
+                                    </a>
+                                </div>
+                                if (calendar.Duties.ContainsKey(Start))
                                 {
-                                    <div class="fam">
-                                        @calendar.Duties[Start.Day].Name
-                                    </div>
+                                <div class="fam">
+                                    @for (int j = 0; j < calendar.Duties[Start].Length; j++)
+                                    {
+                                    <p>@calendar.Duties[Start][j].Name</p>
+                                    }
+                            </div>
                                 }
 
                                 <form method="post" action="/Home/Edit">
                                     <div class="hidden" id="day[@i]">
-                                        <input type="hidden" value="@Start" name="dateEdit" />                                      
-                                        <select size="3" name="selectedEmpId">
+                                        <input type="hidden" value="@Start" name="dateEdit" />
+                                        <select class="selected" size="3" name="selectedEmpId">
                                             @foreach (var e in calendar.Emps)
                                             {
-                                            <option value="@e.EmployeId">@e.Name</option>
+                                                <option value="@e.Value">@e.Text</option>
                                             }
                                         </select>
-                                        <input class="but" type="submit" value="Сохранить изменения" />
+                                        <input class="but" type="submit" value="Сохранить
+                                               изменения" />
                                     </div>
                                 </form>
-
-                                <a class="pencil" href="" onclick="funcEdit('day[@i]'); return false;"><img src="~/Content/edit.png" /></a>
-
                             }
                         </td>
                         i++;
@@ -63,30 +68,34 @@
                         @if (Start.Month == calendar.CurrentDate.Month)
                         {
                             <div class="day">
-                                @Start.Day
+                                <a class="dis" href="" onclick="funcEdit('day[@i]'); return false;">
+                                    @Start.Day
+                                </a>
                             </div>
-                            if (calendar.Duties.ContainsKey(Start.Day))
+                            if (calendar.Duties.ContainsKey(Start))
                             {
-                                <div class="fam">
-                                    @calendar.Duties[Start.Day].Name
-                                </div>
+                            <div class="fam">
+
+                                @for (int j = 0; j < calendar.Duties[Start].Length; j++)
+                                {
+                                 <p>@calendar.Duties[Start][j].Name</p>
+                                }
+                            </div>
                             }
 
                             <form method="post" action="/Home/Edit">
                                 <div class="hidden" id="day[@i]">
                                     <input type="hidden" value="@Start" name="dateEdit" />
-                                    <select size="3" name="selectedEmpId">
+                                    <select class="selected" size="3" name="selectedEmpId">
                                         @foreach (var e in calendar.Emps)
                                         {
-                                            <option value="@e.EmployeId">@e.Name</option>
-                                        } 
+                                            <option value="@e.Value">@e.Text</option>
+                                        }
                                     </select>
-                                    <input class="but" type="submit" value="Сохранить изменения" />
+                                    <input class="but" type="submit" value="Сохранить
+                                           изменения" />
                                 </div>
                             </form>
-
-                            <a class="pencil" href="" onclick="funcEdit('day[@i]'); return false;"><img src="~/Content/edit.png" /></a>
-
                         }
                     </td>
                 </tr>
@@ -97,4 +106,5 @@
             }
         }
     </table>
+
 }

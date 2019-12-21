@@ -19,7 +19,6 @@ namespace DutyOfServiceDepart.Controllers
 			int pageSize = 5;
 			int pageNumber = (page ?? 1);
 			return View("GetAccess", incs.ToPagedList(pageNumber, pageSize));
-
         }
 
 		[MyAuthorize]
@@ -36,13 +35,9 @@ namespace DutyOfServiceDepart.Controllers
 		[MyAuthorize]
 		[HttpPost]
 		public ActionResult Create(Access access)
-		{			
-			if (ModelState.IsValid)
-			{
-				db.Accesses.Add(access);
-				db.SaveChanges();
-				return RedirectToAction("Index");
-		    }
+		{					
+			db.Accesses.Add(access);
+			db.SaveChanges();					   
 			return View("CreateAccess");		
 		}
 

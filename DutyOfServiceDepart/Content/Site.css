@@ -1,16 +1,64 @@
 ﻿body {
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    color:black;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color: black;
+    margin: 0;
+    padding: 0;
 }
-h2{
-    font-family:Cambria;
-    font-weight:500;
+.container-fluid{
+    padding-left:20px;
+    margin:20px;
 }
+h2 {
+    font-family: Cambria;
+    font-weight: 500;
+}
+.body-content {
+    padding-left:0;
+    padding-right:0;
+    /*margin-left:0;
+    margin-right:0;*/
+    left:1%;
+}
+.table {
+    margin: 30px;
+    left: 1%;
+    padding: 30px;
+}
+/*.body-content {
+    padding-right: 0;
+}
+.container {
+    padding-right: 0;
+}
+.body-content {
+    margin:0;
+    padding-right:0;
+    position:relative;*/
+/*left:1%;*/
+/*left: 1%;*/
+/*padding-left: 0;
+    padding-right: 10px;*/
+/*margin: 0;
+    padding: 0;
+    position: relative;*/
+/*right: 1%;*/
+/* left:3%;*/
+/*margin-right:3%;*/
+/*}*/
+/*.container{*/
+/*width:100%;*/
+/*margin:0;
+    padding:0;
+}
+.body-content {
+    margin-left:5px;
+    margin-right:5px;*/
+/*width:90%;*/
+/*}*/
 .logo {
     margin-left: 10px;
     width: 90px;
     height: 50px;
-    
 }
 img {
     -moz-user-select: none;
@@ -22,8 +70,8 @@ img {
 .navbar {
     background-color: #6699CC;
     color: white;
-    border-radius: 0px; 
-
+    border-radius: 0; 
+    border:none;
 }
 .nv {
     list-style: none;

@@ -7,30 +7,34 @@
 }
 
 <link rel="stylesheet" href="~/Content/StyleIndex.css">
+@*<link href="~/Content/StyleCalendar.css" rel="stylesheet" />*@
 <script src="~/Scripts/script.js"></script>
 
 <div>
-    <h2 class="a">График дежурств</h2>
-   
-
+    <div class="heads">
+        <div class="head col-md-4 ">
+            <h2 class="a">График дежурств</h2>
+        </div>
+        <div class="head col-md-4 col-md-offset-4">
+            @using (Html.BeginForm("SendAll", "Home", FormMethod.Post))
+            {
+                <div>
+                    @Html.ActionLink("Разослать график", "SendAll", new { CurDate = Model.CurrentDate }, new { @class = "send", @id = "send1" })
+                </div>
+            }
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-6 col-md-offset-4">
             <p>@Html.ActionLink("<<", "Index", new { start = Model.CurrentDate.AddMonths(-1) })</p>
-            <p id="month">@Model.CurrentDate.ToString("MMMMMMMM")</p>
+            <p id="month">@Model.CurrentDate.ToString("MMMMMMMM") - @Model.CurrentDate.Year</p>
             <p>@Html.ActionLink(">>", "Index", new { start = Model.CurrentDate.AddMonths(1) })</p>
         </div>
-
-         @Helpers.Calendar(Model)
+        <div class="col">
+            @Helpers.Calendar(Model)
+        </div>
 
     </div>
-
-    @using (Html.BeginForm("SendAll", "Home", FormMethod.Post))
-    {
-        <div>
-            <input type="hidden" value="@Model.CurrentDate" name="curDate" />
-            <input class="but" type="submit" value="Разослать всем" />
-        </div>
-    }
 
 
 </div>

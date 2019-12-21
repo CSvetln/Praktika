@@ -26,6 +26,8 @@ namespace DutyOfServiceDepart.Models
 			this.Start = start;
 			this.Finish = finish;
 		}
-
+		public Vacation()
+		{
+		}
 	}
 }

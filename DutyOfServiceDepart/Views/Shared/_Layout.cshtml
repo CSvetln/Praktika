@@ -24,8 +24,10 @@
             <li class="nv">@Html.ActionLink("Создать отчёт", "CreateReport", "Report")</li>
         </ul>
     </nav>
-    <div class="container body-content">
+    <div class="container-fluid">
+      
         @RenderBody()
+       
         <hr />
         <footer>
             <p>© @DateTime.Now.Year - СУЭК</p>

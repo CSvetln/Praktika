@@ -16,7 +16,7 @@ namespace DutyOfServiceDepart.Controllers
 		[HttpGet]
         public ActionResult CreateReport()
         {			
-			return View(db.Employees);			
+			return View(db.Employees.ToList());			
         }
 		
 		[MyAuthorize]
@@ -36,7 +36,8 @@ namespace DutyOfServiceDepart.Controllers
 			
 			using (MemoryStream stream = report.MakeReport(new ReportClosedXML(employeeName, d, date)))
 			{
-				return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Отчёт.xlsx");
+				string output = String.Format("Отчёт {0}-{1}xlsx", date.ToLongDateString(), date.AddMonths(1).AddDays(-1).ToLongDateString());
+				return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", output);
 			}
 		}
 

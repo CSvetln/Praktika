@@ -18,9 +18,11 @@ namespace DutyOfServiceDepart.Controllers
 		[HttpGet]
 		public ActionResult Index(DateTime? start) // Start дата начала месяца, в представлении можно перелистывать месяцы
 		{
-			Calendar calendar = Calendar.GetCalendar(start);
+			Calendar calendar = Calendar.GetCalendarDuty(start);
 
-			calendar.Emps = db.Employees.ToList();// делаем выборку всех сотрудников в выпадающий список
+			calendar.Emps = from genre in db.Employees
+							select new System.Web.WebPages.Html.SelectListItem
+							{ Text = genre.Name, Value = genre.EmployeId.ToString() };// делаем выборку всех сотрудников в выпадающий список
 
 			return View(calendar);
 		}

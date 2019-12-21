@@ -47,13 +47,9 @@ namespace DutyOfServiceDepart.Controllers
 		public ActionResult Create([Bind(Include = "DateIncident,EmployeeId,DescIncident")]ExtremIncident extremIncident)
 		{
 			Employee employee = db.Employees.Find(extremIncident.EmployeeId);
-			extremIncident.Employee = employee;
-			if (ModelState.IsValid)
-			{
-				db.Incidents.Add(extremIncident);
-				db.SaveChanges();
-				return RedirectToAction("Index");
-			}
+			extremIncident.Employee = employee;			
+			db.Incidents.Add(extremIncident);
+			db.SaveChanges();				
 			return View("CreateIncident");
 		}
 

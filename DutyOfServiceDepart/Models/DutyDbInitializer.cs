@@ -36,8 +36,10 @@ namespace DutyOfServiceDepart.Models
 
 
 			db.Vacations.Add(new Vacation(e1, new DateTime(2019, 12, 01), new DateTime(2019, 12, 08)));
-			db.Vacations.Add(new Vacation(e2, new DateTime(2019, 12, 08), new DateTime(2019, 12, 22)));
-			db.Vacations.Add(new Vacation(e1, new DateTime(2019, 12, 22), new DateTime(2019, 12, 31)));
+			db.Vacations.Add(new Vacation(e2, new DateTime(2019, 12, 08), new DateTime(2020, 01, 15)));
+			db.Vacations.Add(new Vacation(e3, new DateTime(2019, 11, 22), new DateTime(2019, 12, 15)));
+			db.Vacations.Add(new Vacation(e4, new DateTime(2019, 11, 22), new DateTime(2020, 01, 15)));
+
 
 			base.Seed(db);
 		}

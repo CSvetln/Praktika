@@ -20,17 +20,6 @@ namespace Infrastructure.Reports
 
 		public MemoryStream CreateReport()
 		{
-			//int d = 0;
-
-			//using (DutyContext db = new DutyContext())
-			//{
-			//	var dutyLists = db.DutyLists.Where(x => x.Employee.Name == EmployeeName && x.DateDuty.Year == Date.Year && x.DateDuty.Month == Date.Month).ToList();
-
-			//	foreach (DutyList s in dutyLists)
-			//	{
-			//		d++;
-			//	}
-			//}
 
 			var workBook = new XLWorkbook();
 			var workSheet = workBook.Worksheets.Add(Date.ToString("MMMMMMMM"));

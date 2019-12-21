@@ -13,14 +13,11 @@
     <h3>Введите необходимые данные:</h3>
     @using (Html.BeginForm("Create", "Access", FormMethod.Post))
     {
-
-
-
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <table>
             <tr>
                 <td><p>Login: </p></td>
-                <td> @Html.DropDownListFor(model => model.Login, ViewBag.Teams as SelectList) </td>
+                <td> @Html.DropDownListFor(model => model.Login, ViewBag.Login as SelectList) </td>
                 <td> @Html.ValidationMessageFor(x => x.Login, "", new { @class = "text-danger" })</td>
             </tr>
 
