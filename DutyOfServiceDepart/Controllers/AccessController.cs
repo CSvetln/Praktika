@@ -1,5 +1,5 @@
 ﻿using DutyOfServiceDepart.Filters;
-using DutyOfServiceDepart.Models;
+using LibraryModels;
 using PagedList;
 using System.Linq;
 using System.Web.Mvc;

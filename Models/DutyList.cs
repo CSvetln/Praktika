@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace DutyOfServiceDepart.Models
+namespace LibraryModels
 {
 	public class DutyList
 	{

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data.Entity;
 
-namespace DutyOfServiceDepart.Models
+namespace LibraryModels
 {
 	public class DutyDbInitializer : DropCreateDatabaseAlways<DutyContext>
 	{

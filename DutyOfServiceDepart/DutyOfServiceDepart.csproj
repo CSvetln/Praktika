@@ -51,9 +51,7 @@
     <Reference Include="DocumentFormat.OpenXml, Version=2.7.2.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
       <HintPath>..\packages\DocumentFormat.OpenXml.2.7.2\lib\net46\DocumentFormat.OpenXml.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.3.0-preview6-19304-03\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.3.0-preview6-19304-03\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
@@ -212,15 +210,7 @@
       <DependentUpon>201912161429083_Vacation.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\Access.cs" />
     <Compile Include="Models\Calendar.cs" />
-    <Compile Include="Models\DutyContext.cs" />
-    <Compile Include="Models\DutyDbInitializer.cs" />
-    <Compile Include="Models\DutyList.cs" />
-    <Compile Include="Models\Employee.cs" />
-    <Compile Include="Models\ExtremIncident.cs" />
-    <Compile Include="Models\Holidays.cs" />
-    <Compile Include="Models\Vacation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -302,6 +292,10 @@
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj">
       <Project>{5ecdccfd-e4a6-4bd3-bdeb-45a5babc9b2e}</Project>
       <Name>Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Models\LibraryModels.csproj">
+      <Project>{204c6870-7a06-498f-89ac-17e6c961520c}</Project>
+      <Name>LibraryModels</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

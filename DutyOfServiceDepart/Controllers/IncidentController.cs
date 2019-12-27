@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
 using DutyOfServiceDepart.Filters;
-using DutyOfServiceDepart.Models;
+using LibraryModels;
 using PagedList;
 
 namespace DutyOfServiceDepart.Controllers

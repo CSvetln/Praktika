@@ -1,6 +1,6 @@
 ﻿using System.Data.Entity;
 
-namespace DutyOfServiceDepart.Models
+namespace LibraryModels
 {
 	public class DutyContext: DbContext
 	{

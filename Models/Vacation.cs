@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
-namespace DutyOfServiceDepart.Models
+namespace LibraryModels
 {
 	public class Vacation
 	{
@@ -26,8 +23,10 @@ namespace DutyOfServiceDepart.Models
 			this.Start = start;
 			this.Finish = finish;
 		}
+
 		public Vacation()
 		{
 		}
+
 	}
 }

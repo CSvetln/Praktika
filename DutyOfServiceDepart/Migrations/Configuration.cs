@@ -4,15 +4,16 @@
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
+	using Models;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<DutyOfServiceDepart.Models.DutyContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<LibraryModels.DutyContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(DutyOfServiceDepart.Models.DutyContext context)
+        protected override void Seed(LibraryModels.DutyContext context)
         {
             //  This method will be called after migrating to the latest version.
 

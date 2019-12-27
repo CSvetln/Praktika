@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using DutyOfServiceDepart.Models;
+using LibraryModels;
 
 namespace DutyOfServiceDepart.Filters
 {

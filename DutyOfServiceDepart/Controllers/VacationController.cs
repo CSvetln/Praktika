@@ -1,13 +1,10 @@
-﻿using DutyOfServiceDepart.Models;
+﻿using LibraryModels;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using System.Web.WebPages.Html;
 using System.Data.Entity;
 using DutyOfServiceDepart.Filters;
-using System.Web.Configuration;
-using Infrastructure.Mail;
+using DutyOfServiceDepart.Models;
 
 namespace DutyOfServiceDepart.Controllers
 {
@@ -19,7 +16,7 @@ namespace DutyOfServiceDepart.Controllers
 		public ActionResult Index(DateTime? start) // Start дата начала месяца, в представлении можно перелистывать месяцы
 		{
 			Calendar calendar = Calendar.GetCalendarVacation(start);				
-			//ViewBag.Books = db.Employees.ToList();
+			
 			return View(calendar);
 		}
 
