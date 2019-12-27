@@ -38,7 +38,7 @@
                                 </div>
                                 if (calendar.Duties.ContainsKey(Start))
                                 {
-                                <div class="fam">
+                                <div class="fam mx-auto">
                                     @for (int j = 0; j < calendar.Duties[Start].Length; j++)
                                     {
                                     <p>@calendar.Duties[Start][j].Name</p>
@@ -47,9 +47,9 @@
                                 }
 
                                 <form method="post" action="/Home/Edit">
-                                    <div class="hidden" id="day[@i]">
+                                    <div class="hidden mx-auto" id="day[@i]">
                                         <input type="hidden" value="@Start" name="dateEdit" />
-                                        <select class="selected" size="3" name="selectedEmpId">
+                                        <select class="selected mx-auto" size="3" name="selectedEmpId">
                                             @foreach (var e in calendar.Emps)
                                             {
                                                 <option value="@e.Value">@e.Text</option>

@@ -5,37 +5,48 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<link rel="stylesheet" href="~/Content/StyleCreate.css">
+@*<link rel="stylesheet" href="~/Content/StyleCreate.css">*@
+<link href="~/Content/StyleSheet1.css" rel="stylesheet" />
 <h2>Добавление нового пользователя</h2>
 
 
 <div>
-    <h3>Введите необходимые данные:</h3>
+
     @using (Html.BeginForm("Create", "Access", FormMethod.Post))
     {
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <table>
-            <tr>
-                <td><p>Login: </p></td>
-                <td> @Html.DropDownListFor(model => model.Login, ViewBag.Login as SelectList) </td>
-                <td> @Html.ValidationMessageFor(x => x.Login, "", new { @class = "text-danger" })</td>
-            </tr>
+        <div class="row mt">
+            <div class="col-md-3 mt">
+                <p>Login: </p>
+            </div>
+            <div class="col-md-2 mt">
+                @Html.DropDownListFor(model => model.Login, ViewBag.Logins as SelectList, new { @class = "drop" })
+            </div>
+            <div class="col-md-3 mt">
+                @Html.ValidationMessageFor(x => x.Login, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 ">
+                <p>Уровень доступа: </p>
+            </div>
+            <div class="col-md-2 ">
+                <p>
+                    <input type="radio" value="false" checked name="AllowedEdit" /> Чтение
+                </p>
 
-            <tr>
-                <td><p>Уровень доступа:</p></td>
-                <td>
-                    <p>
-                        <input type="radio" value="false" checked name="AllowedEdit" />чтение
-                    </p>
-
-                    <p>
-                        <input type="radio" value="true" name="AllowedEdit" />чтение и запись
-                    </p>
-                </td>
-                <td> @Html.ValidationMessageFor(model => model.AllowedEdit, "", new { @class = "text-danger" })</td>
-            </tr>
-
-        </table>
-        <input class="but" id="but1" type="submit" value="Добавить" />
+                <p>
+                    <input type="radio" value="true" name="AllowedEdit" /> Чтение и запись
+                </p>
+            </div>
+            <div class="col-md-3 ">
+                @Html.ValidationMessageFor(model => model.AllowedEdit, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 mt">
+                <input class="but" id="but1" type="submit" value="Добавить" />
+            </div>
+        </div>
     }
 </div>

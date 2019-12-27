@@ -16,7 +16,7 @@ namespace DutyOfServiceDepart.Controllers
 			var incs = from s in db.Incidents
 						   select s;
 			incs = incs.OrderBy(s => s.DateIncident);
-			int pageSize = 5;
+			int pageSize = 10;
 			int pageNumber = (page ?? 1);
 			return View("GetIncident", incs.ToPagedList(pageNumber, pageSize));		
 		}
@@ -47,9 +47,13 @@ namespace DutyOfServiceDepart.Controllers
 		public ActionResult Create([Bind(Include = "DateIncident,EmployeeId,DescIncident")]ExtremIncident extremIncident)
 		{
 			Employee employee = db.Employees.Find(extremIncident.EmployeeId);
-			extremIncident.Employee = employee;			
-			db.Incidents.Add(extremIncident);
-			db.SaveChanges();				
+			extremIncident.Employee = employee;
+			if (ModelState.IsValid)
+			{
+				db.Incidents.Add(extremIncident);
+				db.SaveChanges();
+				return RedirectToAction("Index");
+			}
 			return View("CreateIncident");
 		}
 

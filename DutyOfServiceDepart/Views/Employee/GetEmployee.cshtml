@@ -10,20 +10,22 @@
     
 }
 
-<link rel="stylesheet" href="~/Content/StyleGet.css">
+<link href="~/Content/StyleSheet3.css" rel="stylesheet" />
 <link rel="stylesheet" href="~/Content/PagedList.css">
 <div>
 
-    <div class="tm-right-columnt">
+    
         <h2>Список сотрудников</h2>
         <p class="addemp">@Html.ActionLink("+ Добавить сотрудника", "Create", "Employee")</p>
 
         @using (Html.BeginForm())
         {
-            <div class="search">
-                Поиск по имени:
-                @Html.TextBox("SearchString")
-                <input class="but" id="but1" type="submit" value="Поиск" />
+            <div class="row search">
+                <div class="col-md-2"><p>Поиск по имени:</p></div>
+                <div class="col-md-3">@Html.TextBox("SearchString")</div>
+                <div class="col-md-2">
+                    <input class="but" id="but1" type="submit" value="Поиск" />
+                </div>
             </div>
         }
 
@@ -51,7 +53,7 @@
         
         <br />
 
-    </div>
+   
 </div>
 <br />
     Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount

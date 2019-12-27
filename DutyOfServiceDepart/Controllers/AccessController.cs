@@ -24,21 +24,25 @@ namespace DutyOfServiceDepart.Controllers
 		[MyAuthorize]
 		[HttpGet]
 		public ViewResult Create()
-		{			
+		{
 			var loginQuery = (from e in db.Employees select e.Login).Except
 			(from a in db.Accesses select a.Login);
 			SelectList selectLogin = new SelectList(loginQuery);
-			ViewBag.Login = selectLogin;
+			ViewBag.Logins = selectLogin;
 			return View("CreateAccess");
 		}
 		
 		[MyAuthorize]
 		[HttpPost]
 		public ActionResult Create(Access access)
-		{					
-			db.Accesses.Add(access);
-			db.SaveChanges();					   
-			return View("CreateAccess");		
+		{
+			if (ModelState.IsValid)
+			{
+				db.Accesses.Add(access);
+				db.SaveChanges();
+				return RedirectToAction("Index");
+			}
+			return View("CreateAccess");
 		}
 
 		[MyAuthorize]

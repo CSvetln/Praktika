@@ -28,15 +28,32 @@ namespace DutyOfServiceDepart.Models
 			db.Incidents.Add(new ExtremIncident(new DateTime(2019, 12, 06), e2, ""));
 			db.Incidents.Add(new ExtremIncident(new DateTime(2019, 12, 13), e3, ""));
 			db.Incidents.Add(new ExtremIncident(new DateTime(2019, 12, 25), e4, ""));
+			db.Incidents.Add(new ExtremIncident(new DateTime(2019, 12, 14), e1, ""));
+			db.Incidents.Add(new ExtremIncident(new DateTime(2019, 12, 15), e2, ""));
+			db.Incidents.Add(new ExtremIncident(new DateTime(2019, 12, 18), e3, ""));
+			db.Incidents.Add(new ExtremIncident(new DateTime(2019, 12, 23), e4, ""));
+			db.Incidents.Add(new ExtremIncident(new DateTime(2019, 12, 2), e1, ""));
+			db.Incidents.Add(new ExtremIncident(new DateTime(2019, 12, 3), e2, ""));
+			db.Incidents.Add(new ExtremIncident(new DateTime(2019, 12, 4), e3, ""));
+			db.Incidents.Add(new ExtremIncident(new DateTime(2019, 12, 5), e4, ""));
+			db.Incidents.Add(new ExtremIncident(new DateTime(2019, 12, 7), e1, ""));
+			db.Incidents.Add(new ExtremIncident(new DateTime(2019, 12, 8), e2, ""));
+			db.Incidents.Add(new ExtremIncident(new DateTime(2019, 12, 9), e3, ""));
+			db.Incidents.Add(new ExtremIncident(new DateTime(2019, 12, 10), e4, ""));
 
 			db.Accesses.Add(new Access(e1.Login, true));
 			db.Accesses.Add(new Access(e2.Login, false));
-			db.Accesses.Add(new Access(e3.Login, false));
-			db.Accesses.Add(new Access(e4.Login, false));
+
+			db.Holidays.Add(new Holidays(new DateTime(2019, 12, 01)));
+			db.Holidays.Add(new Holidays(new DateTime(2019, 12, 07)));
+			db.Holidays.Add(new Holidays(new DateTime(2019, 12, 08)));
+			db.Holidays.Add(new Holidays(new DateTime(2019, 12, 14)));
+			db.Holidays.Add(new Holidays(new DateTime(2019, 12, 15)));
 
 
 			db.Vacations.Add(new Vacation(e1, new DateTime(2019, 12, 01), new DateTime(2019, 12, 08)));
 			db.Vacations.Add(new Vacation(e2, new DateTime(2019, 12, 08), new DateTime(2020, 01, 15)));
+			db.Vacations.Add(new Vacation(e2, new DateTime(2019, 12, 09), new DateTime(2019, 12, 13)));
 			db.Vacations.Add(new Vacation(e3, new DateTime(2019, 11, 22), new DateTime(2019, 12, 15)));
 			db.Vacations.Add(new Vacation(e4, new DateTime(2019, 11, 22), new DateTime(2020, 01, 15)));
 

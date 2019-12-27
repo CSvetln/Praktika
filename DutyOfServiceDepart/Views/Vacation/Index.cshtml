@@ -6,48 +6,65 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<link rel="stylesheet" href="~/Content/StyleIndex.css">
-@*<link href="~/Content/StyleSheet1.css" rel="stylesheet" />*@
 <script src="~/Scripts/script.js"></script>
+
+<link href="~/Content/StyleCalendar.css" rel="stylesheet" />
 <link href="~/Content/StyleSheet2.css" rel="stylesheet" />
 <div>
-    <h2 class="a">График отпусков</h2>
+    <h2>График отпусков</h2>
 
+
+    @using (Html.BeginForm("CreateVacation", "Vacation", FormMethod.Post, new { @class = "formcreate" }))
+    {
+
+
+        <div class="row mt">
+            <div class="col-md-5">
+                <p>Выберите сотрудника: </p>
+            </div>
+            <div class="col-md-3">
+                @Html.DropDownList("selectedEmpId", Model.Emps, new { @class = "drop" })
+            </div>
+           
+        </div>
+        <div class="row">
+            <div class="col-md-5">
+                <p>Выберите дату начала отпуска: </p>
+            </div>
+            <div class="col-md-3">
+                <input class="drop" type="date" name="Start" required />
+            </div>
+           
+        </div>
+        <div class="row">
+            <div class="col-md-5">
+                <p>Выберите дату конца отпуска(включительно): </p>
+            </div>
+            <div class="col-md-3">
+                <input class="drop" type="date" name="Finish" required />
+            </div>
+            
+        </div>
+        <div class="row">
+            <div class="col-md-5">
+                <input class="but" id="but1" type="submit" value="Назначить отпуск" />
+            </div>
+        </div>
+    }
 
     <div class="row">
-        <div class="col-md-6 col-md-offset-4">
+        <div class="col-md-1  col-md-offset-4">
             <p>@Html.ActionLink("<<", "Index", new { start = Model.CurrentDate.AddMonths(-1) })</p>
+        </div>
+        <div class="col-md-2 ">
             <p id="month">@Model.CurrentDate.ToString("MMMMMMMM") - @Model.CurrentDate.Year</p>
+        </div>
+        <div class="col-md-1">
             <p>@Html.ActionLink(">>", "Index", new { start = Model.CurrentDate.AddMonths(1) })</p>
         </div>
     </div>
-    <div class="row">
-        @using (Html.BeginForm("CreateVacation", "Vacation", FormMethod.Post))
-        {
 
-        <div class="col-md-6">
-            <p>Имя сотрудника:</p>
-            <select class="selected" size="3" name="selectedEmpId">
-                @foreach (var e in Model.Emps)
-                {
-                    <option value="@e.Value">@e.Text</option>
-                }
-            </select>
-            <p>Выберите дату: </p>
-            @Html.DropDownList("EmployeId", ViewBag.Books as SelectList)
-            <input type="month" name="Date" required />
-            <input class="but" id="but1" type="submit" value="Скачать отчёт" />
-        </div>
+    @Helpers.Calendar(Model)
 
-           
-        
-
-           
-         
-        }
-        </div>
-        @Helpers.Calendar(Model)
-
-    
 </div>
 

@@ -15,14 +15,50 @@ namespace DutyOfServiceDepart.Controllers
 	{
 		DutyContext db = new DutyContext();
 
+		[Authorize]
 		public ActionResult Index(DateTime? start) // Start дата начала месяца, в представлении можно перелистывать месяцы
 		{
-			Calendar calendar = Calendar.GetCalendarVacation(start);
-			calendar.Emps= from genre in db.Employees select new System.Web.WebPages.Html.SelectListItem
-				{ Text = genre.Name, Value = genre.EmployeId.ToString() };
-			//calendar.Emps = db.Employees.ToList();// делаем выборку всех сотрудников в выпадающий список
-			ViewBag.Books = db.Employees.ToList();
+			Calendar calendar = Calendar.GetCalendarVacation(start);				
+			//ViewBag.Books = db.Employees.ToList();
 			return View(calendar);
+		}
+
+		[MyAuthorize]
+		[HttpPost]
+		public ActionResult CreateVacation(int selectedEmpId, DateTime Start, DateTime Finish)
+		{
+			Employee newEmployee = db.Employees.Find(selectedEmpId);
+
+			var vacations = db.Vacations.Where(x => x.Employee.EmployeId==selectedEmpId && (x.Start >= Start && x.Start <= Finish
+					|| x.Start < Start && x.Finish >= Start)).ToList();
+
+			if (vacations.Any())
+			{
+				foreach (Vacation vac in vacations)
+				{
+					db.Entry(vac).State = EntityState.Modified;
+					vac.Start = Start;
+					vac.Finish = Finish;
+				}
+			}
+			else
+			{
+				Vacation newVacation = new Vacation(newEmployee, Start, Finish);
+				db.Vacations.Add(newVacation);
+			}
+			db.SaveChanges();
+
+			return RedirectToAction("Index");
+			
+		}
+
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing)
+			{
+				db.Dispose();
+			}
+			base.Dispose(disposing);
 		}
 	}
 }

@@ -1,41 +1,57 @@
-﻿
-@model DutyOfServiceDepart.Models.ExtremIncident
+﻿@model DutyOfServiceDepart.Models.ExtremIncident
 @using DutyOfServiceDepart.Models;
+
 @{
     ViewBag.Title = "Новая авария";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<link rel="stylesheet" href="~/Content/StyleCreate.css">
+
+<link href="~/Content/StyleSheet1.css" rel="stylesheet" />
 <h2>Добавить информацию об аварии</h2>
+
 <div>
-    <h3>Введите необходимые данные:</h3>
+  
     @using (Html.BeginForm("Create", "Incident", FormMethod.Post))
-    {      
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })       
-        <table>
-            <tr>
-                <td><p>Дата аварии:</p></td>
-                <td>
-                    <input type="date" name="DateIncident" required />
-                </td>
-                <td> @Html.ValidationMessageFor(model => model.DateIncident, "", new { @class = "text-danger" })</td>
-            </tr>
-
-            <tr>
-                <td><p>Ответственный за устранение:</p></td>
-                <td>
-                    @Html.DropDownListFor(model => model.EmployeeId, ViewBag.Emp as SelectList)
-                </td>
-                <td> @Html.ValidationMessageFor(model => model.EmployeeId, "", new { @class = "text-danger" })</td>
-            </tr>
-            <tr>
-                <td><p>Описание аварии:</p></td>
-                <td><textarea name="DescIncident">Введите описание</textarea></td>
-                <td> @Html.ValidationMessageFor(model => model.DecsIncident, "", new { @class = "text-danger" })</td>
-            </tr>
-
-        </table>
-        <input class="but" id="but1" type="submit" value="Добавить" />
+    {
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="row mt">
+            <div class="col-md-4 mt">
+                <p>Дата аварии: </p>
+            </div>
+            <div class="col-md-2 mt">
+                <input class="drop" type="date" name="DateIncident" required />
+            </div>
+            <div class="col-md-5 mt">
+                @Html.ValidationMessageFor(model => model.DateIncident, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 ">
+                <p>Ответственный за устранение: </p>
+            </div>
+            <div class="col-md-2">
+                @Html.DropDownListFor(model => model.EmployeeId, ViewBag.Emp as SelectList, new { @class = "drop" })
+            </div>
+            <div class="col-md-5 ">
+                @Html.ValidationMessageFor(model => model.EmployeeId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 ">
+                <p>Описание аварии: </p>
+            </div>
+            <div class="col-md-2 ">
+                <textarea class="drop" name="DescIncident">Введите описание</textarea>
+            </div>
+            <div class="col-md-5">
+                @Html.ValidationMessageFor(model => model.DecsIncident, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 mt">
+                <input class="but" id="but1" type="submit" value="Добавить" />
+            </div>
+        </div>
     }
 </div>
 

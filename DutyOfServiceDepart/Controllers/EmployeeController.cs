@@ -49,10 +49,14 @@ namespace DutyOfServiceDepart.Controllers
 		public ActionResult Create([Bind(Include = "Name, Email, Login")]Employee employee)
 		{
 			using (DutyContext db = new DutyContext())
-			{				
-				db.Employees.Add(employee);
-				db.SaveChanges();					
-				return View("GetEmployee");
+			{
+				if (ModelState.IsValid)
+				{
+					db.Employees.Add(employee);
+					db.SaveChanges();
+					return RedirectToAction("Index");
+				}
+				return View("CreateEmployee");
 			}
 		}
 
