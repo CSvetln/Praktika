@@ -14,7 +14,7 @@
     <nav class="navbar fixed-top" id="menu">
         <ul class="nav navbar-nav">
             <li><img class="logo" src="~/Content/suek.png" alt=""></li>
-            <li class="nv">@Html.ActionLink("Дежурство", "Index", "Home")</li>
+            <li class="nv">@Html.ActionLink("Дежурства", "Index", "Home")</li>
             <li class="nv">@Html.ActionLink("Отпуска", "Index", "Vacation")</li>
             <li class="nv">@Html.ActionLink("Сотрудники", "Index", "Employee")</li>
             <li class="nv">@Html.ActionLink("Аварии", "Index", "Incident")</li>
@@ -22,12 +22,8 @@
             <li class="nv">@Html.ActionLink("Создать отчёт", "CreateReport", "Report")</li>
         </ul>
     </nav>
-    <div class="container-fluid">
-      
+    <div class="container-fluid">     
         @RenderBody()
-       
-       
-       
     </div>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")

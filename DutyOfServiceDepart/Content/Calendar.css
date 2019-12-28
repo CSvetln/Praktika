@@ -1,22 +1,40 @@
-﻿.but {
+﻿.last {
+    text-align: left;
+    font-size: 20pt;
+    font-weight: 500;
+    font-family: Calibri;
+    padding-top: 0;
+    margin-left: 2px;
+    padding-left: 10px;
+    margin-top: 0;
+    color: dimgrey;
+}
+.head {
+    display: inline-block;
+}
+
+form {
+    width: 100%;
+}
+
+select {
+    width: 100%;
+}
+
+.but {
     background-color: #FFFFFF;
     border: 1px solid #CCCCCC;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
-    transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
     border-radius: 4px;
     color: black;
     font-size: 18px;
     text-align: center;
     text-decoration: none;
     font-family: 'Times New Roman', Times, serif;
-    margin: 10px;
-    width: 60%;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 5px;
+    margin-top: 5px;
     white-space: pre-line;
-}
-
-.but:hover, but:focus {
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(82, 168, 236, 0.6);
-    outline: 0 none;
 }
 
 table {
@@ -70,4 +88,3 @@ td {
 tr {
     height: 70px;
 }
-

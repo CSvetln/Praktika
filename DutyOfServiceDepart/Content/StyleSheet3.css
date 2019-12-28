@@ -1,4 +1,8 @@
-﻿.nametab:hover {
+﻿.btn{
+    margin-top:20px;
+    vertical-align:central;
+}
+.nametab:hover {
     background: #87CEEB;
 }
 .nametab {
@@ -12,7 +16,7 @@
         text-align: center;
     }
 .edrem {
-   
+   padding:5px 5px 5px 5px;
     margin-top:1%;
     /*display: block;*/
     background-color: #FFFFFF;
@@ -25,7 +29,7 @@
     text-align: center;
     text-decoration: none;
     font-family: 'Times New Roman', Times, serif;
-    width:90%;
+    width:200px;
 }
 
     .edrem:hover, edrem:focus {

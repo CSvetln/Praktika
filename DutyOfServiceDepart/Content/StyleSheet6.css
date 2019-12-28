@@ -1,10 +1,4 @@
-﻿.row p {
-    display: inline-block;
-    margin-left: 50px;
-    font-family: Cambria;
-    font-size: 20px;
-}
-.send {
+﻿.send {
     display: block;
     background-color: #87CEEB;
     border: 1px solid #CCCCCC;
@@ -30,4 +24,3 @@
 .head {
     display: inline-block;
 }
-

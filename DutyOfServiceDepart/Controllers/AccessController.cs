@@ -13,8 +13,7 @@ namespace DutyOfServiceDepart.Controllers
 		[Authorize]
 		public ActionResult Index(int? page)
         {			
-			var incs = from s in db.Accesses
-						   select s;
+			var incs = from s in db.Accesses select s;
 			incs = incs.OrderBy(s => s.Login);
 			int pageSize = 5;
 			int pageNumber = (page ?? 1);
@@ -26,7 +25,7 @@ namespace DutyOfServiceDepart.Controllers
 		public ViewResult Create()
 		{
 			var loginQuery = (from e in db.Employees select e.Login).Except
-			(from a in db.Accesses select a.Login);
+				(from a in db.Accesses select a.Login);
 			SelectList selectLogin = new SelectList(loginQuery);
 			ViewBag.Logins = selectLogin;
 			return View("CreateAccess");
