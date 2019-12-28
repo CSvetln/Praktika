@@ -23,10 +23,10 @@ namespace DutyOfServiceDepart.Controllers
 		[MyAuthorize]
 		[HttpPost]
 		public ActionResult CreateVacation(int selectedEmpId, DateTime Start, DateTime Finish)
-		{
+		{		
 			Employee newEmployee = db.Employees.Find(selectedEmpId);
 
-			var vacations = db.Vacations.Where(x => x.Employee.EmployeId==selectedEmpId && (x.Start >= Start && x.Start <= Finish
+			var vacations = db.Vacations.Where(x => x.Employee.EmployeId == selectedEmpId && (x.Start >= Start && x.Start <= Finish
 					|| x.Start < Start && x.Finish >= Start)).ToList();
 
 			if (vacations.Any())
@@ -44,9 +44,9 @@ namespace DutyOfServiceDepart.Controllers
 				db.Vacations.Add(newVacation);
 			}
 			db.SaveChanges();
-
-			return RedirectToAction("Index");
 			
+			return RedirectToAction("Index");
+
 		}
 
 		protected override void Dispose(bool disposing)
