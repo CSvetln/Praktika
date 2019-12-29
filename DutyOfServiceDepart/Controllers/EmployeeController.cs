@@ -13,8 +13,7 @@ namespace DutyOfServiceDepart.Controllers
 		public ViewResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
 			using (DutyContext db = new DutyContext())
-			{
-				ViewBag.CurrentSort = sortOrder;
+			{							
 				if (searchString != null)
 				{
 					page = 1;
@@ -23,17 +22,25 @@ namespace DutyOfServiceDepart.Controllers
 				{
 					searchString = currentFilter;
 				}
-				ViewBag.CurrentFilter = searchString;
+
 				var emps = from s in db.Employees
 						   select s;
 				emps = emps.OrderByDescending(s => s.Name);
+
 				if (!String.IsNullOrEmpty(searchString))
 				{
 					emps = emps.Where(s => s.Name.Contains(searchString));
 				}
+
 				int pageSize = 5;
 				int pageNumber = (page ?? 1);
-				return View("GetEmployee", emps.ToPagedList(pageNumber, pageSize));
+
+				Models.Sort sort = new Models.Sort();
+				sort.CurrentSort = sortOrder;
+				sort.CurrentFilter = searchString;
+				sort.Emps = emps.ToPagedList(pageNumber, pageSize);
+
+				return View("GetEmployee", sort);
 			}
         }
 		

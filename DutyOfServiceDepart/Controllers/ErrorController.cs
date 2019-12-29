@@ -7,8 +7,7 @@ namespace DutyOfServiceDepart.Controllers
 	{
 		public ActionResult Index()
 		{
-			Error error = new Error();
-			error =(Error)RouteData.Values["ExceptionObject"];
+			Error error = (Error)RouteData.Values["ExceptionObject"];
 			return View(error);
 		}
 

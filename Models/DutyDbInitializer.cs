@@ -41,8 +41,8 @@ namespace LibraryModels
 			db.Incidents.Add(new ExtremIncident(new DateTime(2019, 12, 9), e3, ""));
 			db.Incidents.Add(new ExtremIncident(new DateTime(2019, 12, 10), e4, ""));
 
-			db.Accesses.Add(new Access(e1.Login, true, new System.Web.Mvc.SelectList(db.Employees)));
-			db.Accesses.Add(new Access(e2.Login, false, new System.Web.Mvc.SelectList(db.Employees)));
+			db.Accesses.Add(new Access(e1.Login, true));
+			db.Accesses.Add(new Access(e2.Login, false));
 
 			db.Holidays.Add(new Holidays(new DateTime(2019, 12, 01)));
 			db.Holidays.Add(new Holidays(new DateTime(2019, 12, 07)));

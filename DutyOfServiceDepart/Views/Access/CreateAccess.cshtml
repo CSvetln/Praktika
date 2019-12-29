@@ -1,6 +1,6 @@
 ﻿@using LibraryModels;
 
-@model  LibraryModels.Access
+@model  DutyOfServiceDepart.Models.Access
 
 @{
     ViewBag.Title = "Новый пользователь";
@@ -16,7 +16,6 @@
 
     @using (Html.BeginForm("Create", "Access", FormMethod.Post))
     {
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="row mt">
             <div class="col-md-3 mt">
                 <p>Login: </p>
@@ -24,15 +23,12 @@
             <div class="col-md-2 mt">
                 @Html.DropDownListFor(model => model.Login, Model.Logins, new { @class = "drop" })
             </div>
-            <div class="col-md-3 mt">
-                @Html.ValidationMessageFor(x => x.Login, "", new { @class = "text-danger" })
-            </div>
         </div>
         <div class="row">
-            <div class="col-md-3 ">
+            <div class="col-md-3">
                 <p>Уровень доступа: </p>
             </div>
-            <div class="col-md-2 ">
+            <div class="col-md-2">
                 <p>
                     <input type="radio" value="false" checked name="AllowedEdit" /> Чтение
                 </p>
@@ -40,9 +36,6 @@
                 <p>
                     <input type="radio" value="true" name="AllowedEdit" /> Чтение и запись
                 </p>
-            </div>
-            <div class="col-md-3 ">
-                @Html.ValidationMessageFor(model => model.AllowedEdit, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="row">

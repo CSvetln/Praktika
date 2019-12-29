@@ -16,13 +16,10 @@ namespace LibraryModels
 		[Required]
 		public bool AllowedEdit { get; set; }
 
-		public SelectList Logins { get; set; }
-
-		public Access(string login, bool allowedEdit, SelectList logins)
+		public Access(string login, bool allowedEdit)
 		{
 			this.Login = login;
 			this.AllowedEdit = allowedEdit;
-			this.Logins = logins;
 		}
 
 		public Access()

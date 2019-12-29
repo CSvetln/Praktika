@@ -38,8 +38,10 @@ namespace DutyOfServiceDepart.Controllers
 		public ViewResult Create()
 		{
 			SelectList selectEmp = new SelectList(db.Employees, "EmployeId", "Name");
-			ViewBag.Emp = selectEmp;
-			return View("CreateIncident");
+			Models.ExtremIncident extremIncident = new Models.ExtremIncident {
+				Emps = selectEmp
+		    };
+			return View("CreateIncident", extremIncident);
 		}
 
 		[MyAuthorize]

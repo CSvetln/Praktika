@@ -27,7 +27,7 @@ namespace DutyOfServiceDepart.Controllers
 			var loginQuery = (from e in db.Employees select e.Login).Except
 				(from a in db.Accesses select a.Login);
 			SelectList selectLogin = new SelectList(loginQuery);
-			Access access = new Access
+			DutyOfServiceDepart.Models.Access access = new DutyOfServiceDepart.Models.Access
 			{
 				Logins = selectLogin
 			};
@@ -36,8 +36,8 @@ namespace DutyOfServiceDepart.Controllers
 		
 		[MyAuthorize]
 		[HttpPost]
-		public ActionResult Create(Access access)
-		{
+		public ActionResult Create([Bind(Include = "Login, AllowedEdit")]LibraryModels.Access access)
+		{			
 			if (ModelState.IsValid)
 			{
 				db.Accesses.Add(access);
@@ -50,8 +50,8 @@ namespace DutyOfServiceDepart.Controllers
 		[MyAuthorize]
 		[HttpGet]
 		public ActionResult Delete(int id)
-		{			
-			Access access = db.Accesses.Find(id);
+		{
+			LibraryModels.Access access = db.Accesses.Find(id);
 			if (ModelState.IsValid)
 			{
 				db.Accesses.Remove(access);

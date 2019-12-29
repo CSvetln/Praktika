@@ -21,7 +21,6 @@ namespace DutyOfServiceDepart.Controllers
 		public ActionResult Index(DateTime? start) // Start дата начала месяца, в представлении можно перелистывать месяцы
 		{
 			Calendar calendar = Calendar.GetCalendarDuty(start);
-
 			return View(calendar);
 		}
 
@@ -61,7 +60,7 @@ namespace DutyOfServiceDepart.Controllers
 			}
 
 			SendSchedule sendSchedule = new SendSchedule(db.Employees.Select(x => x.Email).ToArray(), "График дежурств", "Изучите график дежурств на текущий месяц", curDate, duties);
-			string selectedPost =WebConfigurationManager.AppSettings["Post"];
+			string selectedPost = WebConfigurationManager.AppSettings["Post"];
 			switch (selectedPost)
 			{
 				case "SMTP":					

@@ -204,8 +204,11 @@
       <DependentUpon>201912161429083_Vacation.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Access.cs" />
     <Compile Include="Models\Calendar.cs" />
     <Compile Include="Models\Error.cs" />
+    <Compile Include="Models\ExtremIncident.cs" />
+    <Compile Include="Models\Sort.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

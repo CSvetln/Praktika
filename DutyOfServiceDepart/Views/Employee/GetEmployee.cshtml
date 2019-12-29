@@ -1,8 +1,7 @@
 ﻿@using PagedList.Mvc;
 @using LibraryModels;
 
-@model PagedList.IPagedList<LibraryModels.Employee>
-
+@model DutyOfServiceDepart.Models.Sort
 @{
 
     ViewBag.Title = "Сотрудники";
@@ -38,7 +37,7 @@
 
         </tr>
 
-        @foreach (Employee b in Model)
+        @foreach (Employee b in Model.Emps)
         {
             <tr>
 
@@ -56,8 +55,8 @@
 
 </div>
 <br />
-    Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount
+    Страница @(Model.Emps.PageCount < Model.Emps.PageNumber ? 0 : Model.Emps.PageNumber) из @Model.Emps.PageCount
 
-    @Html.PagedListPager(Model, page => Url.Action("Index",
-        new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+    @Html.PagedListPager(Model.Emps, page => Url.Action("Index",
+        new { page, sortOrder = Model.CurrentSort, currentFilter = Model.CurrentFilter }))
 

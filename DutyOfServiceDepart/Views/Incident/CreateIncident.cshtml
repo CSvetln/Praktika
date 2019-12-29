@@ -1,5 +1,5 @@
-﻿@model LibraryModels.ExtremIncident
-@using LibraryModels;
+﻿@model DutyOfServiceDepart.Models.ExtremIncident
+
 
 @{
     ViewBag.Title = "Новая авария";
@@ -30,7 +30,7 @@
                 <p>Ответственный за устранение: </p>
             </div>
             <div class="col-md-2">
-                @Html.DropDownListFor(model => model.EmployeeId, ViewBag.Emp as SelectList, new { @class = "drop" })
+                @Html.DropDownListFor(model => model.EmployeeId, Model.Emps, new { @class = "drop" })
             </div>
             <div class="col-md-5 ">
                 @Html.ValidationMessageFor(model => model.EmployeeId, "", new { @class = "text-danger" })
