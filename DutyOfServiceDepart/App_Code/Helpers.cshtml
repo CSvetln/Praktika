@@ -27,7 +27,7 @@
         <tr>
             @while (Start.DayOfWeek != DayOfWeek.Sunday)
             {
-                if (Model.Holidays.Contains(Start))
+                if (calendar.Holidays.Contains(Start.Day))
                 {
                     holiday = "hol";
                 }
@@ -77,7 +77,7 @@
                 i++;
                 Start = Start.AddDays(1);
             }
-            @if (Model.Holidays.Contains(Start))
+            @if (calendar.Holidays.Contains(Start.Day))
             {
                 holiday = "hol";
             }

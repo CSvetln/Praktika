@@ -27,8 +27,11 @@ namespace DutyOfServiceDepart.Controllers
 			var loginQuery = (from e in db.Employees select e.Login).Except
 				(from a in db.Accesses select a.Login);
 			SelectList selectLogin = new SelectList(loginQuery);
-			ViewBag.Logins = selectLogin;
-			return View("CreateAccess");
+			Access access = new Access
+			{
+				Logins = selectLogin
+			};
+			return View("CreateAccess", access);
 		}
 		
 		[MyAuthorize]

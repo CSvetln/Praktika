@@ -25,7 +25,6 @@ namespace DutyOfServiceDepart.Controllers
 		{
 			Report report = new Report();
 			int d = 0;
-
 			
 			var dutyLists = db.DutyLists.Where(x => x.Employee.Name == employeeName && x.DateDuty.Year == date.Year && x.DateDuty.Month == date.Month).ToList();
 

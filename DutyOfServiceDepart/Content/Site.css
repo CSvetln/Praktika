@@ -4,14 +4,17 @@
     margin: 0;
     padding: 0;
 }
+
 h2 {
     font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif;
     font-weight: 600;
 }
+
 div p{
     font-family:Cambria, Cochin, Georgia, Times, Times New Roman, serif;
     font-size:16pt;
 }
+
 .container-fluid{
     padding-left:20px;
     margin:20px;
@@ -22,6 +25,7 @@ div p{
     padding-right:0;
     left:1%;
 }
+
 .table {
     margin: 30px;
     left: 1%;

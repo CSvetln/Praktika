@@ -9,7 +9,6 @@ namespace DutyOfServiceDepart.Controllers
 		{
 			Error error = new Error();
 			error =(Error)RouteData.Values["ExceptionObject"];
-			///RouteData["ExceptionObject"]
 			return View(error);
 		}
 

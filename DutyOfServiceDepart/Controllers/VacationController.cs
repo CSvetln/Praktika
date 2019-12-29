@@ -15,8 +15,7 @@ namespace DutyOfServiceDepart.Controllers
 		[Authorize]
 		public ActionResult Index(DateTime? start) // Start дата начала месяца, в представлении можно перелистывать месяцы
 		{
-			Calendar calendar = Calendar.GetCalendarVacation(start);				
-			
+			Calendar calendar = Calendar.GetCalendarVacation(start);							
 			return View(calendar);
 		}
 
@@ -46,7 +45,6 @@ namespace DutyOfServiceDepart.Controllers
 			db.SaveChanges();
 			
 			return RedirectToAction("Index");
-
 		}
 
 		protected override void Dispose(bool disposing)

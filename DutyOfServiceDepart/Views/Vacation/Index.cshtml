@@ -47,7 +47,7 @@
                 <input class="btn btn-primary" type="submit" value="Назначить отпуск" />
             </div>
         </div>
-     }
+    }
 
     <div class="row">
         <div class="col-md-1  col-md-offset-4">
@@ -60,8 +60,12 @@
             <p>@Html.ActionLink(">>", "Index", new { start = Model.CurrentDate.AddMonths(1) })</p>
         </div>
     </div>
-
-    @Helpers.Calendar(Model)
-
+    @if (!Model.Holidays.Any())
+    {
+        <div class="warn text-danger"><p>База данных выходных и праздников на данный месяц не обновлена!</p></div>
+    }
+    <div class="col">
+        @Helpers.Calendar(Model)
+    </div>
 </div>
 

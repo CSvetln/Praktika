@@ -7,8 +7,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@*<link rel="stylesheet" href="~/Content/StyleCreate.css">*@
-<link href="~/Content/StyleSheet1.css" rel="stylesheet" />
+<link href="~/Content/CreateStyle.css" rel="stylesheet" />
+
 <h2>Добавление нового пользователя</h2>
 
 
@@ -22,7 +22,7 @@
                 <p>Login: </p>
             </div>
             <div class="col-md-2 mt">
-                @Html.DropDownListFor(model => model.Login, ViewBag.Logins as SelectList, new { @class = "drop" })
+                @Html.DropDownListFor(model => model.Login, Model.Logins, new { @class = "drop" })
             </div>
             <div class="col-md-3 mt">
                 @Html.ValidationMessageFor(x => x.Login, "", new { @class = "text-danger" })
@@ -47,7 +47,7 @@
         </div>
         <div class="row">
             <div class="col-md-3 mt">
-                <input class="btn btn-primary" id="but1" type="submit" value="Добавить" />
+                <input class="btn btn-primary" type="submit" value="Добавить" />
             </div>
         </div>
     }
