@@ -27,7 +27,7 @@ namespace DutyOfServiceDepart.Controllers
 			var loginQuery = (from e in db.Employees select e.Login).Except
 				(from a in db.Accesses select a.Login);
 			SelectList selectLogin = new SelectList(loginQuery);
-			DutyOfServiceDepart.Models.Access access = new DutyOfServiceDepart.Models.Access
+			Models.Access access = new Models.Access
 			{
 				Logins = selectLogin
 			};

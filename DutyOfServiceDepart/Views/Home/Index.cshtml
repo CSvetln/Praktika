@@ -1,12 +1,15 @@
-﻿@using DutyOfServiceDepart.Models;
-@model Calendar
+﻿@model Calendar
+
+@using DutyOfServiceDepart.Models;
 
 @{
     ViewBag.Title = "Дежурства";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<link href="~/Content/StyleSheet1.css" rel="stylesheet" />
 <link href="~/Content/Calendar.css" rel="stylesheet" />
+
 <script src="~/Scripts/script.js"></script>
 
 <div>
@@ -14,7 +17,7 @@
         <div class="col-md-10">
             <h2>График дежурств</h2>
         </div>
-        
+
         <div class="col-md-2">
             @using (Html.BeginForm("SendAll", "Home", FormMethod.Post))
             {
@@ -23,17 +26,22 @@
                 </div>
             }
         </div>
+
     </div>
+
     <div class="row">
         <div class="col-md-1  col-md-offset-4">
             <p>@Html.ActionLink("<<", "Index", new { start = Model.CurrentDate.AddMonths(-1) })</p>
         </div>
+
         <div class="col-md-2 ">
             <p id="month">@Model.CurrentDate.ToString("MMMMMMMM") - @Model.CurrentDate.Year</p>
         </div>
+
         <div class="col-md-1">
             <p>@Html.ActionLink(">>", "Index", new { start = Model.CurrentDate.AddMonths(1) })</p>
         </div>
+
     </div>
 
     @if (!Model.Holidays.Any())

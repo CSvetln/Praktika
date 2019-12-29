@@ -35,10 +35,7 @@ select {
     text-align: center;
     text-decoration: none;
     font-family: 'Times New Roman', Times, serif;
-    margin-left: 20px;
-    margin-right: 20px;
-    margin-bottom: 5px;
-    margin-top: 5px;
+    margin: 5px 20px 5px 20px; 
     white-space: pre-line;
 }
 
@@ -92,4 +89,8 @@ td {
 
 tr {
     height: 70px;
+}
+.vacation {
+    color: brown;
+    text-align: center;
 }

@@ -1,19 +1,20 @@
-﻿
-@model LibraryModels.Employee
+﻿@model LibraryModels.Employee
+
 @{
     ViewBag.Title = "Новый сотрудник";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<link href="~/Content/CreateStyle.css" rel="stylesheet" />
-<h2>Добавление нового сотрудника</h2>
 
+<link href="~/Content/CreateStyle.css" rel="stylesheet" />
+
+<h2>Добавление нового сотрудника</h2>
 
 <div>
 
     @using (Html.BeginForm("Create", "Employee", FormMethod.Post))
     {
-
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
         <div class="row mt">
             <div class="col-md-2 mt">
                 <p>Имя: </p>
@@ -25,6 +26,7 @@
                 @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
             </div>
         </div>
+
         <div class="row">
             <div class="col-md-2 ">
                 <p>E-mail: </p>
@@ -36,6 +38,7 @@
                 @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
             </div>
         </div>
+
         <div class="row">
             <div class="col-md-2 ">
                 <p>Login: </p>
@@ -47,11 +50,13 @@
                 @Html.ValidationMessageFor(model => model.Login, "", new { @class = "text-danger" })
             </div>
         </div>
+
         <div class="row">
             <div class="col-md-3 mt">
                 <input class="btn btn-primary" type="submit" value="Добавить" />
             </div>
         </div>
     }
+
 </div>
 

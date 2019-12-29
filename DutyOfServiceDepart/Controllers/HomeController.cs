@@ -21,6 +21,7 @@ namespace DutyOfServiceDepart.Controllers
 		public ActionResult Index(DateTime? start) // Start дата начала месяца, в представлении можно перелистывать месяцы
 		{
 			Calendar calendar = Calendar.GetCalendarDuty(start);
+			calendar.Vacation = Calendar.GetCalendarVacation(start);
 			return View(calendar);
 		}
 

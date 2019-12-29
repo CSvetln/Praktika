@@ -19,7 +19,6 @@ namespace DutyOfServiceDepart.Controllers
 		public ActionResult NotAvailable()
 		{
 			return View();
-		}
-		
+		}		
 	}
 }

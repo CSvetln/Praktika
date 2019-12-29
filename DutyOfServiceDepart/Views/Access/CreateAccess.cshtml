@@ -24,6 +24,7 @@
                 @Html.DropDownListFor(model => model.Login, Model.Logins, new { @class = "drop" })
             </div>
         </div>
+
         <div class="row">
             <div class="col-md-3">
                 <p>Уровень доступа: </p>
@@ -32,16 +33,17 @@
                 <p>
                     <input type="radio" value="false" checked name="AllowedEdit" /> Чтение
                 </p>
-
                 <p>
                     <input type="radio" value="true" name="AllowedEdit" /> Чтение и запись
                 </p>
             </div>
         </div>
+
         <div class="row">
             <div class="col-md-3 mt">
                 <input class="btn btn-primary" type="submit" value="Добавить" />
             </div>
         </div>
     }
+
 </div>

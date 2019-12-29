@@ -23,8 +23,7 @@ namespace DutyOfServiceDepart.Controllers
 					searchString = currentFilter;
 				}
 
-				var emps = from s in db.Employees
-						   select s;
+				var emps = from s in db.Employees select s;
 				emps = emps.OrderByDescending(s => s.Name);
 
 				if (!String.IsNullOrEmpty(searchString))

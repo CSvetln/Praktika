@@ -17,6 +17,8 @@ namespace DutyOfServiceDepart.Models
 
 		public List<int> Holidays { get; set; }
 
+		public Calendar Vacation { get; set; }
+
 		private static Calendar GetInstanse(DateTime? start)
 		{
 			DutyContext db = new DutyContext();
@@ -38,7 +40,7 @@ namespace DutyOfServiceDepart.Models
 			DutyContext db = new DutyContext();
 			
 			Calendar calendar = GetInstanse(start);
-
+			
 			var dutyLists = db.DutyLists.Include(x => x.Employee).Where(x => x.DateDuty.Year == calendar.CurrentDate.Year
 					&& x.DateDuty.Month == calendar.CurrentDate.Month).ToList();
 

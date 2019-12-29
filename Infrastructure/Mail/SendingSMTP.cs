@@ -2,7 +2,6 @@
 using System.Net;
 using System.Net.Mail;
 
-
 namespace Infrastructure.Mail
 {
 	public class SendingSMTP : IMail

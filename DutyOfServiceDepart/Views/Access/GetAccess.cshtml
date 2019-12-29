@@ -2,14 +2,16 @@
 
 @using PagedList.Mvc;
 @using LibraryModels;
+
 @{
     ViewBag.Title = "Права доступа";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h2>Авторизованные пользователи</h2>
 <link rel="stylesheet" href="~/Content/PagedList.css">
 <link href="~/Content/GetStyle.css" rel="stylesheet" />
+
+<h2>Авторизованные пользователи</h2>
+
 <div>
 
     <p class="addemp">@Html.ActionLink("+ Добавить пользователя", "Create", "Access")</p>
@@ -24,24 +26,20 @@
         @foreach (Access b in Model)
         {
             <tr>
-
                 <td><p>@b.Login</p></td>
                 @if (b.AllowedEdit)
-                 {
+                {
                     <td><p>Чтение и запись</p></td>
-                 }
+                }
                 else
                 {
                     <td><p>Чтение</p></td>
                 }
-
                 <td><p><a class="edrem" href="/Access/Delete/@b.AccessId">Удалить</a></p></td>
             </tr>
-
         }
     </table>
     <br />
-
 
 </div>
 <br />

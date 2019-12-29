@@ -20,7 +20,6 @@ namespace Infrastructure.Reports
 
 		public MemoryStream CreateReport()
 		{
-
 			var workBook = new XLWorkbook();
 			var workSheet = workBook.Worksheets.Add(Date.ToString("MMMMMMMM"));
 
@@ -31,7 +30,6 @@ namespace Infrastructure.Reports
 			workSheet.Cell("A" + 2).Value = EmployeeName;
 			workSheet.Cell("B" + 2).Value = Date.ToLongDateString() + "-" + Date.AddMonths(1).AddDays(-1).ToLongDateString();
 			workSheet.Cell("C" + 2).Value = AmountDuty;
-
 
 			for (int i = 1; i < 4; i++)
 			{
