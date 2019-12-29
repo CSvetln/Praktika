@@ -9,6 +9,9 @@
     margin-top: 0;
     color: dimgrey;
 }
+.hol{
+    color:red;
+}
 .head {
     display: inline-block;
 }
