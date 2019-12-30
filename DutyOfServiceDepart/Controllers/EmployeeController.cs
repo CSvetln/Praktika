@@ -71,10 +71,10 @@ namespace DutyOfServiceDepart.Controllers
 		{
 			using (DutyContext db = new DutyContext())
 			{
-				Employee employee = db.Employees.Find(id);
+				Employee employee = db.Employees.Find(id);				
 				if (ModelState.IsValid)
 				{
-					db.Employees.Remove(employee);
+					db.Employees.Remove(employee);					
 					db.SaveChanges();
 				}
 				return RedirectToAction("Index");

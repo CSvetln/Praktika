@@ -220,7 +220,6 @@
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\CreateStyle.css" />
-    <Content Include="Content\StyleSheet1.css" />
     <Content Include="Content\Vacation.css" />
     <Content Include="Content\GetStyle.css" />
     <Content Include="Content\Calendar.css" />
