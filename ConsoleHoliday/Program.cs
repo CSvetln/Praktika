@@ -1,18 +1,17 @@
 ﻿using System;
 using LibraryModels;
 using System.Net;
-using System.Threading.Tasks;
 
 namespace ConsoleHoliday
 {
-	class Program
+	public class Program
 	{
-		static void Main(string[] args)
-		{
-			GetHolidayMonth(DateTime.Now);
+		public static void Main()
+		{	
+			//GetHolidayMonth(new DateTime(Нужная дата));
 		}
 
-		public static async void GetHolidayMonth(DateTime start)
+		public static void GetHolidayMonth(DateTime start)
 		{
 			DutyContext db = new DutyContext();
 
@@ -21,18 +20,23 @@ namespace ConsoleHoliday
 
 			DateTime finish = new DateTime(start.Year + 1, 12, 31);
 
-			while (start != finish)
+			while (start <= finish)
 			{
 				string url = "https://isdayoff.ru/" + start.ToString("yyyyMMdd") + "?cc=ru";
-				string response = await Task.Run(() => webClient.DownloadString(url));
+				Console.WriteLine(start.ToString("yyyyMMdd"));
+				string response = webClient.DownloadString(url);
 
 				if (response == "1")
+				{
+					Console.WriteLine("Загружено");
 					db.Holidays.Add(new Holidays(start));
+				}
 
 				start = start.AddDays(1);
 			}
 
 			db.SaveChanges();
+			Console.ReadKey();
 		}
 	}
 }

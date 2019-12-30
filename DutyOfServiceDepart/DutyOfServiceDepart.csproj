@@ -284,6 +284,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ConsoleHoliday\ConsoleHoliday.csproj">
+      <Project>{13201ee4-1eca-4417-8343-1653906348ce}</Project>
+      <Name>ConsoleHoliday</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj">
       <Project>{5ecdccfd-e4a6-4bd3-bdeb-45a5babc9b2e}</Project>
       <Name>Infrastructure</Name>
