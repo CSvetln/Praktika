@@ -58,11 +58,14 @@
                                     </div>
                                     if (calendar.Vacation != null)
                                     {
-                                        for (int n = 0; n < calendar.Vacation.Duties[Start].Length; n++)
+                                        if (calendar.Vacation.Duties.ContainsKey(Start))
                                         {
-                                            if (calendar.Duties[Start][0].EmployeId == calendar.Vacation.Duties[Start][n].EmployeId)
+                                            for (int n = 0; n < calendar.Vacation.Duties[Start].Length; n++)
                                             {
+                                                if (calendar.Duties[Start][0].EmployeId == calendar.Vacation.Duties[Start][n].EmployeId)
+                                                {
                                             <p class="vacation">У этого сотрудника назначен отпуск</p>
+                                                }
                                             }
                                         }
                                     }
@@ -125,11 +128,14 @@
                                 </div>
                                 if (calendar.Vacation != null)
                                 {
-                                    for (int n = 0; n < calendar.Vacation.Duties[Start].Length; n++)
+                                    if (calendar.Vacation.Duties.ContainsKey(Start))
                                     {
-                                        if (calendar.Duties[Start][0].EmployeId == calendar.Vacation.Duties[Start][n].EmployeId)
+                                        for (int n = 0; n < calendar.Vacation.Duties[Start].Length; n++)
                                         {
+                                            if (calendar.Duties[Start][0].EmployeId == calendar.Vacation.Duties[Start][n].EmployeId)
+                                            {
                                         <p class="vacation">У этого сотрудника назначен отпуск</p>
+                                            }
                                         }
                                     }
                                 }

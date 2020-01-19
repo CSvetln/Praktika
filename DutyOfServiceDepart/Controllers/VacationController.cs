@@ -44,8 +44,7 @@ namespace DutyOfServiceDepart.Controllers
 				db.Vacations.Add(newVacation);
 			}
 			db.SaveChanges();
-			
-			return RedirectToAction("Index");
+			return RedirectToAction("Index", new { start = Start });
 		}
 
 		protected override void Dispose(bool disposing)

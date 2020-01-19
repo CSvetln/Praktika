@@ -42,9 +42,9 @@ namespace DutyOfServiceDepart.Controllers
 				DutyList newDutyList = new DutyList() { DateDuty = dateEdit, Employee = newEmployee, DecrDuty = String.Empty };
 				db.DutyLists.Add(newDutyList);
 			}
-			db.SaveChanges();				
-								
-			return RedirectToAction("Index");
+			db.SaveChanges();
+			
+			return RedirectToAction("Index", new { start = dateEdit });
 		}
 	
 		[MyAuthorize]
