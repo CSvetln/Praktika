@@ -11,9 +11,8 @@ namespace LibraryModels
 		[Required]
 		public DateTime DateIncident { get; set; } //дата чп
 
-		public int EmployeeId { get; set; }
-
-		public virtual Employee Employee { get; set; } //кого вызвали туда
+		[Required]
+		public Employee Employee { get; set; } //кого вызвали туда
 
 		public string DecsIncident { get; set; } //описание чп
 
@@ -22,7 +21,6 @@ namespace LibraryModels
 			this.DateIncident = dateIncident;
 			this.Employee = employee;
 			this.DecsIncident = decsIncident;
-			this.EmployeeId = employee.EmployeId;
 		}
 
 		public ExtremIncident()

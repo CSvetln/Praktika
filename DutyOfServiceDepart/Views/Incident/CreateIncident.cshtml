@@ -38,12 +38,8 @@
             </div>
 
             <div class="col-md-2">
-                @Html.DropDownListFor(model => model.EmployeeId, Model.Emps, new { @class = "drop" })
-            </div>
-
-            <div class="col-md-5 ">
-                @Html.ValidationMessageFor(model => model.EmployeeId, "", new { @class = "text-danger" })
-            </div>
+                @Html.DropDownList("Employee", Model.Emps, new { @class = "drop" })
+            </div>        
 
         </div>
 

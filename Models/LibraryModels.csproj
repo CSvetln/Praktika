@@ -78,12 +78,29 @@
     <Compile Include="Employee.cs" />
     <Compile Include="ExtremIncident.cs" />
     <Compile Include="Holidays.cs" />
+    <Compile Include="Migrations\202001191627337_InitialCreate.cs" />
+    <Compile Include="Migrations\202001191627337_InitialCreate.Designer.cs">
+      <DependentUpon>202001191627337_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001200808541_Incident.cs" />
+    <Compile Include="Migrations\202001200808541_Incident.Designer.cs">
+      <DependentUpon>202001200808541_Incident.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Vacation.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202001191627337_InitialCreate.resx">
+      <DependentUpon>202001191627337_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001200808541_Incident.resx">
+      <DependentUpon>202001200808541_Incident.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
