@@ -16,5 +16,7 @@ namespace LibraryModels
 
 		public DbSet<Vacation> Vacations { get; set; }
 
+
+
 	}
 }

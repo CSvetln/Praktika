@@ -29,17 +29,17 @@ namespace DutyOfServiceDepart.Controllers
 		[HttpPost]
 		public ActionResult Edit(int selectedEmpId, DateTime dateEdit)
 		{
-			Employee newEmployee = db.Employees.Find(selectedEmpId);//находим выбранного на дату дежурства сотрудника 
+			//Employee newEmployee = db.Employees.Find(selectedEmpId);//находим выбранного на дату дежурства сотрудника 
 			DutyList duty = db.DutyLists.FirstOrDefault(x => x.DateDuty == dateEdit); //находим дежурство с такой датой
 
 			if (duty != null) // если такие записи дежурств есть, меняем дежурного
 			{
 				db.Entry(duty).State = EntityState.Modified;
-				duty.Employee = newEmployee;
+				duty.Employee = selectedEmpId;
 			}
 			else // если таких дежурств нет, создаём новую запись
 			{
-				DutyList newDutyList = new DutyList() { DateDuty = dateEdit, Employee = newEmployee, DecrDuty = String.Empty };
+				DutyList newDutyList = new DutyList() { DateDuty = dateEdit, Employee = selectedEmpId, DecrDuty = String.Empty };
 				db.DutyLists.Add(newDutyList);
 			}
 			db.SaveChanges();
@@ -57,7 +57,7 @@ namespace DutyOfServiceDepart.Controllers
 
 			foreach (DutyList s in db.DutyLists.Include(x => x.Employee).Where(x => x.DateDuty.Year == curDate.Year && x.DateDuty.Month == curDate.Month).ToList())
 			{
-				duties.Add(s.DateDuty.Day, s.Employee.Name);
+				duties.Add(s.DateDuty.Day, db.Employees.Find(s.Employee).Name);
 			}
 
 			SendSchedule sendSchedule = new SendSchedule(db.Employees.Select(x => x.Email).ToArray(), "График дежурств", "Изучите график дежурств на текущий месяц", curDate, duties);
