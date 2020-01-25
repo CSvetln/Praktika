@@ -6,14 +6,14 @@ namespace DutyOfServiceDepart.Migrations
     using System.Data.Entity.Migrations.Infrastructure;
     using System.Resources;
     
-    [GeneratedCode("EntityFramework.Migrations", "6.3.0-preview6-19304-03")]
+    [GeneratedCode("EntityFramework.Migrations", "6.4.0")]
     public sealed partial class InitialCreate : IMigrationMetadata
     {
         private readonly ResourceManager Resources = new ResourceManager(typeof(InitialCreate));
         
         string IMigrationMetadata.Id
         {
-            get { return "201907221603166_InitialCreate"; }
+            get { return "202001221428137_InitialCreate"; }
         }
         
         string IMigrationMetadata.Source

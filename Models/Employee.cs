@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace LibraryModels
 {
@@ -21,6 +22,7 @@ namespace LibraryModels
 		[MaxLength(100)]
 		[Required]
 		public string Login { get; set; }
+
 
 		public Employee(string name, string email, string login)
 		{

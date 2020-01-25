@@ -1,7 +1,6 @@
-﻿using ClosedXML.Excel;
-using System;
+﻿using System;
 using System.IO;
-using System.Linq;
+using ClosedXML.Excel;
 
 namespace Infrastructure.Reports
 {

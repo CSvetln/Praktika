@@ -11,8 +11,9 @@ namespace LibraryModels
 		[Required]
 		public DateTime DateIncident { get; set; } //дата чп
 
-		[Required]
-		public Employee Employee { get; set; } //кого вызвали туда
+		
+		public int? EmployeeEmployeId { get; set; }
+		public virtual Employee Employee { get; set; } //кого вызвали туда
 
 		public string DecsIncident { get; set; } //описание чп
 

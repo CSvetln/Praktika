@@ -193,22 +193,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201907221603166_InitialCreate.cs" />
-    <Compile Include="Migrations\201907221603166_InitialCreate.Designer.cs">
-      <DependentUpon>201907221603166_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201912141637228_Holiday.cs" />
-    <Compile Include="Migrations\201912141637228_Holiday.Designer.cs">
-      <DependentUpon>201912141637228_Holiday.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201912161429083_Vacation.cs" />
-    <Compile Include="Migrations\201912161429083_Vacation.Designer.cs">
-      <DependentUpon>201912161429083_Vacation.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202001191622267_dutylists.cs" />
-    <Compile Include="Migrations\202001191622267_dutylists.Designer.cs">
-      <DependentUpon>202001191622267_dutylists.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Access.cs" />
     <Compile Include="Models\Calendar.cs" />
@@ -277,20 +261,6 @@
     <Content Include="Views\Error\NotAvailable.cshtml" />
     <Content Include="Views\Vacation\Index.cshtml" />
     <Content Include="Views\Error\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201907221603166_InitialCreate.resx">
-      <DependentUpon>201907221603166_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201912141637228_Holiday.resx">
-      <DependentUpon>201912141637228_Holiday.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201912161429083_Vacation.resx">
-      <DependentUpon>201912161429083_Vacation.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202001191622267_dutylists.resx">
-      <DependentUpon>202001191622267_dutylists.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ConsoleHoliday\ConsoleHoliday.csproj">
