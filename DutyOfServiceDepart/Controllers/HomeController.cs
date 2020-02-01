@@ -9,13 +9,12 @@ using DutyOfServiceDepart.Models;
 using System.Web.Configuration;
 using Infrastructure.Mail;
 
-
 namespace DutyOfServiceDepart.Controllers
 {
 	public class HomeController : Controller
-	{		
+	{
 		DutyContext db = new DutyContext();
-		
+
 		[Authorize]
 		[HttpGet]
 		public ActionResult Index(DateTime? start) // Start дата начала месяца, в представлении можно перелистывать месяцы
@@ -33,7 +32,7 @@ namespace DutyOfServiceDepart.Controllers
 			{
 				Employee newEmployee = db.Employees.Find(selectedEmpId[i]);//находим выбранного на дату дежурства сотрудника 
 				int tmp = selectedEmpId[i];
-				var duty = db.DutyLists.Where(x=>x.Employeer.EmployeId==tmp && x.DateDuty==dateEdit)
+				var duty = db.DutyLists.Where(x => x.Employeer.EmployeId == tmp && x.DateDuty == dateEdit)
 					.FirstOrDefault(); //находим дежурство с такой датой и таким сотрудником
 
 				if (duty != null) // если такие записи дежурств есть, меняем дежурного
@@ -43,20 +42,15 @@ namespace DutyOfServiceDepart.Controllers
 				}
 				else // если таких дежурств нет, создаём новую запись
 				{
-
 					DutyList newDutyList = new DutyList() { DateDuty = dateEdit, Employeer = newEmployee, DecrDuty = String.Empty };
 					db.Entry(newDutyList).State = EntityState.Added;
 					db.DutyLists.Add(newDutyList);
 				}
-				db.SaveChanges();
-				//}
-
 			}
-			
-
+			db.SaveChanges();
 			return RedirectToAction("Index", new { start = dateEdit });
 		}
-	
+
 		[MyAuthorize]
 		public ViewResult SendAll(DateTime curDate)
 		{
@@ -74,7 +68,7 @@ namespace DutyOfServiceDepart.Controllers
 			string selectedPost = WebConfigurationManager.AppSettings["Post"];
 			switch (selectedPost)
 			{
-				case "SMTP":					
+				case "SMTP":
 					sendSchedule.Send(new SendingSMTP(login, pass));
 					break;
 				case "Exchange":

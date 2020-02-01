@@ -4,18 +4,16 @@ using System.Web.Mvc;
 using DutyOfServiceDepart.Filters;
 using LibraryModels;
 using PagedList;
-using System.Data.Entity;
-using System.Data.Entity.Validation;
 
 namespace DutyOfServiceDepart.Controllers
 {
-    public class EmployeeController : Controller
-    {
+	public class EmployeeController : Controller
+	{
 		[Authorize]
 		public ViewResult Index(string sortOrder, string currentFilter, string searchString, int? page)
-        {
+		{
 			using (DutyContext db = new DutyContext())
-			{							
+			{
 				if (searchString != null)
 				{
 					page = 1;
@@ -43,8 +41,8 @@ namespace DutyOfServiceDepart.Controllers
 
 				return View("GetEmployee", sort);
 			}
-        }
-		
+		}
+
 		[MyAuthorize]
 		[HttpGet]
 		public ViewResult Create()
@@ -75,35 +73,11 @@ namespace DutyOfServiceDepart.Controllers
 			using (DutyContext db = new DutyContext())
 			{
 				Employee employee = db.Employees.Find(id);
-				//foreach (ExtremIncident ei in employee.Incidents)
-				//{
-				//	ei.EmployeeEmployeId =null;
-				//	///ei.Employee = null;
 
-				//}
-				//employee.Incidents = null;
 				if (ModelState.IsValid)
 				{
 					db.Employees.Remove(employee);
-					try
-					{
-
-						db.SaveChanges();
-					}
-					catch (DbEntityValidationException ex)
-					{
-						foreach (DbEntityValidationResult validationError in ex.EntityValidationErrors)
-						{
-							Response.Write("Object: " + validationError.Entry.Entity.ToString());
-							Response.Write("");
-	
-						foreach (DbValidationError err in validationError.ValidationErrors)
-							{
-								Response.Write(err.ErrorMessage + "");
-
-						}
-						}
-					}
+					db.SaveChanges();
 				}
 				return RedirectToAction("Index", new { page = pageDelete });
 			}

@@ -63,7 +63,6 @@
   <ItemGroup>
     <Compile Include="Access.cs" />
     <Compile Include="DutyContext.cs" />
-    <Compile Include="DutyDbInitializer.cs" />
     <Compile Include="DutyList.cs" />
     <Compile Include="Employee.cs" />
     <Compile Include="ExtremIncident.cs" />
