@@ -17,12 +17,12 @@ namespace LibraryModels
 			db.Employees.Add(e3);
 			db.Employees.Add(e4);
 
-			db.DutyLists.Add(new DutyList() { DateDuty = new DateTime(2020, 1, 01), Employeer = e1, DecrDuty = " " });
+			//db.DutyLists.Add(new DutyList() { DateDuty = new DateTime(2020, 1, 01), Employeer = e1, DecrDuty = " " });
 			//db.DutyLists.Add(new DutyList() { DateDuty = new DateTime(2020, 1, 01), Employeer = e2, DecrDuty = " " });
-			db.DutyLists.Add(new DutyList() { DateDuty = new DateTime(2020, 1, 03), Employeer = e3, DecrDuty = " " });
-			db.DutyLists.Add(new DutyList() { DateDuty = new DateTime(2020, 1, 04), Employeer = e4, DecrDuty = " " });
-			db.DutyLists.Add(new DutyList() { DateDuty = new DateTime(2020, 1, 05), Employeer = e1, DecrDuty = " " });
-			db.DutyLists.Add(new DutyList() { DateDuty = new DateTime(2020, 1, 06), Employeer = e2, DecrDuty = " " });
+			db.DutyLists.Add(new DutyList() { DateDuty = new DateTime(2020, 1, 01), Employeer = e1, DecrDuty = " " });
+			db.DutyLists.Add(new DutyList() { DateDuty = new DateTime(2020, 1, 01), Employeer = e2, DecrDuty = " " });
+			//db.DutyLists.Add(new DutyList() { DateDuty = new DateTime(2020, 1, 05), Employeer = e1, DecrDuty = " " });
+			//db.DutyLists.Add(new DutyList() { DateDuty = new DateTime(2020, 1, 06), Employeer = e2, DecrDuty = " " });
 
 			db.Incidents.Add(new ExtremIncident(new DateTime(2019, 12, 01), e1, ""));
 			db.Incidents.Add(new ExtremIncident(new DateTime(2019, 12, 06), e2, ""));
@@ -43,6 +43,8 @@ namespace LibraryModels
 
 			db.Accesses.Add(new Access(e1.Login, true));
 			db.Accesses.Add(new Access(e2.Login, false));
+			db.Accesses.Add(new Access(e3.Login, true));
+			db.Accesses.Add(new Access(e4.Login, false));
 
 			db.Holidays.Add(new Holidays(new DateTime(2019, 12, 01)));
 			db.Holidays.Add(new Holidays(new DateTime(2019, 12, 07)));
@@ -51,7 +53,8 @@ namespace LibraryModels
 			db.Holidays.Add(new Holidays(new DateTime(2019, 12, 15)));
 
 			db.Vacations.Add(new Vacation(e1, new DateTime(2020, 1, 01), new DateTime(2020, 1, 08)));
-
+			db.Vacations.Add(new Vacation(e2, new DateTime(2020, 1, 01), new DateTime(2020, 1, 08)));
+			db.Vacations.Add(new Vacation(e3, new DateTime(2020, 1, 01), new DateTime(2020, 1, 08)));
 			base.Seed(db);
 		}
 	}

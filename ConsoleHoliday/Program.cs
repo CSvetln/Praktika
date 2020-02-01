@@ -6,10 +6,12 @@ namespace ConsoleHoliday
 {
 	public class Program
 	{
-		public static void Main()
+		public static void Main(string[] args)
 		{
-			//GetHoliday(start, countDays);
-			//Console.ReadKey();	
+			DateTime start = DateTime.Parse(args[0]);
+			int countDays = int.Parse(args[1]);
+			GetHoliday(start, countDays);
+			Console.ReadKey();	
 		}
 
 		public static void GetHoliday(DateTime start, int countDays)

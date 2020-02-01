@@ -39,10 +39,17 @@
 
         @foreach (Employee b in Model.Emps)
         {
-            <tr>
-                <td><p>@b.Name</p></td>
-                <td><p>@b.Email</p></td>
-                <td><p><a class="edrem" href="/Employee/Delete/@b.EmployeId">Удалить</a></p></td>
+        <tr>
+            <td><p>@b.Name</p></td>
+            <td><p>@b.Email</p></td>
+            @using (Html.BeginForm("Delete", "Employee", FormMethod.Post))
+            {
+                <td>
+                    <input type="hidden" value="@Model.Emps.PageNumber" name="pageDelete" />
+                    <input type="hidden" value="@b.EmployeId" name="id" />
+                    <input class="btn btn-primary" type="submit" value="Удалить" />
+                </td>
+            }
             </tr>
 
         }

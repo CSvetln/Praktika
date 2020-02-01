@@ -26,7 +26,7 @@ namespace DutyOfServiceDepart.Models
 			Calendar calendar = new Calendar();
 			calendar.CurrentDate = target;
 
-			calendar.Emps = new SelectList(db.Employees, "EmployeId", "Name");
+			calendar.Emps = new SelectList(db.Employees.OrderBy(x=>x.Name), "EmployeId", "Name");
 
 			calendar.Holidays = db.Holidays.Include(x=>x.Holiday).Where(x => x.Holiday.Year == calendar.CurrentDate.Year
 				&& x.Holiday.Month == calendar.CurrentDate.Month).Select(x => x.Holiday.Day).ToList();
@@ -42,12 +42,15 @@ namespace DutyOfServiceDepart.Models
 			Calendar calendar = GetInstanse(start);
 			
 			var dutyLists = db.DutyLists.Include(x => x.Employeer).Where(x => x.DateDuty.Year == calendar.CurrentDate.Year
-					&& x.DateDuty.Month == calendar.CurrentDate.Month).ToList();
+					&& x.DateDuty.Month == calendar.CurrentDate.Month).OrderBy(x=>x.DateDuty).ToList();
 
-			foreach (DutyList s in dutyLists)
+			var ddd = dutyLists.Select(x => x.DateDuty).Distinct();
+
+			foreach (DateTime s in ddd)
 			{
-				Employee[] emps = { s.Employeer };
-				calendar.Duties.Add(s.DateDuty, emps); // Duties - массив пар значений - число месяца и сотрудник 
+				
+				Employee[] emps = dutyLists.Where(x=>x.DateDuty==s).Select(x => x.Employeer).ToArray();
+				calendar.Duties.Add(s, emps); // Duties - массив пар значений - число месяца и сотрудник 
 			}
 
 			return calendar;		

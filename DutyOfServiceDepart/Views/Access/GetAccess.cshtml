@@ -25,17 +25,24 @@
         </tr>
         @foreach (Access b in Model)
         {
-            <tr>
-                <td><p>@b.Login</p></td>
-                @if (b.AllowedEdit)
-                {
-                    <td><p>Чтение и запись</p></td>
-                }
-                else
-                {
-                    <td><p>Чтение</p></td>
-                }
-                <td><p><a class="edrem" href="/Access/Delete/@b.AccessId">Удалить</a></p></td>
+        <tr>
+            <td><p>@b.Login</p></td>
+            @if (b.AllowedEdit)
+            {
+                <td><p>Чтение и запись</p></td>
+            }
+            else
+            {
+                <td><p>Чтение</p></td>
+            }
+            @using (Html.BeginForm("Delete", "Access", FormMethod.Post))
+            {
+                <td>
+                    <input type="hidden" value="@Model.PageNumber" name="pageDelete" />
+                    <input type="hidden" value="@b.AccessId" name="id" />
+                    <input class="btn btn-primary" type="submit" value="Удалить" />
+                </td>
+            }
             </tr>
         }
     </table>

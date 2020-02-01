@@ -31,7 +31,15 @@
                 <td><p>@b.DateIncident.ToLongDateString()</p></td>
                 <td><p>@b.Employee.Name.ToString()</p></td>
                 <td><p>@b.DecsIncident</p></td>
-                <td><p><a class="edrem" href="/Incident/Delete/@b.IncidentId">Удалить</a></p></td>
+                @using (Html.BeginForm("Delete", "Incident", FormMethod.Post))
+                {
+
+                    <td>
+                        <input type="hidden" value="@Model.PageNumber" name="pageDelete" />
+                        <input type="hidden" value="@b.IncidentId" name="id" />
+                        <input class="btn btn-primary" type="submit" value="Удалить" />
+                    </td>
+                }
             </tr>
         }
 

@@ -69,7 +69,8 @@ namespace DutyOfServiceDepart.Controllers
 		}
 
 		[MyAuthorize]
-		public ActionResult Delete(int id)
+		[HttpPost]
+		public ActionResult Delete(int id, int pageDelete)
 		{
 			using (DutyContext db = new DutyContext())
 			{
@@ -104,7 +105,7 @@ namespace DutyOfServiceDepart.Controllers
 						}
 					}
 				}
-				return RedirectToAction("Index");
+				return RedirectToAction("Index", new { page = pageDelete });
 			}
 		}
 	}

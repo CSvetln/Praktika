@@ -24,7 +24,8 @@ namespace DutyOfServiceDepart.Controllers
 		}
 
 		[MyAuthorize]
-		public ActionResult Delete(int id)
+		[HttpPost]
+		public ActionResult Delete(int id, int pageDelete)
 		{
 			ExtremIncident incident = db.Incidents.Find(id);
 			if (ModelState.IsValid)
@@ -32,7 +33,7 @@ namespace DutyOfServiceDepart.Controllers
 				db.Incidents.Remove(incident);
 				db.SaveChanges();
 			}
-			return RedirectToAction("Index");
+			return RedirectToAction("Index", new { page = pageDelete });
 		}
 
 		[MyAuthorize]
