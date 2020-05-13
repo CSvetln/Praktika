@@ -57,14 +57,21 @@ namespace DutyOfServiceDepart.Controllers
 			string login = WebConfigurationManager.AppSettings["login"];
 			string pass = WebConfigurationManager.AppSettings["pass"];
 
-			Dictionary<int, string> duties = new Dictionary<int, string>();
+			Dictionary<int, Employee[]> duties = new Dictionary<int, Employee[]>();
 
-			foreach (DutyList s in db.DutyLists.Include(x => x.Employee).Where(x => x.DateDuty.Year == curDate.Year && x.DateDuty.Month == curDate.Month).ToList())
+			var dutyLists = db.DutyLists.Include(x => x.Employee).Where(x => x.DateDuty.Year == curDate.Year
+					&& x.DateDuty.Month == curDate.Month).OrderBy(x => x.DateDuty).ToList();
+
+			var dates = dutyLists.Select(x => x.DateDuty).Distinct();
+
+			foreach (DateTime s in dates)
 			{
-				duties.Add(s.DateDuty.Day, s.Employee.Name);
+				Employee[] emps = dutyLists.Where(x => x.DateDuty == s).Select(x => x.Employee).ToArray();
+				duties.Add(s.Day, emps);
 			}
 
-			SendSchedule sendSchedule = new SendSchedule(db.Employees.Select(x => x.Email).ToArray(), "График дежурств", "Изучите график дежурств на текущий месяц", curDate, duties);
+			SendSchedule sendSchedule = new SendSchedule(db.Employees.Select(x => x.Email).ToArray(),
+				"График дежурств", "Изучите график дежурств на текущий месяц", curDate, duties);
 			string selectedPost = WebConfigurationManager.AppSettings["Post"];
 			switch (selectedPost)
 			{
