@@ -28,25 +28,21 @@ namespace DutyOfServiceDepart.Controllers
 		[HttpPost]
 		public ActionResult Edit(int[] selectedEmpId, DateTime dateEdit)
 		{
-			for (int i = 0; i < selectedEmpId.Length; i++)
-			{
-				Employee newEmployee = db.Employees.Find(selectedEmpId[i]);//находим выбранного на дату дежурства сотрудника 
-				int tmp = selectedEmpId[i];
-				var duty = db.DutyLists.Where(x => x.Employee.EmployeId == tmp && x.DateDuty == dateEdit)
-					.FirstOrDefault(); //находим дежурство с такой датой и таким сотрудником
 
-				if (duty != null) // если такие записи дежурств есть, меняем дежурного
-				{
-					db.Entry(duty).State = EntityState.Modified;
-					duty.Employee = newEmployee;
-				}
-				else // если таких дежурств нет, создаём новую запись
-				{
-					DutyList newDutyList = new DutyList() { DateDuty = dateEdit, Employee = newEmployee };
-					db.Entry(newDutyList).State = EntityState.Added;
-					db.DutyLists.Add(newDutyList);
-				}
+			var duties = db.DutyLists.Where(x => x.DateDuty == dateEdit).ToList(); // все дежурства с такой датой
+			foreach(DutyList s  in duties)//очищаем все на эту дату
+			{
+				db.Entry(s).State = EntityState.Deleted;
+				db.DutyLists.Remove(s);
 			}
+			for (int i = 0; i < selectedEmpId.Length; i++)   // содаем новые
+			{
+				Employee newEmployee = db.Employees.Find(selectedEmpId[i]);
+				DutyList newDutyList = new DutyList() { DateDuty = dateEdit, Employee = newEmployee };
+				db.Entry(newDutyList).State = EntityState.Added;
+				db.DutyLists.Add(newDutyList);
+			}
+
 			db.SaveChanges();
 			return RedirectToAction("Index", new { start = dateEdit });
 		}
