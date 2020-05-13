@@ -41,14 +41,14 @@ namespace DutyOfServiceDepart.Models
 
 			Calendar calendar = GetInstanse(start);
 
-			var dutyLists = db.DutyLists.Include(x => x.Employeer).Where(x => x.DateDuty.Year == calendar.CurrentDate.Year
+			var dutyLists = db.DutyLists.Include(x => x.Employee).Where(x => x.DateDuty.Year == calendar.CurrentDate.Year
 					&& x.DateDuty.Month == calendar.CurrentDate.Month).OrderBy(x => x.DateDuty).ToList();
 
 			var dates = dutyLists.Select(x => x.DateDuty).Distinct();
 
 			foreach (DateTime s in dates)
 			{
-				Employee[] emps = dutyLists.Where(x => x.DateDuty == s).Select(x => x.Employeer).ToArray();
+				Employee[] emps = dutyLists.Where(x => x.DateDuty == s).Select(x => x.Employee).ToArray();
 				calendar.Duties.Add(s, emps); // Duties - массив пар значений - число месяца и сотрудник 
 			}
 			return calendar;

@@ -27,7 +27,7 @@ namespace DutyOfServiceDepart.Controllers
 			Report report = new Report();
 			int d = 0;
 			
-			var dutyLists = db.DutyLists.Include(x=>x.Employeer).Where(x => x.Employeer.Name == employeeName && x.DateDuty.Year == date.Year && x.DateDuty.Month == date.Month).ToList();
+			var dutyLists = db.DutyLists.Include(x=>x.Employee).Where(x => x.Employee.Name == employeeName && x.DateDuty.Year == date.Year && x.DateDuty.Month == date.Month).ToList();
 
 			foreach (DutyList s in dutyLists)
 			{

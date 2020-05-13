@@ -32,17 +32,17 @@ namespace DutyOfServiceDepart.Controllers
 			{
 				Employee newEmployee = db.Employees.Find(selectedEmpId[i]);//находим выбранного на дату дежурства сотрудника 
 				int tmp = selectedEmpId[i];
-				var duty = db.DutyLists.Where(x => x.Employeer.EmployeId == tmp && x.DateDuty == dateEdit)
+				var duty = db.DutyLists.Where(x => x.Employee.EmployeId == tmp && x.DateDuty == dateEdit)
 					.FirstOrDefault(); //находим дежурство с такой датой и таким сотрудником
 
 				if (duty != null) // если такие записи дежурств есть, меняем дежурного
 				{
 					db.Entry(duty).State = EntityState.Modified;
-					duty.Employeer = newEmployee;
+					duty.Employee = newEmployee;
 				}
 				else // если таких дежурств нет, создаём новую запись
 				{
-					DutyList newDutyList = new DutyList() { DateDuty = dateEdit, Employeer = newEmployee, DecrDuty = String.Empty };
+					DutyList newDutyList = new DutyList() { DateDuty = dateEdit, Employee = newEmployee };
 					db.Entry(newDutyList).State = EntityState.Added;
 					db.DutyLists.Add(newDutyList);
 				}
@@ -59,9 +59,9 @@ namespace DutyOfServiceDepart.Controllers
 
 			Dictionary<int, string> duties = new Dictionary<int, string>();
 
-			foreach (DutyList s in db.DutyLists.Include(x => x.Employeer).Where(x => x.DateDuty.Year == curDate.Year && x.DateDuty.Month == curDate.Month).ToList())
+			foreach (DutyList s in db.DutyLists.Include(x => x.Employee).Where(x => x.DateDuty.Year == curDate.Year && x.DateDuty.Month == curDate.Month).ToList())
 			{
-				duties.Add(s.DateDuty.Day, s.Employeer.Name);
+				duties.Add(s.DateDuty.Day, s.Employee.Name);
 			}
 
 			SendSchedule sendSchedule = new SendSchedule(db.Employees.Select(x => x.Email).ToArray(), "График дежурств", "Изучите график дежурств на текущий месяц", curDate, duties);

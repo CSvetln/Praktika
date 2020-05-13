@@ -205,6 +205,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202005130354064_update-duty.cs" />
+    <Compile Include="Migrations\202005130354064_update-duty.designer.cs">
+      <DependentUpon>202005130354064_update-duty.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Access.cs" />
     <Compile Include="Models\Calendar.cs" />
@@ -287,6 +291,11 @@
       <Project>{204c6870-7a06-498f-89ac-17e6c961520c}</Project>
       <Name>LibraryModels</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202005130354064_update-duty.resx">
+      <DependentUpon>202005130354064_update-duty.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
