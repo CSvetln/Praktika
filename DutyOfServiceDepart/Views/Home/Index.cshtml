@@ -1,122 +1,61 @@
-﻿@using DutyOfServiceDepart.Models;
-@model Calendar
+﻿@model Calendar
+
+@using DutyOfServiceDepart.Models;
 
 @{
     ViewBag.Title = "Дежурства";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<link rel="stylesheet" href="~/Content/StyleIndex.css">
+<link href="~/Content/Calendar.css" rel="stylesheet" />
+
 <script src="~/Scripts/script.js"></script>
 
 <div>
-    <h2 class="a">График дежурств</h2>
-
-    <div class="tm-right-column">
-        <div class="cal">
-            <div style="width:100%; height:1px; clear:both;"></div>
-            <div class="list">@Html.ActionLink("<<", "Index", new { Start = Model.CurrentDate.AddMonths(-1) })</div>
-            <div class="list">@Model.CurrentDate.ToString("MMMMM")</div>
-            <div class="list">@Html.ActionLink(">>", "Index", new { Start = Model.CurrentDate.AddMonths(1) })</div>
-            <div style="width:100%; height:1px; clear:both;"></div>
+    <div class="row">
+        <div class="col-md-10">
+            <h2>График дежурств</h2>
         </div>
-        <table id="calendar" border="1" align="center">
-            <thead>
-                <tr class="week">
-                    <td>ПН</td>
-                    <td>ВТ</td>
-                    <td>СР</td>
-                    <td>ЧТ</td>
-                    <td>ПТ</td>
-                    <td>СБ</td>
-                    <td>ВС</td>
-                </tr>
-            </thead>
 
-            @{
-                int i = 0;
-                DateTime Start = new DateTime(Model.CurrentDate.Year, Model.CurrentDate.Month, 1);
-                while (Start.DayOfWeek != DayOfWeek.Monday)
-                {
-                    Start = Start.AddDays(-1);
-                }
-                while (true)
-                {
-                    <tr>
-                        @while (Start.DayOfWeek != DayOfWeek.Sunday)
-                        {
-                            <td>
-                                @if (Start.Month == Model.CurrentDate.Month)
-                                {
-                                    <div class="day">@Start.Day</div>
-                                    if (Model.Duties.ContainsKey(Start.Day))
-                                    {
-                                        <div class="fam">
-                                            @Model.Duties[Start.Day].Name
-                                        </div>
-                                    }
-
-                                    using (Html.BeginForm("Edit", "Home", FormMethod.Post))
-                                    {
-                                        <div class="hidden" id="day[@i]">
-                                            <input type="hidden" value="@Start" name="DateEdit" />
-                                            @Html.DropDownList("selectedEmpId", ViewBag.Emp as SelectList)
-                                          
-                                            <input class="but" type="submit" value="Сохранить изменения" />
-                                        </div>
-                                    }
-                                    
-
-                                    <a class="pencil" href="" onclick="funcEdit('day[@i]'); return false;"><img src="~/Content/edit.png" /></a>
-
-                                }
-
-                            </td>
-                            i++;
-                            Start = Start.AddDays(1);
-                        }
-                        <td>
-                            @if (Start.Month == Model.CurrentDate.Month)
-                            {
-                                <div class="day">
-                                    @Start.Day
-                                </div>
-                                if (Model.Duties.ContainsKey(Start.Day))
-                                {
-                                    <div class="fam">
-                                        @Model.Duties[Start.Day].Name
-                                    </div>
-                                }
-
-                                using (Html.BeginForm("Edit", "Home", FormMethod.Post))
-                                {
-                                    <div class="hidden" id="day[@i]">
-                                        <input type="hidden" value="@Start" name="DateEdit" />
-                                        @Html.DropDownList("selectedEmpId", ViewBag.Emp as SelectList)
-                                        <input class="but" type="submit" value="Сохранить изменения" />
-                                    </div>
-                                }
-
-                                <a class="pencil" href="" onclick="funcEdit('day[@i]'); return false;"><img src="~/Content/edit.png" /></a>
-
-                            }
-                        </td>
-                    </tr>
-                    i++;
-                    Start = Start.AddDays(1);
-                    if (Model.CurrentDate.Month != Start.Month)
-                    { break; }
-                }
+        <div class="col-md-2">
+            @using (Html.BeginForm("SendAll", "Home", FormMethod.Post))
+            {
+                <div>
+                    @Html.ActionLink("Разослать график", "SendAll", new { CurDate = Model.CurrentDate }, new { @class = "btn btn-primary" })
+                </div>
             }
-        </table>
-
+        </div>
 
     </div>
-    <div class="sendall">
-        @Html.ActionLink("Разослать график", "SendAll", new { CurDate = Model.CurrentDate }, new { @class = "send", @id = "send1" })
+
+    <div class="row">
+        <div class="col-md-1  col-md-offset-4">
+            <p>@Html.ActionLink("<<", "Index", new { start = Model.CurrentDate.AddMonths(-1) })</p>
+        </div>
+
+        <div class="col-md-2 ">
+            <p id="month">@Model.CurrentDate.ToString("MMMMMMMM") - @Model.CurrentDate.Year</p>
+        </div>
+
+        <div class="col-md-1">
+            <p>@Html.ActionLink(">>", "Index", new { start = Model.CurrentDate.AddMonths(1) })</p>
+        </div>
+
+    </div>
+
+    @if (!Model.Holidays.Any())
+    {
+        <div class="warn text-danger"><p>База данных выходных и праздников на данный месяц не обновлена!</p></div>
+    }
+
+    <div class="col">
+        @Helpers.Calendar(Model)
     </div>
 
 </div>
+
+
+
 
 
 

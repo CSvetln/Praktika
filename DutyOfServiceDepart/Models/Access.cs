@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+﻿using System.Web.Mvc;
 
 namespace DutyOfServiceDepart.Models
 {
 	public class Access
 	{
-		[Key]
-		public int AccessId { get; set; }
 		public string Login { get; set; }
-		public bool AllowedEdit { get; set; }
+
+		public SelectList Logins { get; set; }
+
 	}
 }

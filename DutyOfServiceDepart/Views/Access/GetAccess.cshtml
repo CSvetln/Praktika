@@ -1,32 +1,31 @@
-﻿@model PagedList.IPagedList<DutyOfServiceDepart.Models.Access>
+﻿@model PagedList.IPagedList<LibraryModels.Access>
 
 @using PagedList.Mvc;
-@using DutyOfServiceDepart.Models;
+@using LibraryModels;
+
 @{
     ViewBag.Title = "Права доступа";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<link rel="stylesheet" href="~/Content/PagedList.css">
+<link href="~/Content/GetStyle.css" rel="stylesheet" />
 
 <h2>Авторизованные пользователи</h2>
-<link rel="stylesheet" href="~/Content/PagedList.css">
-<link rel="stylesheet" href="~/Content/StyleGet.css">
+
 <div>
 
-    <div class="tm-right-columnt">
-  
-        <p class="addemp">@Html.ActionLink("+ Добавить пользователя", "Create", "Access")</p>
+    <p class="addemp">@Html.ActionLink("+ Добавить пользователя", "Create", "Access")</p>
 
-        <table>
+    <table>
 
-            <tr class="nametab">
-                <th><p>Логин</p></th>
-                <th><p>Уровень доступа</p></th>
-                <th><p></p></th>
-            </tr>
-            @foreach (Access b in Model)
-            {
+        <tr class="nametab">
+            <th><p>Login</p></th>
+            <th><p>Уровень доступа</p></th>
+            <th><p></p></th>
+        </tr>
+        @foreach (Access b in Model)
+        {
             <tr>
-
                 <td><p>@b.Login</p></td>
                 @if (b.AllowedEdit)
                 {
@@ -36,15 +35,12 @@
                 {
                     <td><p>Чтение</p></td>
                 }
-          
                 <td><p><a class="edrem" href="/Access/Delete/@b.AccessId">Удалить</a></p></td>
             </tr>
+        }
+    </table>
+    <br />
 
-            }
-        </table>
-        <br />
-
-    </div>
 </div>
 <br />
     Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount

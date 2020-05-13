@@ -1,0 +1,104 @@
+﻿.btn{
+    margin-top:20px;
+    vertical-align:central;
+}
+
+.nametab {
+    color: black;
+    background: #87CEEB;
+    font-size: 16pt;
+    font-weight: bold;
+}
+
+tr.nametab:hover {
+    background: #87CEEB;
+}
+   
+.nametab th p {
+    text-align: center;
+}
+
+.edrem {
+    padding:5px 5px 5px 5px;
+    margin-top:1%;  
+    background-color: #FFFFFF;
+    border: 1px solid #CCCCCC;
+    border-radius: 6px;
+    color: black;
+    font-size: 18px;
+    text-align: center;
+    text-decoration: none;
+    font-family: 'Times New Roman', Times, serif;
+    width:200px;
+}
+
+.edrem:hover, edrem:focus {
+    outline: 0 none;
+    text-decoration:none;
+}
+
+table {
+    width: 100%;
+    border:none;
+    text-align: center;
+    background-color: #F5F5DC;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.addemp a {
+    color: #006400;
+    font-size: 18pt;
+    text-decoration: none;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.search {
+    width: 1000px;
+    padding-bottom: 20px;
+    font-family: 'Times New Roman';
+    font-size: 16pt;
+    display: inline-block;
+}
+
+.search input {
+     height: 15px;
+     width: 250px;
+}
+
+table tbody tr:nth-child(2n) {
+    background: #f4f4f4;
+}
+
+table tbody tr:hover {
+    background: #ebffe8;
+}
+
+tr {
+    height: 30px;
+   
+}
+
+td {
+    width: 135px;
+    vertical-align: central;
+}
+
+.btn {
+    margin-top: 0;
+}
+
+input.btn.btn-primary {
+    margin-top: 0;
+    padding-bottom: 3px;
+    padding-top: 3px;
+    width: 200px;
+}
+
+tr.nametab:hover {
+    background: #87CEEB;
+}
+
+input {
+    margin-top: 0;
+    width: 100%;
+}

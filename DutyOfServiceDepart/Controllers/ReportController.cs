@@ -2,9 +2,9 @@
 using System.IO;
 using System.Linq;
 using System.Web.Mvc;
-using ClosedXML.Excel;
 using DutyOfServiceDepart.Filters;
-using DutyOfServiceDepart.Models;
+using LibraryModels;
+using Infrastructure.Reports;
 
 namespace DutyOfServiceDepart.Controllers
 {
@@ -16,49 +16,30 @@ namespace DutyOfServiceDepart.Controllers
 		[HttpGet]
         public ActionResult CreateReport()
         {			
-			return View(db.Employees);			
+			return View(db.Employees.ToList());			
         }
-
+		
 		[MyAuthorize]
 		[HttpPost]
-		public FileResult CreateReport(string EmployeeName, DateTime Date)
+		public FileResult CreateReport(string employeeName, DateTime date)
 		{
+			Report report = new Report();
 			int d = 0;
 			
-			foreach (DutyList s in db.DutyLists.Where(x => x.Employee.Name == EmployeeName && x.DateDuty.Year == Date.Year && x.DateDuty.Month == Date.Month).ToList())
+			var dutyLists = db.DutyLists.Where(x => x.Employee.Name == employeeName && x.DateDuty.Year == date.Year && x.DateDuty.Month == date.Month).ToList();
+
+			foreach (DutyList s in dutyLists)
 			{
 				d++;
 			}
 			
-			var workbook = new XLWorkbook();
-			var worksheet = workbook.Worksheets.Add("Лист1");
-
-			worksheet.Cell("A" + 1).Value = "Дежурный";
-			worksheet.Cell("B" + 1).Value = "Период";
-			worksheet.Cell("C" + 1).Value = "Количество дежурств";
-
-			worksheet.Cell("A" + 2).Value = EmployeeName;
-			worksheet.Cell("B" + 2).Value = Date.ToLongDateString() + "-" + Date.AddMonths(1).AddDays(-1).ToLongDateString();
-			worksheet.Cell("C" + 2).Value = d;
-
-
-			for (int i = 1; i < 4; i++)
+			using (MemoryStream stream = report.MakeReport(new ReportClosedXML(employeeName, d, date)))
 			{
-				worksheet.Cell(1, i).Style.Font.Bold = true;
-			}
-			worksheet.Cells().Style.Font.FontName = "Times New Roman";
-			worksheet.Cells().Style.Border.BottomBorder = XLBorderStyleValues.Medium;
-			worksheet.Cells().Style.Border.RightBorder = XLBorderStyleValues.Medium;
-			worksheet.Cells().Style.Font.FontSize = 14;
-
-			worksheet.Columns().AdjustToContents(); //ширина столбца по содержимому
-
-			using (MemoryStream stream = new MemoryStream())
-			{
-				workbook.SaveAs(stream);
-				return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Отчёт.xlsx");
+				string output = String.Format("Отчёт {0}-{1}xlsx", date.ToLongDateString(), date.AddMonths(1).AddDays(-1).ToLongDateString());
+				return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", output);
 			}
 		}
+
 		protected override void Dispose(bool disposing)
 		{
 			if (disposing)
@@ -67,6 +48,5 @@ namespace DutyOfServiceDepart.Controllers
 			}
 			base.Dispose(disposing);
 		}
-
 	}
 }

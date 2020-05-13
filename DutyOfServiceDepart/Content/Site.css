@@ -1,122 +1,73 @@
 ﻿body {
-    font-family: 'Open Sans', Helvetica, Arial, sans-serif;
-    font-size: 20px;
-    font-weight: 300;
-    overflow-x: scroll;
-    margin-left: 0px;
-    margin-bottom: 0px;
-    margin-top: 0px;
-    background: left;
-    background-color: #DCDCDC;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color: black;
+    margin: 0;
+    padding: 0;
 }
-.tm-blue-bg {
-    background-color: #006599;
+
+h2 {
+    font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif;
+    font-weight: 600;
+}
+
+div p{
+    font-family:Cambria, Cochin, Georgia, Times, Times New Roman, serif;
+    font-size:16pt;
+}
+
+.container-fluid{
+    padding-left:20px;
+    margin:20px;
+}
+
+.body-content {
+    padding-left:0;
+    padding-right:0;
+    left:1%;
+}
+
+.table {
+    margin: 30px;
+    left: 1%;
+    padding: 30px;
+}
+
+.logo {
+    margin-left: 10px;
+    width: 90px;
+    height: 50px;
+}
+
+img {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.navbar {
+    background-color: #6699CC;
     color: white;
-}
-.att{
-   width:400%;
-}
-.tm-logo-div {
-    padding-top: 40px;
-    padding-bottom: 40px;
-    padding-left: 20px;
-    width: 17%;
-}
-a {
-    text-decoration: none;
-} 
-.right-column {
-    /*padding-left:20px;*/
-    margin-left:10px;
-    float: right;
-    width: 75%;
+    border-radius: 0; 
+    border:none;
 }
 
-
-
-
-
-.tm-blue-bg a {
+.nv {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    left: 25%;
+    float: left;
     color: white;
+    height: 30px
 }
 
-
-
-
-.tm-main-nav {
-    display: none;
+.nv a{
+    color:white;
+    font-size:18px;
 }
 
-.tm-main-nav-ul {
-    display: inline-block;
-    padding-left: 0;
+.nv a:hover {
+      color: black;
 }
-
-
-
-    .tm-nav-item:hover a,
-    .tm-nav-item:active a,
-    .tm-nav-item:focus a,
-    .tm-nav-item-link.active {
-        text-decoration: none;
-        color: #f4ef5e;
-    }
-
-
-
-
-
-@media (min-width: 576px) {
- .container {
-        width: 100%;
-    }
-}
-
- 
-
-
-
-@media (min-width: 992px) {
-    .tm-main-nav {
-        display: flex;
-        justify-content: center;
-    }
-
-
-    .tm-left-column {
-        position: fixed;
-        height: 100%;
-    }
-
-    .container {
-        width: 100%;
-    }
-
-    .tm-left-column {
-        width: 20%;
-    }
-
-
-
-    .right-column {
-        margin-left: 10px;
-        float: right;
-        width: 75%;
-    }
-
-    .tm-nav-item {
-        cursor: pointer;
-        font-size: 1.5rem;
-        list-style: none;
-        padding: 18px 30px;
-        transition: all 0.3s ease;
-    }
-
-
-
-    .tm-logo-div {
-        padding-top: 30px;
-        padding-bottom: 30px;
-    }
-}
-

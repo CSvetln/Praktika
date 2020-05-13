@@ -1,0 +1,96 @@
+﻿.last {
+    text-align: left;
+    font-size: 20pt;
+    font-weight: 500;
+    font-family: Calibri;
+    padding-top: 0;
+    margin-left: 2px;
+    padding-left: 10px;
+    margin-top: 0;
+    color: dimgrey;
+}
+
+.hol .dis{
+    color:red;
+}
+
+.head {
+    display: inline-block;
+}
+
+form {
+    width: 100%;
+}
+
+select {
+    width: 100%;
+}
+
+.but {
+    background-color: #FFFFFF;
+    border: 1px solid #CCCCCC;
+    border-radius: 4px;
+    color: black;
+    font-size: 18px;
+    text-align: center;
+    text-decoration: none;
+    font-family: 'Times New Roman', Times, serif;
+    margin: 5px 20px 5px 20px; 
+    white-space: pre-line;
+}
+
+table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+.hidden select {
+    margin-left: 10px;
+    background: transparent;
+    display: block;
+    width: 90%;
+    border: 1px solid #a7a7a7;
+    color: #32353a;
+    font-family: 16/Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.4;
+    font-weight: normal;
+    outline: 0;
+}
+
+.day {
+    text-align: left;
+    font-size: 20pt;
+    font-weight: 500;
+    font-family: Calibri;
+    padding-top: 0;
+    margin-left: 2px;
+    padding-left: 10px;
+    margin-top: 0;
+}
+
+.fam {
+    display: block;
+    color: #800000;
+    text-align: center;
+}
+
+.week {
+    text-align: center;
+    font-weight: bold;
+    height: 30px;
+    background-color: #87CEEB;
+}
+
+td {
+    width: 14.3%;
+    vertical-align: top;
+}
+
+tr {
+    height: 70px;
+}
+.vacation {
+    color: brown;
+    text-align: center;
+}

@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
 using DutyOfServiceDepart.Filters;
-using DutyOfServiceDepart.Models;
+using LibraryModels;
 using PagedList;
 
 namespace DutyOfServiceDepart.Controllers
@@ -16,8 +16,7 @@ namespace DutyOfServiceDepart.Controllers
 			var incs = from s in db.Incidents
 						   select s;
 			incs = incs.OrderBy(s => s.DateIncident);
-
-			int pageSize = 5;
+			int pageSize = 10;
 			int pageNumber = (page ?? 1);
 			return View("GetIncident", incs.ToPagedList(pageNumber, pageSize));		
 		}
@@ -29,7 +28,7 @@ namespace DutyOfServiceDepart.Controllers
 			if (ModelState.IsValid)
 			{
 				db.Incidents.Remove(incident);
-					db.SaveChanges();
+				db.SaveChanges();
 			}
 			return RedirectToAction("Index");
 		}
@@ -39,8 +38,10 @@ namespace DutyOfServiceDepart.Controllers
 		public ViewResult Create()
 		{
 			SelectList selectEmp = new SelectList(db.Employees, "EmployeId", "Name");
-			ViewBag.Emp = selectEmp;
-			return View("CreateIncident");
+			Models.ExtremIncident extremIncident = new Models.ExtremIncident {
+				Emps = selectEmp
+		    };
+			return View("CreateIncident", extremIncident);
 		}
 
 		[MyAuthorize]
@@ -57,6 +58,7 @@ namespace DutyOfServiceDepart.Controllers
 			}
 			return View("CreateIncident");
 		}
+
 		protected override void Dispose(bool disposing)
 		{
 			if (disposing)
@@ -65,8 +67,6 @@ namespace DutyOfServiceDepart.Controllers
 			}
 			base.Dispose(disposing);
 		}
-
 	}
-
 }
 

@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace DutyOfServiceDepart.Models
+namespace LibraryModels
 {
 	public class Employee
 	{
-	
 		[Key]
 		public int EmployeId { get; set; }
+
 		[Required]
 		public string Name { get; set; }
 
@@ -20,12 +15,23 @@ namespace DutyOfServiceDepart.Models
 		[MaxLength(100)]
 		[Required]
 		public string Email { get; set; }
+
 		[StringLength(100, MinimumLength =4)]
 		[MinLength(4)]
 		[MaxLength(100)]
 		[Required]
 		public string Login { get; set; }
 
-		
+		public Employee(string name, string email, string login)
+		{
+			this.Name = name;
+			this.Email = email;
+			this.Login = login;
+		}
+
+		public Employee()
+		{
+		}
+
 	}
 }

@@ -1,34 +1,53 @@
-﻿@model IEnumerable<DutyOfServiceDepart.Models.Employee>
+﻿@model IEnumerable<LibraryModels.Employee>
+
 @{
     ViewBag.Title = "Создать отчёт";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<link rel="stylesheet" href="~/Content/StyleCreate.css">
+
+<link href="~/Content/CreateStyle.css" rel="stylesheet" />
+
 <h2>Новый отчёт</h2>
+
 <div>
-    <h3>Введите необходимые данные:</h3>
+
     @using (Html.BeginForm("CreateReport", "Report", FormMethod.Post))
     {
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        <table >
+        <div class="row mt">
 
-            <tr>
-                <td><p>Имя дежурного: </p></td>
-                <td>
-                    @Html.DropDownList("EmployeeName", new SelectList(Model, "Name", "Name"))
-                </td>
-            </tr>
+            <div class="col-md-3 mt">
+                <p>Имя дежурного: </p>
+            </div>
 
-            <tr>
-                <td><p>Выберите месяц: </p></td>
-                <td>
-                    <input type="month" name="Date" required />
-                </td>
-            </tr>
-            
-            <tr><td><input class ="but" id="but1" type="submit" value="Скачать отчёт" /> </td><td></td></tr>
-        </table>
+            <div class="col-md-3 mt">
+                @Html.DropDownList("EmployeeName", new SelectList(Model, "Name", "Name"), new { @class = "drop input-sm" })
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-3 ">
+                <p>Выберите месяц: </p>
+            </div>
+
+            <div class="col-md-3 ">
+                <input class="drop input-sm" type="month" name="Date" required />
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-3 mt">
+                <input class="btn btn-primary" type="submit" value="Скачать отчёт" />
+            </div>
+
+        </div>
+
     }
-    </div>
+</div>
 
 

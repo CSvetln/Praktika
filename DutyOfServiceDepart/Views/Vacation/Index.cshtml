@@ -1,0 +1,91 @@
+﻿@model Calendar
+
+@using DutyOfServiceDepart.Models;
+
+@{
+    ViewBag.Title = "Отпуска";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/script.js"></script>
+<link href="~/Content/Calendar.css" rel="stylesheet" />
+<link href="~/Content/Vacation.css" rel="stylesheet" />
+
+<div>
+
+    <h2>График отпусков</h2>
+
+    @using (Html.BeginForm("CreateVacation", "Vacation", FormMethod.Post, new { @class = "formcreate" }))
+    {
+        <div class="row mt">
+
+            <div class="col-md-5">
+                <p>Выберите сотрудника: </p>
+            </div>
+
+            <div class="col-md-3">
+                @Html.DropDownList("selectedEmpId", Model.Emps, new { @class = "drop" })
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-5">
+                <p>Выберите дату начала отпуска: </p>
+            </div>
+
+            <div class="col-md-3">
+                <input class="drop" type="date" name="Start" required />
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-5">
+                <p>Выберите дату конца отпуска(включительно): </p>
+            </div>
+
+            <div class="col-md-3">
+                <input class="drop" type="date" name="Finish" required />
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-5">
+                <input class="btn btn-primary" type="submit" value="Назначить отпуск" />
+            </div>
+
+        </div>
+    }
+
+    <div class="row">
+
+        <div class="col-md-1  col-md-offset-4">
+            <p>@Html.ActionLink("<<", "Index", new { start = Model.CurrentDate.AddMonths(-1) })</p>
+        </div>
+
+        <div class="col-md-2 ">
+            <p id="month">@Model.CurrentDate.ToString("MMMMMMMM") - @Model.CurrentDate.Year</p>
+        </div>
+
+        <div class="col-md-1">
+            <p>@Html.ActionLink(">>", "Index", new { start = Model.CurrentDate.AddMonths(1) })</p>
+        </div>
+
+    </div>
+
+    @if (!Model.Holidays.Any())
+    {
+        <div class="warn text-danger"><p>База данных выходных и праздников на данный месяц не обновлена!</p></div>
+    }
+
+    <div class="col">
+        @Helpers.Calendar(Model)
+    </div>
+
+</div>
+

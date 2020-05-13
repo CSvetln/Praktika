@@ -1,5 +1,5 @@
 ﻿using DutyOfServiceDepart.Filters;
-using DutyOfServiceDepart.Models;
+using LibraryModels;
 using PagedList;
 using System.Linq;
 using System.Web.Mvc;
@@ -13,53 +13,51 @@ namespace DutyOfServiceDepart.Controllers
 		[Authorize]
 		public ActionResult Index(int? page)
         {			
-			var incs = from s in db.Accesses
-						   select s;
+			var incs = from s in db.Accesses select s;
 			incs = incs.OrderBy(s => s.Login);
-
 			int pageSize = 5;
 			int pageNumber = (page ?? 1);
 			return View("GetAccess", incs.ToPagedList(pageNumber, pageSize));
-
         }
 
 		[MyAuthorize]
 		[HttpGet]
 		public ViewResult Create()
-		{			
+		{
 			var loginQuery = (from e in db.Employees select e.Login).Except
-			(from a in db.Accesses select a.Login);
+				(from a in db.Accesses select a.Login);
 			SelectList selectLogin = new SelectList(loginQuery);
-			ViewBag.Login = selectLogin;
-			return View("CreateAccess");
-			
+			Models.Access access = new Models.Access
+			{
+				Logins = selectLogin
+			};
+			return View("CreateAccess", access);
 		}
 		
 		[MyAuthorize]
 		[HttpPost]
-		public ActionResult Create(Access access)
+		public ActionResult Create([Bind(Include = "Login, AllowedEdit")]LibraryModels.Access access)
 		{			
 			if (ModelState.IsValid)
 			{
 				db.Accesses.Add(access);
 				db.SaveChanges();
 				return RedirectToAction("Index");
-		    }
-			return View("CreateAccess");		
+			}
+			return View("CreateAccess");
 		}
 
 		[MyAuthorize]
 		[HttpGet]
 		public ActionResult Delete(int id)
-		{			
-			Access access = db.Accesses.Find(id);
+		{
+			LibraryModels.Access access = db.Accesses.Find(id);
 			if (ModelState.IsValid)
 			{
 				db.Accesses.Remove(access);
 				db.SaveChanges();
 			}
 			return RedirectToAction("Index");
-			
 		}
 
 		protected override void Dispose(bool disposing)

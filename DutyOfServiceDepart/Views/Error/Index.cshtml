@@ -1,0 +1,25 @@
+﻿@model  DutyOfServiceDepart.Models.Error
+
+@{
+    ViewBag.Title = "Ошибка";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/Error.css" rel="stylesheet" />
+
+<h2>Ошибка!</h2>
+
+<h3 class="error">
+    @Model.Message
+    @Model.InnerExceptionMessage
+</h3>
+
+<p class="trase">Трассировка стека:</p>
+
+<div class="row trasediv">
+    <div class="col-md-12">
+        <h3>@Model.StackTrace</h3>
+    </div>
+</div>
+
+
