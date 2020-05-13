@@ -40,7 +40,7 @@ namespace DutyOfServiceDepart.Controllers
 		[HttpGet]
 		public ViewResult Create()
 		{
-			SelectList selectEmp = new SelectList(db.Employees, "EmployeId", "Name");
+			SelectList selectEmp = new SelectList(db.Employees, "EmployeeId", "Name");
 			Models.ExtremIncident extremIncident = new Models.ExtremIncident {
 				Emps = selectEmp
 		    };

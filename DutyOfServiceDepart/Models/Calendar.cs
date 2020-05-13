@@ -26,7 +26,7 @@ namespace DutyOfServiceDepart.Models
 			Calendar calendar = new Calendar();
 			calendar.CurrentDate = target;
 
-			calendar.Emps = new SelectList(db.Employees.OrderBy(x => x.Name), "EmployeId", "Name");
+			calendar.Emps = new SelectList(db.Employees.OrderBy(x => x.Name), "EmployeeId", "Name");
 
 			calendar.Holidays = db.Holidays.Include(x => x.Holiday).Where(x => x.Holiday.Year == calendar.CurrentDate.Year
 				  && x.Holiday.Month == calendar.CurrentDate.Month).Select(x => x.Holiday.Day).ToList();
