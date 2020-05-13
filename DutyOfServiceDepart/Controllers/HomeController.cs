@@ -28,7 +28,6 @@ namespace DutyOfServiceDepart.Controllers
 		[HttpPost]
 		public ActionResult Edit(int[] selectedEmpId, DateTime dateEdit)
 		{
-
 			var duties = db.DutyLists.Where(x => x.DateDuty == dateEdit).ToList(); // все дежурства с такой датой
 			foreach(DutyList s  in duties)//очищаем все на эту дату
 			{
@@ -68,7 +67,9 @@ namespace DutyOfServiceDepart.Controllers
 
 			SendSchedule sendSchedule = new SendSchedule(db.Employees.Select(x => x.Email).ToArray(),
 				"График дежурств", "Изучите график дежурств на текущий месяц", curDate, duties);
+
 			string selectedPost = WebConfigurationManager.AppSettings["Post"];
+
 			switch (selectedPost)
 			{
 				case "SMTP":

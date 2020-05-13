@@ -62,9 +62,7 @@
                                     {
                                         var empsVacation = calendar.Vacation.Duties[Start];
                                         var empsDuty = calendar.Duties[Start];
-
-
-
+                                    
                                         for (int n = 0; n < empsDuty.Length; n++)
                                         {
                                             for (int j = 0; j < empsVacation.Length; j++)
@@ -73,15 +71,12 @@
                                                 {
                                                    <p class="vacation">У сотрудника - @empsDuty[n].Name назначен отпуск</p>
                                                 }
-
-
                                             }
                                         }
                                     }
                                 }
                             }
-
-
+                     
                             <form method="post" action="/Home/Edit">
                                 <div class="hidden row" id="day[@i]">
                                     <div class="col-md-12">
@@ -142,9 +137,7 @@
                                     {
                                         var empsVacation = calendar.Vacation.Duties[Start];
                                         var empsDuty = calendar.Duties[Start];
-
-
-
+                   
                                         for (int n = 0; n < empsDuty.Length; n++)
                                         {
                                             for (int j = 0; j < empsVacation.Length; j++)
@@ -153,8 +146,6 @@
                                                 {
                                                     <p class="vacation">У сотрудника - @empsDuty[n].Name назначен отпуск</p>
                                                 }
-
-
                                             }
                                         }                                     
                                     }

@@ -9,10 +9,10 @@ namespace LibraryModels
 		public int IncidentId { get; set; }
 
 		[Required]
-		public DateTime DateIncident { get; set; } //дата чп
-
+		public DateTime DateIncident { get; set; } //дата чп	
 		
 		public int? EmployeeEmployeId { get; set; }
+
 		public virtual Employee Employee { get; set; } //кого вызвали туда
 
 		public string DecsIncident { get; set; } //описание чп
@@ -24,9 +24,6 @@ namespace LibraryModels
 			this.DecsIncident = decsIncident;
 		}
 
-		public ExtremIncident()
-		{
-		}
-
+		public ExtremIncident() { }
 	}
 }

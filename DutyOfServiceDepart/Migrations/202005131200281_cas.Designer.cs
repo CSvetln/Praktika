@@ -7,13 +7,13 @@ namespace DutyOfServiceDepart.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.0")]
-    public sealed partial class dutyemp : IMigrationMetadata
+    public sealed partial class cas : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(dutyemp));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(cas));
         
         string IMigrationMetadata.Id
         {
-            get { return "202005130821555_duty-emp"; }
+            get { return "202005131200281_cas"; }
         }
         
         string IMigrationMetadata.Source

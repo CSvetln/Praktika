@@ -7,6 +7,5 @@ namespace DutyOfServiceDepart.Models
 		public string Login { get; set; }
 
 		public SelectList Logins { get; set; }
-
 	}
 }

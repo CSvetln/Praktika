@@ -8,6 +8,7 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using System.Data.Entity;
 
+
 namespace DutyOfServiceDepart
 {
 	public class MvcApplication : System.Web.HttpApplication
@@ -17,41 +18,35 @@ namespace DutyOfServiceDepart
 			AreaRegistration.RegisterAllAreas();
 			FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
 			RouteConfig.RegisterRoutes(RouteTable.Routes);
-			BundleConfig.RegisterBundles(BundleTable.Bundles);
-			LibraryModels.Access a = new LibraryModels.Access("Sveta-ПК\\Sveta", true);
-			DutyContext db = new DutyContext();
-			db.Accesses.Add(a);
-			DutyList dutyList = new DutyList() { DateDuty = new DateTime(2019, 12, 05), EmployeeId=null};
-			db.DutyLists.Add(dutyList);
-			db.SaveChanges();
+			BundleConfig.RegisterBundles(BundleTable.Bundles);		
 		}
 
-		//protected void Application_Error(object sender, EventArgs e)
-		//{
-		//	var Exception = Server.GetLastError();
+		protected void Application_Error(object sender, EventArgs e)
+		{
+			var Exception = Server.GetLastError();
 
-		//	var httpContext = ((HttpApplication)sender).Context;
-		//	httpContext.Response.Clear();
-		//	httpContext.ClearError();
+			var httpContext = ((HttpApplication)sender).Context;
+			httpContext.Response.Clear();
+			httpContext.ClearError();
 
-		//	Error Information = new Error();
-		//	Information.ExceptionPageUrl = Request.Url.ToString();
-		//	Information.Message = Exception.Message;
-		//	Information.StackTrace = Exception.StackTrace;
-		//	Information.InnerExceptionMessage = Exception.InnerException == null ? String.Empty : Exception.InnerException.Message;
-		//	Information.UserName = HttpContext.Current.User.Identity.Name;
+			Error Information = new Error();
+			Information.ExceptionPageUrl = Request.Url.ToString();
+			Information.Message = Exception.Message;
+			Information.StackTrace = Exception.StackTrace;
+			Information.InnerExceptionMessage = Exception.InnerException == null ? String.Empty : Exception.InnerException.Message;
+			Information.UserName = HttpContext.Current.User.Identity.Name;
 
-		//	var routeData = new RouteData();
-		//	routeData.Values["controller"] = "Error";
-		//	routeData.Values["action"] = "Index";
-		//	routeData.Values["ExceptionObject"] = Information;
+			var routeData = new RouteData();
+			routeData.Values["controller"] = "Error";
+			routeData.Values["action"] = "Index";
+			routeData.Values["ExceptionObject"] = Information;
 
-		//	Server.ClearError();
+			Server.ClearError();
 
-		//	using (Controller controller = new Controllers.ErrorController())
-		//	{
-		//		((IController)controller).Execute(new RequestContext(new HttpContextWrapper(httpContext), routeData));
-		//	}
-		//}
+			using (Controller controller = new Controllers.ErrorController())
+			{
+				((IController)controller).Execute(new RequestContext(new HttpContextWrapper(httpContext), routeData));
+			}
+		}
 	}
 }

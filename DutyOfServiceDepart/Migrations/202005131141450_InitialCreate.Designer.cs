@@ -13,7 +13,7 @@ namespace DutyOfServiceDepart.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202001221428137_InitialCreate"; }
+            get { return "202005131141450_InitialCreate"; }
         }
         
         string IMigrationMetadata.Source

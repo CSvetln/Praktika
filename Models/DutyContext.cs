@@ -16,21 +16,19 @@ namespace LibraryModels
 
 		public DbSet<Vacation> Vacations { get; set; }
 
-		//protected override void OnModelCreating(DbModelBuilder modelBuilder)
-		//{
-		//	modelBuilder.Entity<Employee>()
-		//		.HasMany(p => p.Incidents)
-		//		.WithRequired(c => c.Employee)
-		//		.HasForeignKey(c => c.EmployeeEmployeId)
-		//		.WillCascadeOnDelete(false);
+		protected override void OnModelCreating(DbModelBuilder modelBuilder)
+		{
+			modelBuilder.Entity<Employee>()
+				.HasMany(p => p.DutyLists)
+				.WithRequired(c => c.Employee)
+				.HasForeignKey(c => c.EmployeeId)
+				.WillCascadeOnDelete(true);
 
-		//}
-		//protected override void OnModelCreating(DbModelBuilder modelBuilder)
-		//{
-		//	modelBuilder.Entity<Employee>()
-		//		.HasMany(c => c.Incidents)
-		//		.WithRequired(o => o.Employee)
-		//		.WillCascadeOnDelete(false);
-		//}
+			modelBuilder.Entity<Employee>()
+				.HasMany(p => p.Incidents)
+				.WithRequired(c => c.Employee)
+				.HasForeignKey(c => c.EmployeeEmployeId)
+				.WillCascadeOnDelete(true);
+		}
 	}
 }

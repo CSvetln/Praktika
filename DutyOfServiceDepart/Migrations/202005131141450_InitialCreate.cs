@@ -23,23 +23,22 @@
                     {
                         DutyId = c.Int(nullable: false, identity: true),
                         DateDuty = c.DateTime(nullable: false),
-                        DecrDuty = c.String(),
-                        Employeer_EmployeId = c.Int(nullable: false),
+                        EmployeeId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.DutyId)
-                .ForeignKey("dbo.Employees", t => t.Employeer_EmployeId, cascadeDelete: true)
-                .Index(t => t.Employeer_EmployeId);
+                .ForeignKey("dbo.Employees", t => t.EmployeeId, cascadeDelete: true)
+                .Index(t => t.EmployeeId);
             
             CreateTable(
                 "dbo.Employees",
                 c => new
                     {
-                        EmployeId = c.Int(nullable: false, identity: true),
+                        EmployeeId = c.Int(nullable: false, identity: true),
                         Name = c.String(nullable: false),
                         Email = c.String(nullable: false, maxLength: 100),
                         Login = c.String(nullable: false, maxLength: 100),
                     })
-                .PrimaryKey(t => t.EmployeId);
+                .PrimaryKey(t => t.EmployeeId);
             
             CreateTable(
                 "dbo.Holidays",
@@ -55,12 +54,13 @@
                     {
                         IncidentId = c.Int(nullable: false, identity: true),
                         DateIncident = c.DateTime(nullable: false),
-                        EmployeeEmployeId = c.Int(nullable: false),
+                        EmployeeEmployeId = c.Int(),
                         DecsIncident = c.String(),
+                        Employee_EmployeeId = c.Int(),
                     })
                 .PrimaryKey(t => t.IncidentId)
-                .ForeignKey("dbo.Employees", t => t.EmployeeEmployeId, cascadeDelete: true)
-                .Index(t => t.EmployeeEmployeId);
+                .ForeignKey("dbo.Employees", t => t.Employee_EmployeeId)
+                .Index(t => t.Employee_EmployeeId);
             
             CreateTable(
                 "dbo.Vacations",
@@ -69,22 +69,22 @@
                         IdVacation = c.Int(nullable: false, identity: true),
                         Start = c.DateTime(nullable: false),
                         Finish = c.DateTime(nullable: false),
-                        Employee_EmployeId = c.Int(nullable: false),
+                        Employee_EmployeeId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.IdVacation)
-                .ForeignKey("dbo.Employees", t => t.Employee_EmployeId, cascadeDelete: true)
-                .Index(t => t.Employee_EmployeId);
+                .ForeignKey("dbo.Employees", t => t.Employee_EmployeeId, cascadeDelete: true)
+                .Index(t => t.Employee_EmployeeId);
             
         }
         
         public override void Down()
         {
-            DropForeignKey("dbo.Vacations", "Employee_EmployeId", "dbo.Employees");
-            DropForeignKey("dbo.ExtremIncidents", "EmployeeEmployeId", "dbo.Employees");
-            DropForeignKey("dbo.DutyLists", "Employeer_EmployeId", "dbo.Employees");
-            DropIndex("dbo.Vacations", new[] { "Employee_EmployeId" });
-            DropIndex("dbo.ExtremIncidents", new[] { "EmployeeEmployeId" });
-            DropIndex("dbo.DutyLists", new[] { "Employeer_EmployeId" });
+            DropForeignKey("dbo.Vacations", "Employee_EmployeeId", "dbo.Employees");
+            DropForeignKey("dbo.ExtremIncidents", "Employee_EmployeeId", "dbo.Employees");
+            DropForeignKey("dbo.DutyLists", "EmployeeId", "dbo.Employees");
+            DropIndex("dbo.Vacations", new[] { "Employee_EmployeeId" });
+            DropIndex("dbo.ExtremIncidents", new[] { "Employee_EmployeeId" });
+            DropIndex("dbo.DutyLists", new[] { "EmployeeId" });
             DropTable("dbo.Vacations");
             DropTable("dbo.ExtremIncidents");
             DropTable("dbo.Holidays");

@@ -19,9 +19,6 @@ namespace LibraryModels
 			this.AllowedEdit = allowedEdit;
 		}
 
-		public Access()
-		{
-		}
-
+		public Access() { }
 	}
 }

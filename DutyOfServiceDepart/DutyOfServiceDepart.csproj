@@ -205,13 +205,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202005130354064_update-duty.cs" />
-    <Compile Include="Migrations\202005130354064_update-duty.designer.cs">
-      <DependentUpon>202005130354064_update-duty.cs</DependentUpon>
+    <Compile Include="Migrations\202005131141450_InitialCreate.cs" />
+    <Compile Include="Migrations\202005131141450_InitialCreate.designer.cs">
+      <DependentUpon>202005131141450_InitialCreate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202005130821555_duty-emp.cs" />
-    <Compile Include="Migrations\202005130821555_duty-emp.designer.cs">
-      <DependentUpon>202005130821555_duty-emp.cs</DependentUpon>
+    <Compile Include="Migrations\202005131200281_cas.cs" />
+    <Compile Include="Migrations\202005131200281_cas.designer.cs">
+      <DependentUpon>202005131200281_cas.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Access.cs" />
@@ -297,11 +297,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202005130354064_update-duty.resx">
-      <DependentUpon>202005130354064_update-duty.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202005131141450_InitialCreate.resx">
+      <DependentUpon>202005131141450_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202005130821555_duty-emp.resx">
-      <DependentUpon>202005130821555_duty-emp.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202005131200281_cas.resx">
+      <DependentUpon>202005131200281_cas.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

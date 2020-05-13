@@ -12,6 +12,5 @@ namespace LibraryModels
 		{
 			this.Holiday = holiday;
 		}
-
 	}
 }

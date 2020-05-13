@@ -25,6 +25,8 @@ namespace LibraryModels
 
 		public ICollection<DutyList> DutyLists { get; set; }
 
+		public ICollection<ExtremIncident> Incidents { get; set; }
+
 		public Employee(string name, string email, string login)
 		{
 			this.Name = name;
