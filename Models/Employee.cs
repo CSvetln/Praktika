@@ -6,7 +6,7 @@ namespace LibraryModels
 	public class Employee
 	{
 		[Key]
-		public int EmployeId { get; set; }
+		public int EmployeeId { get; set; }
 
 		[Required]
 		public string Name { get; set; }
@@ -23,6 +23,7 @@ namespace LibraryModels
 		[Required]
 		public string Login { get; set; }
 
+		public ICollection<DutyList> DutyLists { get; set; }
 
 		public Employee(string name, string email, string login)
 		{
@@ -31,9 +32,6 @@ namespace LibraryModels
 			this.Login = login;
 		}
 
-		public Employee()
-		{
-		}
-
+		public Employee() { }
 	}
 }

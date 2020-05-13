@@ -209,6 +209,10 @@
     <Compile Include="Migrations\202005130354064_update-duty.designer.cs">
       <DependentUpon>202005130354064_update-duty.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202005130821555_duty-emp.cs" />
+    <Compile Include="Migrations\202005130821555_duty-emp.designer.cs">
+      <DependentUpon>202005130821555_duty-emp.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Access.cs" />
     <Compile Include="Models\Calendar.cs" />
@@ -295,6 +299,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202005130354064_update-duty.resx">
       <DependentUpon>202005130354064_update-duty.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005130821555_duty-emp.resx">
+      <DependentUpon>202005130821555_duty-emp.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
