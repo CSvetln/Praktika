@@ -10,6 +10,5 @@ namespace DutyOfServiceDepart.Models
 		public string CurrentFilter { get; set; }
 
 		public IPagedList<Employee> Emps { get; set; }
-
 	}
 }

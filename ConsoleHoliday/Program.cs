@@ -6,19 +6,22 @@ namespace ConsoleHoliday
 {
 	public class Program
 	{
-		public static void Main()
-		{	
-			//GetHolidayMonth(new DateTime(Нужная дата));
+		public static void Main(string[] args)
+		{
+			DateTime start = DateTime.Parse(args[0]);
+			int countDays = int.Parse(args[1]); //0 - дата, с которой загружать, 1 - количество дней
+			GetHoliday(start, countDays);
+			Console.ReadKey();	
 		}
 
-		public static void GetHolidayMonth(DateTime start)
+		public static void GetHoliday(DateTime start, int countDays)
 		{
 			DutyContext db = new DutyContext();
 
 			WebClient webClient = new WebClient();
 			ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
 
-			DateTime finish = new DateTime(start.Year + 1, 12, 31);
+			DateTime finish = start.AddDays(countDays);
 
 			while (start <= finish)
 			{

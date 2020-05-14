@@ -1,5 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Web.Mvc;
+using System.Data.Entity;
 using DutyOfServiceDepart.Filters;
 using LibraryModels;
 using PagedList;
@@ -12,9 +15,8 @@ namespace DutyOfServiceDepart.Controllers
 
 		[Authorize]
 		public ActionResult Index(int? page)
-        {			
-			var incs = from s in db.Incidents
-						   select s;
+        {
+			var incs = db.Incidents.Include(x => x.Employee);
 			incs = incs.OrderBy(s => s.DateIncident);
 			int pageSize = 10;
 			int pageNumber = (page ?? 1);
@@ -22,7 +24,8 @@ namespace DutyOfServiceDepart.Controllers
 		}
 
 		[MyAuthorize]
-		public ActionResult Delete(int id)
+		[HttpPost]
+		public ActionResult Delete(int id, int pageDelete)
 		{
 			ExtremIncident incident = db.Incidents.Find(id);
 			if (ModelState.IsValid)
@@ -30,14 +33,14 @@ namespace DutyOfServiceDepart.Controllers
 				db.Incidents.Remove(incident);
 				db.SaveChanges();
 			}
-			return RedirectToAction("Index");
+			return RedirectToAction("Index", new { page = pageDelete });
 		}
 
 		[MyAuthorize]
 		[HttpGet]
 		public ViewResult Create()
 		{
-			SelectList selectEmp = new SelectList(db.Employees, "EmployeId", "Name");
+			SelectList selectEmp = new SelectList(db.Employees, "EmployeeId", "Name");
 			Models.ExtremIncident extremIncident = new Models.ExtremIncident {
 				Emps = selectEmp
 		    };
@@ -46,10 +49,11 @@ namespace DutyOfServiceDepart.Controllers
 
 		[MyAuthorize]
 		[HttpPost]		
-		public ActionResult Create([Bind(Include = "DateIncident,EmployeeId,DescIncident")]ExtremIncident extremIncident)
-		{
-			Employee employee = db.Employees.Find(extremIncident.EmployeeId);
-			extremIncident.Employee = employee;
+		public ActionResult Create(DateTime DateIncident, int Employee, string DescIncident)
+		{			
+			Employee employee = db.Employees.Find(Employee);			
+			ExtremIncident extremIncident = new ExtremIncident(DateIncident, employee, DescIncident);
+
 			if (ModelState.IsValid)
 			{
 				db.Incidents.Add(extremIncident);

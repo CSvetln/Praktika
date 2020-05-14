@@ -2,12 +2,13 @@
 using ClosedXML.Excel;
 using System.IO;
 using System.Collections.Generic;
+using LibraryModels;
 
 namespace Infrastructure.Mail
 {
 	public class Schedule
 	{
-		public static MemoryStream GetSchedule(Dictionary<int, string> duties, DateTime date)
+		public static MemoryStream GetSchedule(Dictionary<int, Employee[]> duties, DateTime date)
 		{
 			var workbook = new XLWorkbook();
 			var worksheet = workbook.Worksheets.Add("График");
@@ -27,12 +28,13 @@ namespace Infrastructure.Mail
 				worksheet.Cell(i, 1).Value = Start.Day.ToString();
 				if (duties.ContainsKey(Start.Day))
 				{
-					worksheet.Cell(i, 2).Value = duties[Start.Day];
+					for (int j = 0; j < duties[Start.Day].Length; j++)
+					{
+						worksheet.Cell(i, j+2).Value = duties[Start.Day][j].Name;
+
+					}
 				}
-				else
-				{
-					worksheet.Cell(i, 2).Value = " ";
-				}
+				
 				i++;
 				Start = Start.AddDays(1);
 				if (date.Month != Start.Month)

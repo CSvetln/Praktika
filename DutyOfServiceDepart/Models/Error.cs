@@ -11,7 +11,6 @@ namespace DutyOfServiceDepart.Models
 
 		public string InnerExceptionMessage { get; set; }
 
-		public string UserName { get; set; }
-
+		public string UserName { get; set; }	
 	}
 }

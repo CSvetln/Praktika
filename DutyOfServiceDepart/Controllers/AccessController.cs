@@ -15,7 +15,7 @@ namespace DutyOfServiceDepart.Controllers
         {			
 			var incs = from s in db.Accesses select s;
 			incs = incs.OrderBy(s => s.Login);
-			int pageSize = 5;
+			int pageSize = 10;
 			int pageNumber = (page ?? 1);
 			return View("GetAccess", incs.ToPagedList(pageNumber, pageSize));
         }
@@ -36,7 +36,7 @@ namespace DutyOfServiceDepart.Controllers
 		
 		[MyAuthorize]
 		[HttpPost]
-		public ActionResult Create([Bind(Include = "Login, AllowedEdit")]LibraryModels.Access access)
+		public ActionResult Create([Bind(Include = "Login, AllowedEdit")]Access access)
 		{			
 			if (ModelState.IsValid)
 			{
@@ -48,16 +48,16 @@ namespace DutyOfServiceDepart.Controllers
 		}
 
 		[MyAuthorize]
-		[HttpGet]
-		public ActionResult Delete(int id)
+		[HttpPost]
+		public ActionResult Delete(int id, int pageDelete)
 		{
-			LibraryModels.Access access = db.Accesses.Find(id);
+			Access access = db.Accesses.Find(id);
 			if (ModelState.IsValid)
 			{
 				db.Accesses.Remove(access);
 				db.SaveChanges();
 			}
-			return RedirectToAction("Index");
+			return RedirectToAction("Index", new { page = pageDelete });
 		}
 
 		protected override void Dispose(bool disposing)

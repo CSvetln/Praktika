@@ -7,13 +7,13 @@ using PagedList;
 
 namespace DutyOfServiceDepart.Controllers
 {
-    public class EmployeeController : Controller
-    {
+	public class EmployeeController : Controller
+	{
 		[Authorize]
 		public ViewResult Index(string sortOrder, string currentFilter, string searchString, int? page)
-        {
+		{
 			using (DutyContext db = new DutyContext())
-			{							
+			{
 				if (searchString != null)
 				{
 					page = 1;
@@ -41,8 +41,8 @@ namespace DutyOfServiceDepart.Controllers
 
 				return View("GetEmployee", sort);
 			}
-        }
-		
+		}
+
 		[MyAuthorize]
 		[HttpGet]
 		public ViewResult Create()
@@ -67,17 +67,19 @@ namespace DutyOfServiceDepart.Controllers
 		}
 
 		[MyAuthorize]
-		public ActionResult Delete(int id)
+		[HttpPost]
+		public ActionResult Delete(int id, int pageDelete)
 		{
 			using (DutyContext db = new DutyContext())
 			{
-				Employee employee = db.Employees.Find(id);				
+				Employee employee = db.Employees.Find(id);
+
 				if (ModelState.IsValid)
 				{
-					db.Employees.Remove(employee);					
+					db.Employees.Remove(employee);
 					db.SaveChanges();
 				}
-				return RedirectToAction("Index");
+				return RedirectToAction("Index", new { page = pageDelete });
 			}
 		}
 	}

@@ -26,10 +26,10 @@ namespace DutyOfServiceDepart.Models
 			Calendar calendar = new Calendar();
 			calendar.CurrentDate = target;
 
-			calendar.Emps = new SelectList(db.Employees, "EmployeId", "Name");
+			calendar.Emps = new SelectList(db.Employees.OrderBy(x => x.Name), "EmployeeId", "Name");
 
-			calendar.Holidays = db.Holidays.Where(x => x.Holiday.Year == calendar.CurrentDate.Year
-				&& x.Holiday.Month == calendar.CurrentDate.Month).Select(x => x.Holiday.Day).ToList();
+			calendar.Holidays = db.Holidays.Include(x => x.Holiday).Where(x => x.Holiday.Year == calendar.CurrentDate.Year
+				  && x.Holiday.Month == calendar.CurrentDate.Month).Select(x => x.Holiday.Day).ToList();
 
 			return calendar;
 		}
@@ -38,25 +38,26 @@ namespace DutyOfServiceDepart.Models
 		{
 			/*Метод создаёт экземепляр класса Calendar и записывает в него текущую дату и дежурных сотрудников в этом месяце */
 			DutyContext db = new DutyContext();
-			
+
 			Calendar calendar = GetInstanse(start);
-			
+
 			var dutyLists = db.DutyLists.Include(x => x.Employee).Where(x => x.DateDuty.Year == calendar.CurrentDate.Year
-					&& x.DateDuty.Month == calendar.CurrentDate.Month).ToList();
+					&& x.DateDuty.Month == calendar.CurrentDate.Month).OrderBy(x => x.DateDuty).ToList();
 
-			foreach (DutyList s in dutyLists)
+			var dates = dutyLists.Select(x => x.DateDuty).Distinct();
+
+			foreach (DateTime s in dates)
 			{
-				Employee[] emps = { s.Employee };
-				calendar.Duties.Add(s.DateDuty, emps); // Duties - массив пар значений - число месяца и сотрудник 
+				Employee[] emps = dutyLists.Where(x => x.DateDuty == s).Select(x => x.Employee).ToArray();
+				calendar.Duties.Add(s, emps); // Duties - массив пар значений - число месяца и сотрудник 
 			}
-
-			return calendar;		
+			return calendar;
 		}
 
 		public static Calendar GetCalendarVacation(DateTime? start)
 		{
 			DutyContext db = new DutyContext();
-			
+
 			Calendar calendar = GetInstanse(start);
 
 			DateTime current = new DateTime(calendar.CurrentDate.Year, calendar.CurrentDate.Month, 1);
@@ -75,7 +76,6 @@ namespace DutyOfServiceDepart.Models
 
 				current = current.AddDays(1);
 			}
-
 			return calendar;
 		}
 	}

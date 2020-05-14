@@ -10,11 +10,9 @@ namespace LibraryModels
 
 		[Required]
 		public DateTime DateDuty { get; set; } //дата дежурства
-	
-		[Required]
-		public Employee Employee { get; set; }   //дежурный
 
-		public string DecrDuty { get; set; } //описание дежурства 
-
+		public int? EmployeeId { get; set; }
+		
+		public virtual Employee Employee { get; set; }   //дежурный
 	}
 }

@@ -6,14 +6,14 @@ namespace DutyOfServiceDepart.Migrations
     using System.Data.Entity.Migrations.Infrastructure;
     using System.Resources;
     
-    [GeneratedCode("EntityFramework.Migrations", "6.3.0-preview6-19304-03")]
-    public sealed partial class Holiday : IMigrationMetadata
+    [GeneratedCode("EntityFramework.Migrations", "6.4.0")]
+    public sealed partial class cas : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Holiday));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(cas));
         
         string IMigrationMetadata.Id
         {
-            get { return "201912141637228_Holiday"; }
+            get { return "202005131200281_cas"; }
         }
         
         string IMigrationMetadata.Source

@@ -1,11 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace LibraryModels
 {
 	public class Employee
 	{
 		[Key]
-		public int EmployeId { get; set; }
+		public int EmployeeId { get; set; }
 
 		[Required]
 		public string Name { get; set; }
@@ -22,6 +23,10 @@ namespace LibraryModels
 		[Required]
 		public string Login { get; set; }
 
+		public ICollection<DutyList> DutyLists { get; set; }
+
+		public ICollection<ExtremIncident> Incidents { get; set; }
+
 		public Employee(string name, string email, string login)
 		{
 			this.Name = name;
@@ -29,9 +34,6 @@ namespace LibraryModels
 			this.Login = login;
 		}
 
-		public Employee()
-		{
-		}
-
+		public Employee() { }
 	}
 }

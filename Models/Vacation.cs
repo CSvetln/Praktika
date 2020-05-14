@@ -24,9 +24,6 @@ namespace LibraryModels
 			this.Finish = finish;
 		}
 
-		public Vacation()
-		{
-		}
-
+		public Vacation() { }
 	}
 }

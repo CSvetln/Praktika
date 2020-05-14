@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LibraryModels;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -10,9 +11,9 @@ namespace Infrastructure.Mail
 		public string Subject { get; set; }
 		public string Body { get; set; }
 		public DateTime DateSchedule { get; set; }
-		public Dictionary<int, string> Duties { get; set; }
+		public Dictionary<int, Employee[]> Duties { get; set; }
 
-		public SendSchedule(string[] emails, string subject, string body, DateTime dateSchedule, Dictionary<int, string> duties)
+		public SendSchedule(string[] emails, string subject, string body, DateTime dateSchedule, Dictionary<int, Employee[]> duties)
 		{
 			this.Emails = emails;
 			this.Subject = subject;

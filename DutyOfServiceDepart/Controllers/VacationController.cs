@@ -26,7 +26,7 @@ namespace DutyOfServiceDepart.Controllers
 		{		
 			Employee newEmployee = db.Employees.Find(selectedEmpId);
 
-			var vacations = db.Vacations.Where(x => x.Employee.EmployeId == selectedEmpId && (x.Start >= Start && x.Start <= Finish
+			var vacations = db.Vacations.Include(x=>x.Employee).Where(x => x.Employee.EmployeeId == selectedEmpId && (x.Start >= Start && x.Start <= Finish
 					|| x.Start < Start && x.Finish >= Start)).ToList();
 
 			if (vacations.Any())
