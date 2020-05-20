@@ -15,6 +15,7 @@ namespace DutyOfServiceDepart
 	{		
 		protected void Application_Start()
 		{
+			Database.SetInitializer(new DutyDbInitializer());
 			AreaRegistration.RegisterAllAreas();
 			FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
 			RouteConfig.RegisterRoutes(RouteTable.Routes);

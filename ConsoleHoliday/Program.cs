@@ -11,7 +11,6 @@ namespace ConsoleHoliday
 			DateTime start = DateTime.Parse(args[0]);
 			int countDays = int.Parse(args[1]); //0 - дата, с которой загружать, 1 - количество дней
 			GetHoliday(start, countDays);
-			Console.ReadKey();	
 		}
 
 		public static void GetHoliday(DateTime start, int countDays)
