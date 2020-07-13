@@ -3,80 +3,82 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Data.Entity;
 using System.Web.Mvc;
-using LibraryModels;
+using DBModels;
 
-namespace DutyOfServiceDepart.Models
+namespace CalendarWebsite.Models
 {
-	public class Calendar
-	{
-		public Dictionary<DateTime, Employee[]> Duties { get; set; } = new Dictionary<DateTime, Employee[]>();
+    public class Calendar
+    {
+        public Dictionary<DateTime, Employee[]> Duties { get; set; } = new Dictionary<DateTime, Employee[]>();
 
-		public DateTime CurrentDate { get; set; }
+        public DateTime CurrentDate { get; set; }
 
-		public SelectList Emps { get; set; }
+        public SelectList Emps { get; set; }
 
-		public List<int> Holidays { get; set; }
+        public List<int> Holidays { get; set; }
 
-		public Calendar Vacation { get; set; }
+        public Calendar Vacation { get; set; }
 
-		private static Calendar GetInstanse(DateTime? start)
-		{
-			DutyContext db = new DutyContext();
-			DateTime target = start ?? DateTime.Now.Date;
-			Calendar calendar = new Calendar();
-			calendar.CurrentDate = target;
+        private static Calendar GetInstanse(DateTime? start)
+        {
+            DutyContext db = new DutyContext();
+            DateTime target = start ?? DateTime.Now.Date;
+            Calendar calendar = new Calendar();
+            calendar.CurrentDate = target;
 
-			calendar.Emps = new SelectList(db.Employees.OrderBy(x => x.Name), "EmployeeId", "Name");
+            calendar.Emps = new SelectList(db.Employees.ToList(), "EmployeeId", "Name");
 
-			calendar.Holidays = db.Holidays.Include(x => x.Holiday).Where(x => x.Holiday.Year == calendar.CurrentDate.Year
-				  && x.Holiday.Month == calendar.CurrentDate.Month).Select(x => x.Holiday.Day).ToList();
+            calendar.Holidays = db.Holidays.Where(x => x.DateValue.Year == calendar.CurrentDate.Year
+                  && x.DateValue.Month == calendar.CurrentDate.Month).Select(x => x.DateValue.Day).ToList();
 
-			return calendar;
-		}
+            return calendar;
+        }
 
-		public static Calendar GetCalendarDuty(DateTime? start)
-		{
-			/*Метод создаёт экземепляр класса Calendar и записывает в него текущую дату и дежурных сотрудников в этом месяце */
-			DutyContext db = new DutyContext();
+        public static Calendar GetCalendarDuty(DateTime? start)
+        {
+            /*Метод создаёт экземепляр класса Calendar и записывает в него текущую дату и дежурных сотрудников в этом месяце */
+            DutyContext db = new DutyContext();
 
-			Calendar calendar = GetInstanse(start);
+            Calendar calendar = GetInstanse(start);
 
-			var dutyLists = db.DutyLists.Include(x => x.Employee).Where(x => x.DateDuty.Year == calendar.CurrentDate.Year
-					&& x.DateDuty.Month == calendar.CurrentDate.Month).OrderBy(x => x.DateDuty).ToList();
+            var dutyLists = db.Duties.Include(x => x.Employee).Where(x => x.DutyDate.Year == calendar.CurrentDate.Year
+                    && x.DutyDate.Month == calendar.CurrentDate.Month).OrderBy(x => x.DutyDate).ToList();
 
-			var dates = dutyLists.Select(x => x.DateDuty).Distinct();
+            var dates = dutyLists.Select(x => x.DutyDate).Distinct();
 
-			foreach (DateTime s in dates)
-			{
-				Employee[] emps = dutyLists.Where(x => x.DateDuty == s).Select(x => x.Employee).ToArray();
-				calendar.Duties.Add(s, emps); // Duties - массив пар значений - число месяца и сотрудник 
-			}
-			return calendar;
-		}
+            foreach (DateTime s in dates)
+            {
+                Employee[] emps = dutyLists.Where(x => x.DutyDate == s).Select(x => x.Employee).ToArray();
+                calendar.Duties.Add(s, emps); // Duties - массив пар значений - число месяца и сотрудник 
+            }
 
-		public static Calendar GetCalendarVacation(DateTime? start)
-		{
-			DutyContext db = new DutyContext();
+            return calendar;
+        }
 
-			Calendar calendar = GetInstanse(start);
+        public static Calendar GetCalendarVacation(DateTime? start)
+        {
+            DutyContext db = new DutyContext();
 
-			DateTime current = new DateTime(calendar.CurrentDate.Year, calendar.CurrentDate.Month, 1);
-			int allDayMonth = DateTime.DaysInMonth(calendar.CurrentDate.Year, calendar.CurrentDate.Month);
-			DateTime last = new DateTime(calendar.CurrentDate.Year, calendar.CurrentDate.Month, allDayMonth);
+            Calendar calendar = GetInstanse(start);
 
-			var vacations = db.Vacations.Include(x => x.Employee).Where(x => x.Start >= current && x.Start <= last
-				|| x.Start < current && x.Finish >= current).ToList();
+            DateTime current = new DateTime(calendar.CurrentDate.Year, calendar.CurrentDate.Month, 1);
+            int allDayMonth = DateTime.DaysInMonth(calendar.CurrentDate.Year, calendar.CurrentDate.Month);
+            DateTime last = new DateTime(calendar.CurrentDate.Year, calendar.CurrentDate.Month, allDayMonth);
 
-			while (current <= last)
-			{
-				var emps = vacations.Where(x => x.Start <= current && x.Finish >= current).Select(x => x.Employee).ToArray();
+            var vacations = db.Vacations.Include(x => x.Employee).Where(x => x.BeginDate >= current && x.BeginDate <= last
+                || x.BeginDate < current && x.EndDate >= current).ToList();
 
-				if (emps.Length != 0)
-					calendar.Duties.Add(current, emps);
+            while (current <= last)
+            {
+                var emps = vacations.Where(x => x.BeginDate <= current && x.EndDate >= current).Select(x => x.Employee).ToArray();
 
-				current = current.AddDays(1);
-			}
-			return calendar;
-		}
-	}
+                if (emps.Length != 0)
+                    calendar.Duties.Add(current, emps);
+
+                current = current.AddDays(1);
+            }
+
+            return calendar;
+        }
+    }
 }

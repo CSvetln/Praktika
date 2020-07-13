@@ -1,4 +1,12 @@
-﻿.last {
+﻿#calendar {
+    border-collapse: collapse;
+}
+
+    #calendar td {
+        border: 1px solid black;
+    }
+
+.last {
     text-align: left;
     font-size: 20pt;
     font-weight: 500;
@@ -10,8 +18,8 @@
     color: dimgrey;
 }
 
-.hol .dis{
-    color:red;
+.hol .dis {
+    color: red;
 }
 
 .head {
@@ -35,7 +43,7 @@ select {
     text-align: center;
     text-decoration: none;
     font-family: 'Times New Roman', Times, serif;
-    margin: 5px 20px 5px 20px; 
+    margin: 5px 20px 5px 20px;
     white-space: pre-line;
 }
 
@@ -90,6 +98,7 @@ td {
 tr {
     height: 70px;
 }
+
 .vacation {
     color: brown;
     text-align: center;

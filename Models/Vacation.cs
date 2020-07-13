@@ -1,29 +1,24 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace LibraryModels
+namespace DBModels
 {
+    [Table("Vacations")]
 	public class Vacation
 	{
 		[Key]
-		public int IdVacation { get; set; }
+		public Int32 Id { get; set; }
+
+        [Required]
+        public Int32 EmployeeId { get; set; }
+        		
+		public virtual Employee Employee { get; set; }
 
 		[Required]
-		public Employee Employee { get; set; }
+		public DateTime BeginDate { get; set; }
 
 		[Required]
-		public DateTime Start { get; set; }
-
-		[Required]
-		public DateTime Finish { get; set; }
-
-		public Vacation(Employee employee, DateTime start, DateTime finish)
-		{
-			this.Employee = employee;
-			this.Start = start;
-			this.Finish = finish;
-		}
-
-		public Vacation() { }
+		public DateTime EndDate { get; set; }
 	}
 }

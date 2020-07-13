@@ -2,42 +2,42 @@
 using System;
 using System.IO;
 
-namespace Infrastructure.Mail
+namespace Helpers.Mail
 {
-	public class SendingExchange:IMail
-	{
-		public void SendMail(string email, string subject, string body, MemoryStream attachment)
-		{
-			ExchangeService service = new ExchangeService(ExchangeVersion.Exchange2007_SP1) { UseDefaultCredentials = true };
+    public class SendingExchange : IMailSender
+    {
+        public void SendMail(string email, string subject, string body, MemoryStream attachmentFileStream)
+        {
+            ExchangeService service = new ExchangeService(ExchangeVersion.Exchange2007_SP1) { UseDefaultCredentials = true };
 
-			service.AutodiscoverUrl(Environment.UserName + "@suek.ru", RedirectionUrlValidationCallback);
+            service.AutodiscoverUrl(Environment.UserName + "@suek.ru", RedirectionUrlValidationCallback);
 
-			EmailMessage Email = new EmailMessage(service) { Subject = subject, Body = body, Importance = Importance.Normal };
+            EmailMessage message = new EmailMessage(service) { Subject = subject, Body = body, Importance = Importance.Normal };
 
-			Email.ToRecipients.Add(email);
+            message.ToRecipients.Add(email);
 
-			if (attachment != null)
-			{
-				Email.Attachments.AddFileAttachment("График.xlsx", attachment);
-			}
-			
-			Email.Save();
-			Email.Send();
+            if (attachmentFileStream != null)
+            {
+                message.Attachments.AddFileAttachment("График.xlsx", attachmentFileStream);
+            }
 
-			return;
-		}
+            message.Save();
+            message.Send();
 
-		private static bool RedirectionUrlValidationCallback(string redirectionUrl)
-		{
-			bool result = false;
+            return;
+        }
 
-			Uri redirectionUri = new Uri(redirectionUrl);
+        private static bool RedirectionUrlValidationCallback(string redirectionUrl)
+        {
+            bool result = false;
 
-			if (redirectionUri.Scheme == "https")
-			{
-				result = true;
-			}
-			return result;
-		}
-	}
+            Uri redirectionUri = new Uri(redirectionUrl);
+
+            if (redirectionUri.Scheme == "https")
+            {
+                result = true;
+            }
+            return result;
+        }
+    }
 }

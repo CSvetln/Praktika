@@ -1,59 +1,51 @@
-﻿using LibraryModels;
-using System;
+﻿using System;
 using System.Linq;
 using System.Web.Mvc;
 using System.Data.Entity;
-using DutyOfServiceDepart.Filters;
-using DutyOfServiceDepart.Models;
+using DBModels;
+using CalendarWebsite.Filters;
+using CalendarWebsite.Models;
 
-namespace DutyOfServiceDepart.Controllers
+namespace CalendarWebsite.Controllers
 {
-	public class VacationController : Controller
-	{
-		DutyContext db = new DutyContext();
+    public class VacationController : BaseControllerWithDB
+    {
+        [Authorize]
+        public ActionResult Index(DateTime? start) // Start дата начала месяца, в представлении можно перелистывать месяцы
+        {
+            Calendar calendar = Calendar.GetCalendarVacation(start);
+            calendar.Vacation = null;
 
-		[Authorize]
-		public ActionResult Index(DateTime? start) // Start дата начала месяца, в представлении можно перелистывать месяцы
-		{
-			Calendar calendar = Calendar.GetCalendarVacation(start);
-			calendar.Vacation = null;
-			return View(calendar);
-		}
+            return View(calendar);
+        }
 
-		[MyAuthorize]
-		[HttpPost]
-		public ActionResult CreateVacation(int selectedEmpId, DateTime Start, DateTime Finish)
-		{		
-			Employee newEmployee = db.Employees.Find(selectedEmpId);
+        [MyAuthorize]
+        [HttpPost]
+        public ActionResult Index(int selectedEmpId, DateTime start, DateTime finish)
+        {
+            Employee newEmployee = db.Employees.Find(selectedEmpId);
 
-			var vacations = db.Vacations.Include(x=>x.Employee).Where(x => x.Employee.EmployeeId == selectedEmpId && (x.Start >= Start && x.Start <= Finish
-					|| x.Start < Start && x.Finish >= Start)).ToList();
+            var vacations = db.Vacations.Include(x => x.Employee).Where(x => x.Employee.Id == selectedEmpId && (x.BeginDate >= start && x.BeginDate <= finish
+                      || x.BeginDate < start && x.EndDate >= start)).ToList();
 
-			if (vacations.Any())
-			{
-				foreach (Vacation vac in vacations)
-				{
-					db.Entry(vac).State = EntityState.Modified;
-					vac.Start = Start;
-					vac.Finish = Finish;
-				}
-			}
-			else
-			{
-				Vacation newVacation = new Vacation(newEmployee, Start, Finish);
-				db.Vacations.Add(newVacation);
-			}
-			db.SaveChanges();
-			return RedirectToAction("Index", new { start = Start });
-		}
+            if (vacations.Any())
+            {
+                foreach (Vacation vac in vacations)
+                {
+                    db.Entry(vac).State = EntityState.Modified;
+                    vac.BeginDate = start;
+                    vac.EndDate = finish;
+                }
+            }
+            else
+            {
+                Vacation newVacation = new Vacation() { BeginDate = start, EndDate = finish, EmployeeId = selectedEmpId };
+                db.Vacations.Add(newVacation);
+            }
 
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing)
-			{
-				db.Dispose();
-			}
-			base.Dispose(disposing);
-		}
-	}
+            db.SaveChanges();
+
+            return RedirectToAction("Index", new { start = start });
+        }
+    }
 }

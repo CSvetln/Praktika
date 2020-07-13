@@ -2,9 +2,9 @@
 using System.Net;
 using System.Net.Mail;
 
-namespace Infrastructure.Mail
+namespace Helpers.Mail
 {
-	public class SendingSMTP : IMail
+	public class SendingSMTP : IMailSender
 	{
 		string Login { get; set; } 
 		string Password { get; set; } 
@@ -15,24 +15,24 @@ namespace Infrastructure.Mail
 			this.Password = password;
 		}
 
-		public void SendMail(string email, string subject, string body, MemoryStream attachment)
+		public void SendMail(string email, string subject, string body, MemoryStream attachmentFileStream)
 		{
-			SmtpClient Smtp = new SmtpClient("smtp.mail.ru", 25);
-			Smtp.Credentials = new NetworkCredential(Login, Password);
-			Smtp.EnableSsl = true;
+			SmtpClient smtp = new SmtpClient("smtp.mail.ru", 25);
+			smtp.Credentials = new NetworkCredential(Login, Password);
+			smtp.EnableSsl = true;
 
-			MailMessage Message = new MailMessage();
+			MailMessage message = new MailMessage();
 
-			Message.From = new MailAddress(Login);
-			Message.To.Add(new MailAddress(email));
-			Message.Subject = subject;
-			Message.Body = body;
-			Message.Attachments.Add(new Attachment(attachment, "График.xlsx"));
+			message.From = new MailAddress(Login);
+			message.To.Add(new MailAddress(email));
+			message.Subject = subject;
+			message.Body = body;
+			message.Attachments.Add(new Attachment(attachmentFileStream, "График.xlsx"));
 
-			Smtp.Send(Message);
+			smtp.Send(message);
 
-			Message.Dispose();
-			Smtp.Dispose();
+			message.Dispose();
+			smtp.Dispose();
 		}
 	}
 }

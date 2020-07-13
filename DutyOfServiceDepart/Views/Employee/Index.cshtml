@@ -1,0 +1,58 @@
+﻿@using PagedList.Mvc
+@using DBModels
+
+@model CalendarWebsite.Models.EmployeeList
+
+@{
+    ViewBag.Title = "Сотрудники";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<link href="~/Content/GetStyle.css" rel="stylesheet" />
+<link rel="stylesheet" href="~/Content/PagedList.css">
+
+<div>
+    <h2>Список сотрудников</h2>
+    <p class="addemp">@Html.ActionLink("+ Добавить сотрудника", "Create", "Employee")</p>
+
+    @using (Html.BeginForm())
+    {
+        <div class="row">
+            <div class="col-md-2"><p>Поиск по имени:</p></div>
+            <div class="col-md-3">@Html.TextBox("SearchString")</div>
+
+            <div class="sear col-md-2">
+                <input class="btn btn-primary" type="submit" value="Поиск" />
+            </div>
+        </div>
+    }
+
+    <table>
+        <tr class="nametab">
+            <th><p>Имя</p></th>
+            <th><p>Email</p></th>
+            <th><p></p></th>
+        </tr>
+
+        @foreach (Employee employee in Model.Employees)
+        {
+            <tr>
+                <td><p>@employee.FullName</p></td>
+                <td><p>@employee.Email</p></td>
+                @using (Html.BeginForm("Delete", "Employee", FormMethod.Post))
+                {
+                    <td>
+                        <input type="hidden" value="@Model.Employees.PageNumber" name="pageDelete" />
+                        <input type="hidden" value="@employee.Id" name="id" />
+                        <input class="btn btn-primary" type="submit" value="Удалить" />
+                    </td>
+                }
+            </tr>
+
+        }
+    </table>
+</div>
+<br />
+Страница @(Model.Employees.PageCount < Model.Employees.PageNumber ? 0 : Model.Employees.PageNumber) из @Model.Employees.PageCount
+@Html.PagedListPager(Model.Employees, page => Url.Action("Index", new { page, sortOrder = Model.CurrentSort, currentFilter = Model.CurrentFilter }))

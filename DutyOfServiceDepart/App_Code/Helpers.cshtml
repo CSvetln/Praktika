@@ -1,8 +1,17 @@
-﻿@using DutyOfServiceDepart.Models;
+﻿@using CalendarWebsite.Models;
 
 @helper Calendar(Calendar calendar)
 {
-    <table id="calendar" border="1">
+    string holiday = String.Empty;
+    int i = 0;
+    DateTime start = new DateTime(calendar.CurrentDate.Year, calendar.CurrentDate.Month, 1);
+
+    while (start.DayOfWeek != DayOfWeek.Monday)
+    {
+        start = start.AddDays(-1);
+    }
+
+    <table id="calendar">
         <thead>
             <tr class="week">
                 <td>ПН</td>
@@ -15,19 +24,12 @@
             </tr>
         </thead>
         @{
-            string holiday = String.Empty;
-            int i = 0;
-            DateTime Start = new DateTime(calendar.CurrentDate.Year, calendar.CurrentDate.Month, 1);
-            while (Start.DayOfWeek != DayOfWeek.Monday)
-            {
-                Start = Start.AddDays(-1);
-            }
             while (true)
             {
                 <tr>
-                    @while (Start.DayOfWeek != DayOfWeek.Sunday)
+                    @while (start.DayOfWeek != DayOfWeek.Sunday)
                     {
-                        if (calendar.Holidays.Contains(Start.Day))
+                        if (calendar.Holidays.Contains(start.Day))
                         {
                             holiday = "hol";
                         }
@@ -36,76 +38,74 @@
                             holiday = "bud";
                         }
 
-                    <td class="@holiday">
-
-                        @if (Start.Month == calendar.CurrentDate.Month)
-                        {
-                            <div class="day">
-                                <a class="dis" href="" onclick="funcEdit('day[@i]'); return false;">
-                                    @Start.Day
-                                </a>
-                            </div>
-                            if (calendar.Duties.ContainsKey(Start))
+                        <td class="@holiday">
+                            @if (start.Month == calendar.CurrentDate.Month)
                             {
-                                <div class="fam mx-auto">
-                                    @for (int j = 0; j < calendar.Duties[Start].Length; j++)
-                                    {
-
-                                        <p>@calendar.Duties[Start][j].Name</p>
-
-                                    }
-
+                                <div class="day">
+                                    <a class="dis" href="" onclick="funcEdit('day[@i]'); return false;">
+                                        @start.Day
+                                    </a>
                                 </div>
-                                if (calendar.Vacation != null)
+                                if (calendar.Duties.ContainsKey(start))
                                 {
-                                    if (calendar.Vacation.Duties.ContainsKey(Start))
-                                    {
-                                        var empsVacation = calendar.Vacation.Duties[Start];
-                                        var empsDuty = calendar.Duties[Start];
-                                    
-                                        for (int n = 0; n < empsDuty.Length; n++)
+                                    <div class="fam mx-auto">
+                                        @for (int j = 0; j < calendar.Duties[start].Length; j++)
                                         {
-                                            for (int j = 0; j < empsVacation.Length; j++)
+
+                                            <p>@calendar.Duties[start][j].FullName</p>
+
+                                        }
+                                    </div>
+                                    if (calendar.Vacation != null)
+                                    {
+                                        if (calendar.Vacation.Duties.ContainsKey(start))
+                                        {
+                                            var empsVacation = calendar.Vacation.Duties[start];
+                                            var empsDuty = calendar.Duties[start];
+
+                                            for (int n = 0; n < empsDuty.Length; n++)
                                             {
-                                                if (empsDuty[n].EmployeeId == empsVacation[j].EmployeeId)
+                                                for (int j = 0; j < empsVacation.Length; j++)
                                                 {
-                                                   <p class="vacation">У сотрудника - @empsDuty[n].Name назначен отпуск</p>
+                                                    if (empsDuty[n].Id == empsVacation[j].Id)
+                                                    {
+                                                        <p class="vacation">У сотрудника - @empsDuty[n].FullName назначен отпуск</p>
+                                                    }
                                                 }
                                             }
                                         }
                                     }
                                 }
-                            }
-                     
-                            <form method="post" action="/Home/Edit">
-                                <div class="hidden row" id="day[@i]">
-                                    <div class="col-md-12">
-                                        <input type="hidden" value="@Start" name="dateEdit" />
-                                        <select multiple="multiple" class="selected mx-auto" size="3" name="selectedEmpId">
-                                            @foreach (var e in calendar.Emps)
-                                            {
-                                                <option value="@e.Value">@e.Text</option>
-                                            }
-                                        </select>
-                                    </div>
-                                    <div class="row">
+                                <form method="post" action="/Home/Edit">
+                                    <div class="hidden row" id="day[@i]">
                                         <div class="col-md-12">
-                                            <input class="but" type="submit" value="Сохранить
+                                            <input type="hidden" value="@start" name="dateEdit" />
+                                            <select multiple="multiple" class="selected mx-auto" size="3" name="selectedEmpId">
+                                                @foreach (var e in calendar.Emps.OrderBy(x => x.Text))
+                                                {
+                                                    <option value="@e.Value">@e.Text</option>
+                                                }
+                                            </select>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <input class="but" type="submit" value="Сохранить
                                                изменения" />
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </form>
-                        }
-                        else
-                        {
-                            <div class="last">@Start.Day</div>
-                        }
-                    </td>
+                                </form>
+                            }
+                            else
+                            {
+                                <div class="last">@start.Day</div>
+                            }
+                        </td>
                         i++;
-                        Start = Start.AddDays(1);
+                        start = start.AddDays(1);
                     }
-                    @if (calendar.Holidays.Contains(Start.Day))
+
+                    @if (calendar.Holidays.Contains(start.Day))
                     {
                         holiday = "hol";
                     }
@@ -116,45 +116,45 @@
 
                     <td class="@holiday">
 
-                        @if (Start.Month == calendar.CurrentDate.Month)
+                        @if (start.Month == calendar.CurrentDate.Month)
                         {
                             <div class="day">
                                 <a class="dis" href="" onclick="funcEdit('day[@i]'); return false;">
-                                    @Start.Day
+                                    @start.Day
                                 </a>
                             </div>
-                            if (calendar.Duties.ContainsKey(Start))
+                            if (calendar.Duties.ContainsKey(start))
                             {
                                 <div class="fam">
-                                    @for (int j = 0; j < calendar.Duties[Start].Length; j++)
+                                    @for (int j = 0; j < calendar.Duties[start].Length; j++)
                                     {
-                                        <p>@calendar.Duties[Start][j].Name</p>
+                                        <p>@calendar.Duties[start][j].FullName</p>
                                     }
                                 </div>
                                 if (calendar.Vacation != null)
                                 {
-                                    if (calendar.Vacation.Duties.ContainsKey(Start))
+                                    if (calendar.Vacation.Duties.ContainsKey(start))
                                     {
-                                        var empsVacation = calendar.Vacation.Duties[Start];
-                                        var empsDuty = calendar.Duties[Start];
-                   
+                                        var empsVacation = calendar.Vacation.Duties[start];
+                                        var empsDuty = calendar.Duties[start];
+
                                         for (int n = 0; n < empsDuty.Length; n++)
                                         {
                                             for (int j = 0; j < empsVacation.Length; j++)
                                             {
                                                 if (empsDuty[n] == empsVacation[j])
                                                 {
-                                                    <p class="vacation">У сотрудника - @empsDuty[n].Name назначен отпуск</p>
+                                                    <p class="vacation">У сотрудника - @empsDuty[n].FullName назначен отпуск</p>
                                                 }
                                             }
-                                        }                                     
+                                        }
                                     }
                                 }
                             }
                             <form method="post" action="/Home/Edit">
                                 <div class="hidden row" id="day[@i]">
                                     <div class="col-md-12">
-                                        <input type="hidden" value="@Start" name="dateEdit" />
+                                        <input type="hidden" value="@start" name="dateEdit" />
                                         <select multiple="multiple" class="selected" size="3" name="selectedEmpId">
                                             @foreach (var e in calendar.Emps)
                                             {
@@ -173,14 +173,17 @@
                         }
                         else
                         {
-                            <div class="last">@Start.Day</div>
+                            <div class="last">@start.Day</div>
                         }
                     </td>
                 </tr>
                 i++;
-                Start = Start.AddDays(1);
-                if (calendar.CurrentDate.Month != Start.Month)
-                { break; }
+                start = start.AddDays(1);
+
+                if (calendar.CurrentDate.Month != start.Month)
+                {
+                    break;
+                }
             }
         }
     </table>

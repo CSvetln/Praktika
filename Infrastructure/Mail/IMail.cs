@@ -1,9 +1,9 @@
 ﻿using System.IO;
 
-namespace Infrastructure.Mail
+namespace Helpers.Mail
 {
-	public interface IMail
-	{
-		void SendMail(string Email, string Subject, string Body, MemoryStream stream);
+    public interface IMailSender
+    {
+		void SendMail(string email, string subject, string body, MemoryStream attachmentFileStream);
 	}
 }

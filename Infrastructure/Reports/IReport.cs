@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace Infrastructure.Reports
+namespace Helpers.Reports
 {
 	public interface IReport
 	{

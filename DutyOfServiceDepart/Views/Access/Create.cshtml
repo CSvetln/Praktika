@@ -1,0 +1,45 @@
+﻿@model  CalendarWebsite.Models.UserAddForm
+
+@{
+    ViewBag.Title = "Новый пользователь";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/CreateStyle.css" rel="stylesheet" />
+
+<h2>Добавление нового пользователя</h2>
+
+<div>
+
+    @using (Html.BeginForm())
+    {
+        <div class="row mt">
+            <div class="col-md-3 mt">
+                <p>Логин:</p>
+            </div>
+            <div class="col-md-2 mt">
+                @Html.DropDownListFor(model => model.User.DomainLogin, Model.Logins.Select(x => new SelectListItem() { Text = x, Value = x }), new { @class = "drop" })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3">
+                <p>Уровень доступа:</p>
+            </div>
+            <div class="col-md-2">
+                <p>
+                    @Html.RadioButtonFor(model => model.User.CanEdit, false) Чтение
+                </p>
+                <p>
+                    @Html.RadioButtonFor(model => model.User.CanEdit, true) Чтение и запись
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3 mt">
+                <input class="btn btn-primary" type="submit" value="Добавить" />
+            </div>
+        </div>
+    }
+</div>

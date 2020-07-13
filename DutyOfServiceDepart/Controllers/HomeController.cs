@@ -1,94 +1,82 @@
-﻿using LibraryModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using System.Data.Entity;
-using DutyOfServiceDepart.Filters;
-using DutyOfServiceDepart.Models;
 using System.Web.Configuration;
-using Infrastructure.Mail;
+using Helpers.Mail;
+using DBModels;
+using CalendarWebsite.Filters;
+using CalendarWebsite.Models;
 
-namespace DutyOfServiceDepart.Controllers
+namespace CalendarWebsite.Controllers
 {
-	public class HomeController : Controller
-	{
-		DutyContext db = new DutyContext();
+    public class HomeController : BaseControllerWithDB
+    {
+        [Authorize]
+        [HttpGet]
+        public ActionResult Index(DateTime? start) // Start дата начала месяца, в представлении можно перелистывать месяцы
+        {
+            Calendar calendar = Calendar.GetCalendarDuty(start);
+            calendar.Vacation = Calendar.GetCalendarVacation(start);
 
-		[Authorize]
-		[HttpGet]
-		public ActionResult Index(DateTime? start) // Start дата начала месяца, в представлении можно перелистывать месяцы
-		{
-			Calendar calendar = Calendar.GetCalendarDuty(start);
-			calendar.Vacation = Calendar.GetCalendarVacation(start);
-			return View(calendar);
-		}
+            return View(calendar);
+        }
 
-		[MyAuthorize]
-		[HttpPost]
-		public ActionResult Edit(int[] selectedEmpId, DateTime dateEdit)
-		{
-			var duties = db.DutyLists.Where(x => x.DateDuty == dateEdit).ToList(); // все дежурства с такой датой
-			foreach(DutyList s  in duties)//очищаем все на эту дату
-			{
-				db.Entry(s).State = EntityState.Deleted;
-				db.DutyLists.Remove(s);
-			}
-			for (int i = 0; i < selectedEmpId.Length; i++)   // содаем новые
-			{
-				Employee newEmployee = db.Employees.Find(selectedEmpId[i]);
-				DutyList newDutyList = new DutyList() { DateDuty = dateEdit, Employee = newEmployee };
-				db.Entry(newDutyList).State = EntityState.Added;
-				db.DutyLists.Add(newDutyList);
-			}
+        [MyAuthorize]
+        [HttpPost]
+        public ActionResult Edit(int[] selectedEmpId, DateTime dateEdit)
+        {
+            var duties = db.Duties.Where(x => x.DutyDate == dateEdit).ToList(); // все дежурства с такой датой
+            foreach (Duty s in duties)//очищаем все на эту дату
+            {
+                db.Duties.Remove(s);
+            }
 
-			db.SaveChanges();
-			return RedirectToAction("Index", new { start = dateEdit });
-		}
+            for (int i = 0; i < selectedEmpId.Length; i++)   // содаем новые
+            {
+                Employee selectedEmployee = db.Employees.Find(selectedEmpId[i]);
+                Duty newDutyList = new Duty() { DutyDate = dateEdit, Employee = selectedEmployee };
 
-		[MyAuthorize]
-		public ViewResult SendAll(DateTime curDate)
-		{
-			string login = WebConfigurationManager.AppSettings["login"];
-			string pass = WebConfigurationManager.AppSettings["pass"];
+                db.Duties.Add(newDutyList);
+            }
 
-			Dictionary<int, Employee[]> duties = new Dictionary<int, Employee[]>();
+            db.SaveChanges();
 
-			var dutyLists = db.DutyLists.Include(x => x.Employee).Where(x => x.DateDuty.Year == curDate.Year
-					&& x.DateDuty.Month == curDate.Month).OrderBy(x => x.DateDuty).ToList();
+            return RedirectToAction("Index", new { start = dateEdit });
+        }
 
-			var dates = dutyLists.Select(x => x.DateDuty).Distinct();
+        [MyAuthorize]
+        public ActionResult SendAll(DateTime curDate)
+        {
+            string login = WebConfigurationManager.AppSettings["login"];
+            string pass = WebConfigurationManager.AppSettings["pass"];
+            string selectedPost = WebConfigurationManager.AppSettings["Post"];
+            Dictionary<int, Employee[]> duties = new Dictionary<int, Employee[]>();
+            var dutyLists = db.Duties.Include(x => x.Employee).Where(x => x.DutyDate.Year == curDate.Year
+                    && x.DutyDate.Month == curDate.Month).OrderBy(x => x.DutyDate).ToList();
+            var dates = dutyLists.Select(x => x.DutyDate).Distinct();
 
-			foreach (DateTime s in dates)
-			{
-				Employee[] emps = dutyLists.Where(x => x.DateDuty == s).Select(x => x.Employee).ToArray();
-				duties.Add(s.Day, emps);
-			}
+            foreach (DateTime s in dates)
+            {
+                Employee[] emps = dutyLists.Where(x => x.DutyDate == s).Select(x => x.Employee).ToArray();
+                duties.Add(s.Day, emps);
+            }
 
-			SendSchedule sendSchedule = new SendSchedule(db.Employees.Select(x => x.Email).ToArray(),
-				"График дежурств", "Изучите график дежурств на текущий месяц", curDate, duties);
+            Helpers.SendSchedule sendSchedule = new Helpers.SendSchedule(db.Employees.Select(x => x.Email).ToArray(),
+                "График дежурств", "Изучите график дежурств на текущий месяц", curDate, duties);
 
-			string selectedPost = WebConfigurationManager.AppSettings["Post"];
+            switch (selectedPost)
+            {
+                case "SMTP":
+                    sendSchedule.Send(new SendingSMTP(login, pass));
+                    break;
+                case "Exchange":
+                    sendSchedule.Send(new SendingExchange());
+                    break;
+            }
 
-			switch (selectedPost)
-			{
-				case "SMTP":
-					sendSchedule.Send(new SendingSMTP(login, pass));
-					break;
-				case "Exchange":
-					sendSchedule.Send(new SendingExchange());
-					break;
-			}
-			return View();
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing)
-			{
-				db.Dispose();
-			}
-			base.Dispose(disposing);
-		}
-	}
+            return View();
+        }
+    }
 }

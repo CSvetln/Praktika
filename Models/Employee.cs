@@ -1,39 +1,47 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace LibraryModels
+namespace DBModels
 {
-	public class Employee
-	{
-		[Key]
-		public int EmployeeId { get; set; }
+    [Table("Employees")]
+    public class Employee
+    {
+        [Key]
+        public Int32 Id { get; set; }
 
-		[Required]
-		public string Name { get; set; }
+        [Required]
+        public string FirstName { get; set; }
 
-		[StringLength(100, MinimumLength = 6)]
-		[MinLength(6)]
-		[MaxLength(100)]
-		[Required]
-		public string Email { get; set; }
+        [Required]
+        public string LastName { get; set; }
 
-		[StringLength(100, MinimumLength =4)]
-		[MinLength(4)]
-		[MaxLength(100)]
-		[Required]
-		public string Login { get; set; }
+        [Required]
+        public string MidlleName { get; set; }
 
-		public ICollection<DutyList> DutyLists { get; set; }
+        [StringLength(100, MinimumLength = 6)]
+        [MinLength(6)]
+        [MaxLength(100)]
+        [Required]
+        public string Email { get; set; }
 
-		public ICollection<ExtremIncident> Incidents { get; set; }
+        [StringLength(100, MinimumLength = 4)]
+        [MinLength(4)]
+        [MaxLength(100)]
+        [Required]
+        public string DomainLogin { get; set; }
 
-		public Employee(string name, string email, string login)
-		{
-			this.Name = name;
-			this.Email = email;
-			this.Login = login;
-		}
+        public String FullName
+        {
+            get
+            {
+                return String.Format("{0} {1} {2}", LastName, FirstName, MidlleName);
+            }
+        }
 
-		public Employee() { }
-	}
+        public virtual ICollection<Duty> DutyLists { get; set; }
+
+        public virtual ICollection<AccidentWork> AccidentWorks { get; set; }
+    }
 }

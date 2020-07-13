@@ -1,17 +1,13 @@
-﻿using DutyOfServiceDepart.Models;
-using LibraryModels;
-using System;
-using ConsoleHoliday;
+﻿using System;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using System.Data.Entity;
+using CalendarWebsite.Models;
 
-
-namespace DutyOfServiceDepart
+namespace CalendarWebsite
 {
-	public class MvcApplication : System.Web.HttpApplication
+	public class MvcApplication : HttpApplication
 	{		
 		protected void Application_Start()
 		{

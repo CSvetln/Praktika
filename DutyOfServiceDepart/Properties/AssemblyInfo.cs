@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // Управление общими сведениями о сборке осуществляется следующим образом
 // набора атрибутов. Измените значения этих атрибутов для изменения сведений,
 // связанных с этой сборкой.
-[assembly: AssemblyTitle("DutyOfServiceDepart")]
+[assembly: AssemblyTitle("CalendarWebsite")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("DutyOfServiceDepart")]
+[assembly: AssemblyProduct("CalendarWebsite")]
 [assembly: AssemblyCopyright("© , 2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

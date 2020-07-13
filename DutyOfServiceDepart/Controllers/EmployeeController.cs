@@ -1,86 +1,77 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Mvc;
-using DutyOfServiceDepart.Filters;
-using LibraryModels;
+using DBModels;
 using PagedList;
+using CalendarWebsite.Filters;
+using CalendarWebsite.Models;
 
-namespace DutyOfServiceDepart.Controllers
+namespace CalendarWebsite.Controllers
 {
-	public class EmployeeController : Controller
-	{
-		[Authorize]
-		public ViewResult Index(string sortOrder, string currentFilter, string searchString, int? page)
-		{
-			using (DutyContext db = new DutyContext())
-			{
-				if (searchString != null)
-				{
-					page = 1;
-				}
-				else
-				{
-					searchString = currentFilter;
-				}
+    public class EmployeeController : BaseControllerWithDB
+    {
+        const Int32 FIXED_PAGESIZE = 15;
 
-				var emps = from s in db.Employees select s;
-				emps = emps.OrderByDescending(s => s.Name);
+        [Authorize]
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int page = 1)
+        {
+            var emps = from s in db.Employees select s;
 
-				if (!String.IsNullOrEmpty(searchString))
-				{
-					emps = emps.Where(s => s.Name.Contains(searchString));
-				}
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
 
-				int pageSize = 5;
-				int pageNumber = (page ?? 1);
+            emps = emps.OrderByDescending(s => s.LastName).ThenByDescending(x => x.FirstName);
 
-				Models.Sort sort = new Models.Sort();
-				sort.CurrentSort = sortOrder;
-				sort.CurrentFilter = searchString;
-				sort.Emps = emps.ToPagedList(pageNumber, pageSize);
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                emps = emps.Where(s => s.FirstName.Contains(searchString) || s.MidlleName.Contains(searchString) || s.LastName.Contains(searchString));
+            }
 
-				return View("GetEmployee", sort);
-			}
-		}
+            EmployeeList model = new EmployeeList() { CurrentFilter = searchString, CurrentSort = sortOrder, Employees = emps.ToPagedList(page, FIXED_PAGESIZE) };
 
-		[MyAuthorize]
-		[HttpGet]
-		public ViewResult Create()
-		{
-			return View("CreateEmployee");
-		}
+            return View(model);
+        }
 
-		[MyAuthorize]
-		[HttpPost]
-		public ActionResult Create([Bind(Include = "Name, Email, Login")]Employee employee)
-		{
-			using (DutyContext db = new DutyContext())
-			{
-				if (ModelState.IsValid)
-				{
-					db.Employees.Add(employee);
-					db.SaveChanges();
-					return RedirectToAction("Index");
-				}
-				return View("CreateEmployee");
-			}
-		}
+        [MyAuthorize]
+        [HttpGet]
+        public ActionResult Create()
+        {
+            return View();
+        }
 
-		[MyAuthorize]
-		[HttpPost]
-		public ActionResult Delete(int id, int pageDelete)
-		{
-			using (DutyContext db = new DutyContext())
-			{
-				Employee employee = db.Employees.Find(id);
+        [MyAuthorize]
+        [HttpPost]
+        public ActionResult Create([Bind(Include = "Name, Email, Login")]Employee employee)
+        {
+            using (DutyContext db = new DutyContext())
+            {
+                if (ModelState.IsValid)
+                {
+                    db.Employees.Add(employee);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
 
-				if (ModelState.IsValid)
-				{
-					db.Employees.Remove(employee);
-					db.SaveChanges();
-				}
-				return RedirectToAction("Index", new { page = pageDelete });
-			}
-		}
-	}
+                return View("CreateEmployee");
+            }
+        }
+
+        [MyAuthorize]
+        [HttpPost]
+        public ActionResult Delete(int id, int pageDelete)
+        {
+            Employee employee = db.Employees.Find(id);
+
+            db.Employees.Remove(employee);
+            db.SaveChanges();
+
+            return RedirectToAction("Index", new { page = pageDelete });
+        }
+    }
 }

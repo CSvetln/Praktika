@@ -1,0 +1,53 @@
+﻿@model CalendarWebsite.Models.AccidentForm
+
+@{
+    ViewBag.Title = "Новая авария";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/CreateStyle.css" rel="stylesheet" />
+
+<h2>Добавить информацию об аварии</h2>
+<div>
+
+    @using (Html.BeginForm())
+    {
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="row mt">
+            <div class="col-md-4 mt">
+                <p>Дата аварии: </p>
+            </div>
+            <div class="col-md-2 mt">
+                @Html.TextBoxFor(model => model.Work.AccidentDate, new { @class = "drop" })
+            </div>
+            <div class="col-md-5 mt">
+                @Html.ValidationMessageFor(model => model.Work.AccidentDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 ">
+                <p>Ответственный за устранение: </p>
+            </div>
+            <div class="col-md-2">
+                @Html.DropDownListFor(model => model.Work.EmployeeId, Model.Employees, new { @class = "drop" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 ">
+                <p>Описание аварии: </p>
+            </div>
+            <div class="col-md-2 ">
+                @Html.TextAreaFor(model => model.Work.Description)
+            </div>
+            <div class="col-md-5">
+                @Html.ValidationMessageFor(model => model.Work.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 mt">
+                <input class="btn btn-primary" type="submit" value="Добавить" />
+            </div>
+        </div>
+    }
+</div>

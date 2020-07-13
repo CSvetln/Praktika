@@ -1,4 +1,5 @@
-﻿@model IEnumerable<LibraryModels.Employee>
+﻿@using CalendarWebsite.Models;
+@model ReportForm
 
 @{
     ViewBag.Title = "Создать отчёт";
@@ -16,39 +17,25 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
         <div class="row mt">
-
             <div class="col-md-3 mt">
                 <p>Имя дежурного: </p>
             </div>
-
             <div class="col-md-3 mt">
-                @Html.DropDownList("EmployeeName", new SelectList(Model, "Name", "Name"), new { @class = "drop input-sm" })
+                @Html.DropDownListFor(model => model.EmployeeId, new SelectList(Model.Employees, "Id", "FullName"), new { @class = "drop input-sm" })
             </div>
-
         </div>
-
         <div class="row">
-
             <div class="col-md-3 ">
                 <p>Выберите месяц: </p>
             </div>
-
             <div class="col-md-3 ">
-                <input class="drop input-sm" type="month" name="Date" required />
+                @Html.TextBoxFor(model => model.ReportMonth, new { @class = "drop input-sm" })
             </div>
-
         </div>
-
         <div class="row">
-
             <div class="col-md-3 mt">
                 <input class="btn btn-primary" type="submit" value="Скачать отчёт" />
             </div>
-
         </div>
-
     }
 </div>
-
-
-  

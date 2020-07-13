@@ -2,52 +2,45 @@
 using System.IO;
 using System.Linq;
 using System.Web.Mvc;
-using DutyOfServiceDepart.Filters;
-using LibraryModels;
-using Infrastructure.Reports;
 using System.Data.Entity;
+using DBModels;
+using Helpers.Reports;
+using CalendarWebsite.Filters;
+using CalendarWebsite.Models;
 
-namespace DutyOfServiceDepart.Controllers
+namespace CalendarWebsite.Controllers
 {
-    public class ReportController : Controller
+    public class ReportController : BaseControllerWithDB
     {
-		DutyContext db = new DutyContext();
-
-		[Authorize]
-		[HttpGet]
+        [Authorize]
+        [HttpGet]
         public ActionResult CreateReport()
-        {			
-			return View(db.Employees.ToList());			
+        {
+            ReportForm model = new ReportForm() { Employees = db.Employees.ToList(), EmployeeId = 0, ReportMonth = DateTime.Now.Date };
+
+            return View(model);
         }
-		
-		[MyAuthorize]
-		[HttpPost]
-		public FileResult CreateReport(string employeeName, DateTime date)
-		{
-			Report report = new Report();
-			int d = 0;
-			
-			var dutyLists = db.DutyLists.Include(x=>x.Employee).Where(x => x.Employee.Name == employeeName && x.DateDuty.Year == date.Year && x.DateDuty.Month == date.Month).ToList();
 
-			foreach (DutyList s in dutyLists)
-			{
-				d++;
-			}
-			
-			using (MemoryStream stream = report.MakeReport(new ReportClosedXML(employeeName, d, date)))
-			{
-				string output = String.Format("Отчёт {0}-{1}xlsx", date.ToLongDateString(), date.AddMonths(1).AddDays(-1).ToLongDateString());
-				return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", output);
-			}
-		}
+        [MyAuthorize]
+        [HttpPost]
+        public FileResult CreateReport(ReportForm model)
+        {
+            int d = 0;
+            Employee employee = db.Employees.First(x => x.Id == model.EmployeeId);
+            ReportClosedXML report = new ReportClosedXML(employee.FullName, d, model.ReportMonth);
+            var dutyLists = db.Duties.Include(x => x.Employee).Where(x => x.EmployeeId == model.EmployeeId && x.DutyDate.Year == model.ReportMonth.Year && x.DutyDate.Month == model.ReportMonth.Month).ToList();
 
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing)
-			{
-				db.Dispose();
-			}
-			base.Dispose(disposing);
-		}
-	}
+            foreach (Duty duty in dutyLists)
+            {
+                d++;
+            }
+
+            using (MemoryStream stream = report.CreateReport())
+            {
+                string output = String.Format("Отчёт {0}-{1}xlsx", model.ReportMonth.ToLongDateString(), model.ReportMonth.AddMonths(1).AddDays(-1).ToLongDateString());
+
+                return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", output);
+            }
+        }
+    }
 }

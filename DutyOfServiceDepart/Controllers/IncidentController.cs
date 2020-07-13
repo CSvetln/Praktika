@@ -3,74 +3,67 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Web.Mvc;
 using System.Data.Entity;
-using DutyOfServiceDepart.Filters;
-using LibraryModels;
 using PagedList;
+using DBModels;
+using CalendarWebsite.Filters;
+using CalendarWebsite.Models;
 
-namespace DutyOfServiceDepart.Controllers
+namespace CalendarWebsite.Controllers
 {
-    public class IncidentController : Controller
+    public class IncidentController : BaseControllerWithDB
     {
-		DutyContext db = new DutyContext();
-
-		[Authorize]
-		public ActionResult Index(int? page)
+        [Authorize]
+        public ActionResult Index(int page = 1)
         {
-			var incs = db.Incidents.Include(x => x.Employee);
-			incs = incs.OrderBy(s => s.DateIncident);
-			int pageSize = 10;
-			int pageNumber = (page ?? 1);
-			return View("GetIncident", incs.ToPagedList(pageNumber, pageSize));		
-		}
+            var incs = db.AccidentWorks.Include(x => x.Employee);
+            incs = incs.OrderBy(s => s.AccidentDate);
+            int pageSize = 10;
+            int pageNumber = (page);
+            var model = incs.ToPagedList(pageNumber, pageSize);
 
-		[MyAuthorize]
-		[HttpPost]
-		public ActionResult Delete(int id, int pageDelete)
-		{
-			ExtremIncident incident = db.Incidents.Find(id);
-			if (ModelState.IsValid)
-			{
-				db.Incidents.Remove(incident);
-				db.SaveChanges();
-			}
-			return RedirectToAction("Index", new { page = pageDelete });
-		}
+            return View(model);
+        }
 
-		[MyAuthorize]
-		[HttpGet]
-		public ViewResult Create()
-		{
-			SelectList selectEmp = new SelectList(db.Employees, "EmployeeId", "Name");
-			Models.ExtremIncident extremIncident = new Models.ExtremIncident {
-				Emps = selectEmp
-		    };
-			return View("CreateIncident", extremIncident);
-		}
+        [MyAuthorize]
+        [HttpPost]
+        public ActionResult Delete(int id, int pageDelete)
+        {
+            AccidentWork incident = db.AccidentWorks.Find(id);
 
-		[MyAuthorize]
-		[HttpPost]		
-		public ActionResult Create(DateTime DateIncident, int Employee, string DescIncident)
-		{			
-			Employee employee = db.Employees.Find(Employee);			
-			ExtremIncident extremIncident = new ExtremIncident(DateIncident, employee, DescIncident);
+            db.AccidentWorks.Remove(incident);
+            db.SaveChanges();
 
-			if (ModelState.IsValid)
-			{
-				db.Incidents.Add(extremIncident);
-				db.SaveChanges();
-				return RedirectToAction("Index");
-			}
-			return View("CreateIncident");
-		}
+            return RedirectToAction("Index", new { page = pageDelete });
+        }
 
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing)
-			{
-				db.Dispose();
-			}
-			base.Dispose(disposing);
-		}
-	}
+        [MyAuthorize]
+        [HttpGet]
+        public ViewResult Create()
+        {
+            SelectList selectEmp = new SelectList(db.Employees, "EmployeeId", "Name");
+            AccidentForm model = new AccidentForm
+            {
+                Employees = selectEmp,
+                Work = new AccidentWork()
+            };
+
+            return View(model);
+        }
+
+        [MyAuthorize]
+        [HttpPost]
+        public ActionResult Create(AccidentForm model)
+        {
+            if (ModelState.IsValid)
+            {
+                db.AccidentWorks.Add(model.Work);
+                db.SaveChanges();
+
+                return RedirectToAction("Index");
+            }
+
+            return View();
+        }
+    }
 }
 

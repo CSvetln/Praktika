@@ -1,24 +1,24 @@
-﻿using DutyOfServiceDepart.Models;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
+using CalendarWebsite.Models;
 
-namespace DutyOfServiceDepart.Controllers
+namespace CalendarWebsite.Controllers
 {
-	public class ErrorController : Controller
-	{
-		public ActionResult Index()
-		{
-			Error error = (Error)RouteData.Values["ExceptionObject"];
-			return View(error);
-		}
+    public class ErrorController : Controller
+    {
+        public ActionResult Index()
+        {
+            Error error = (Error)RouteData.Values["ExceptionObject"];
+            return View(error);
+        }
 
-		public ActionResult NoAuthorization()
-		{
-			return View();
-		}
+        public ActionResult NoAuthorization()
+        {
+            return View();
+        }
 
-		public ActionResult NotAvailable()
-		{
-			return View();
-		}		
-	}
+        public ActionResult NotAvailable()
+        {
+            return View();
+        }
+    }
 }

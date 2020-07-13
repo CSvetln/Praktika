@@ -1,18 +1,18 @@
 ﻿using System.Data.Entity;
 
-namespace LibraryModels
+namespace DBModels
 {
 	public class DutyContext: DbContext
 	{
 		public DbSet<Employee> Employees { get; set; }
 
-		public DbSet<ExtremIncident> Incidents { get; set; }
+		public DbSet<AccidentWork> AccidentWorks { get; set; }
 
-		public DbSet<DutyList> DutyLists { get; set; }
+		public DbSet<Duty> Duties { get; set; }
 	
-		public DbSet<Access> Accesses { get; set; }
+		public DbSet<User> Users { get; set; }
 		
-		public DbSet<Holidays> Holidays { get; set; }
+		public DbSet<Holiday> Holidays { get; set; }
 
 		public DbSet<Vacation> Vacations { get; set; }
 
@@ -25,9 +25,9 @@ namespace LibraryModels
 				.WillCascadeOnDelete(true);
 
 			modelBuilder.Entity<Employee>()
-				.HasMany(p => p.Incidents)
+				.HasMany(p => p.AccidentWorks)
 				.WithRequired(c => c.Employee)
-				.HasForeignKey(c => c.EmployeeEmployeId)
+				.HasForeignKey(c => c.EmployeeId)
 				.WillCascadeOnDelete(true);
 		}
 	}
